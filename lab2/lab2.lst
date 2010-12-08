@@ -1,0 +1,513 @@
+GAS LISTING /tmp/ccPLD1M4.s 			page 1
+
+
+   1               		.file	"lab2.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	chk_buttons
+  12               		.type	chk_buttons, @function
+  13               	chk_buttons:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 90E0      		ldi r25,lo8(0)
+  17 0002 49B3      		in r20,57-32
+  18 0004 FC01      		movw r30,r24
+  19 0006 EE0F      		lsl r30
+  20 0008 FF1F      		rol r31
+  21 000a E050      		subi r30,lo8(-(state.1242))
+  22 000c F040      		sbci r31,hi8(-(state.1242))
+  23 000e 2081      		ld r18,Z
+  24 0010 3181      		ldd r19,Z+1
+  25 0012 220F      		lsl r18
+  26 0014 331F      		rol r19
+  27 0016 306E      		ori r19,hi8(-8192)
+  28 0018 50E0      		ldi r21,lo8(0)
+  29 001a 00C0      		rjmp 2f
+  30 001c 5595      	1:	asr r21
+  31 001e 4795      		ror r20
+  32 0020 8A95      	2:	dec r24
+  33 0022 02F4      		brpl 1b
+  34 0024 4170      		andi r20,lo8(1)
+  35 0026 5070      		andi r21,hi8(1)
+  36 0028 242B      		or r18,r20
+  37 002a 352B      		or r19,r21
+  38 002c 3183      		std Z+1,r19
+  39 002e 2083      		st Z,r18
+  40 0030 80E0      		ldi r24,lo8(0)
+  41 0032 2050      		subi r18,lo8(-4096)
+  42 0034 304F      		sbci r19,hi8(-4096)
+  43 0036 01F0      		breq .L5
+  44 0038 0895      		ret
+  45               	.L5:
+  46 003a 81E0      		ldi r24,lo8(1)
+  47 003c 0895      		ret
+  48               		.size	chk_buttons, .-chk_buttons
+  49               	.global	segsum
+  50               		.type	segsum, @function
+  51               	segsum:
+  52               	/* prologue: function */
+  53               	/* frame size = 0 */
+  54 003e FC01      		movw r30,r24
+  55 0040 0A97      		sbiw r24,10
+  56 0042 8A35      		cpi r24,90
+  57 0044 9105      		cpc r25,__zero_reg__
+GAS LISTING /tmp/ccPLD1M4.s 			page 2
+
+
+  58 0046 00F4      		brsh .L7
+  59 0048 22E0      		ldi r18,lo8(2)
+  60               	.L8:
+  61 004a CF01      		movw r24,r30
+  62 004c 8456      		subi r24,lo8(-(-100))
+  63 004e 9040      		sbci r25,hi8(-(-100))
+  64 0050 8458      		subi r24,lo8(900)
+  65 0052 9340      		sbci r25,hi8(900)
+  66 0054 00F4      		brsh .L9
+  67 0056 23E0      		ldi r18,lo8(3)
+  68               	.L9:
+  69 0058 CF01      		movw r24,r30
+  70 005a 885E      		subi r24,lo8(-(-1000))
+  71 005c 9340      		sbci r25,hi8(-(-1000))
+  72 005e 8852      		subi r24,lo8(9000)
+  73 0060 9342      		sbci r25,hi8(9000)
+  74 0062 00F0      		brlo .L10
+  75 0064 CF01      		movw r24,r30
+  76 0066 6AE0      		ldi r22,lo8(10)
+  77 0068 70E0      		ldi r23,hi8(10)
+  78 006a 0E94 0000 		call __udivmodhi4
+  79 006e CB01      		movw r24,r22
+  80 0070 6AE0      		ldi r22,lo8(10)
+  81 0072 70E0      		ldi r23,hi8(10)
+  82 0074 0E94 0000 		call __udivmodhi4
+  83 0078 482F      		mov r20,r24
+  84 007a CF01      		movw r24,r30
+  85 007c 6AE0      		ldi r22,lo8(10)
+  86 007e 70E0      		ldi r23,hi8(10)
+  87 0080 0E94 0000 		call __udivmodhi4
+  88 0084 382F      		mov r19,r24
+  89 0086 2330      		cpi r18,lo8(3)
+  90 0088 01F0      		breq .+2
+  91 008a 00C0      		rjmp .L11
+  92 008c 2FEF      		ldi r18,lo8(-1)
+  93 008e 2093 0000 		sts segment_data+4,r18
+  94 0092 CF01      		movw r24,r30
+  95 0094 64E6      		ldi r22,lo8(100)
+  96 0096 70E0      		ldi r23,hi8(100)
+  97 0098 0E94 0000 		call __udivmodhi4
+  98 009c CB01      		movw r24,r22
+  99 009e 6AE0      		ldi r22,lo8(10)
+ 100 00a0 70E0      		ldi r23,hi8(10)
+ 101 00a2 0E94 0000 		call __udivmodhi4
+ 102 00a6 8093 0000 		sts segment_data+3,r24
+ 103 00aa 2093 0000 		sts segment_data+2,r18
+ 104 00ae 4093 0000 		sts segment_data+1,r20
+ 105 00b2 3093 0000 		sts segment_data,r19
+ 106 00b6 0895      		ret
+ 107               	.L7:
+ 108 00b8 21E0      		ldi r18,lo8(1)
+ 109 00ba 00C0      		rjmp .L8
+ 110               	.L10:
+ 111 00bc CF01      		movw r24,r30
+ 112 00be 68EE      		ldi r22,lo8(1000)
+ 113 00c0 73E0      		ldi r23,hi8(1000)
+ 114 00c2 0E94 0000 		call __udivmodhi4
+GAS LISTING /tmp/ccPLD1M4.s 			page 3
+
+
+ 115 00c6 CB01      		movw r24,r22
+ 116 00c8 6AE0      		ldi r22,lo8(10)
+ 117 00ca 70E0      		ldi r23,hi8(10)
+ 118 00cc 0E94 0000 		call __udivmodhi4
+ 119 00d0 8093 0000 		sts segment_data+4,r24
+ 120 00d4 CF01      		movw r24,r30
+ 121 00d6 64E6      		ldi r22,lo8(100)
+ 122 00d8 70E0      		ldi r23,hi8(100)
+ 123 00da 0E94 0000 		call __udivmodhi4
+ 124 00de CB01      		movw r24,r22
+ 125 00e0 6AE0      		ldi r22,lo8(10)
+ 126 00e2 70E0      		ldi r23,hi8(10)
+ 127 00e4 0E94 0000 		call __udivmodhi4
+ 128 00e8 8093 0000 		sts segment_data+3,r24
+ 129 00ec 8FEF      		ldi r24,lo8(-1)
+ 130 00ee 8093 0000 		sts segment_data+2,r24
+ 131 00f2 CF01      		movw r24,r30
+ 132 00f4 6AE0      		ldi r22,lo8(10)
+ 133 00f6 70E0      		ldi r23,hi8(10)
+ 134 00f8 0E94 0000 		call __udivmodhi4
+ 135 00fc CB01      		movw r24,r22
+ 136 00fe 6AE0      		ldi r22,lo8(10)
+ 137 0100 70E0      		ldi r23,hi8(10)
+ 138 0102 0E94 0000 		call __udivmodhi4
+ 139 0106 8093 0000 		sts segment_data+1,r24
+ 140 010a CF01      		movw r24,r30
+ 141 010c 6AE0      		ldi r22,lo8(10)
+ 142 010e 70E0      		ldi r23,hi8(10)
+ 143 0110 0E94 0000 		call __udivmodhi4
+ 144 0114 8093 0000 		sts segment_data,r24
+ 145 0118 0895      		ret
+ 146               	.L11:
+ 147 011a 2230      		cpi r18,lo8(2)
+ 148 011c 01F4      		brne .L13
+ 149 011e 8FEF      		ldi r24,lo8(-1)
+ 150 0120 8093 0000 		sts segment_data+4,r24
+ 151 0124 8093 0000 		sts segment_data+3,r24
+ 152 0128 8093 0000 		sts segment_data+2,r24
+ 153 012c 4093 0000 		sts segment_data+1,r20
+ 154 0130 3093 0000 		sts segment_data,r19
+ 155 0134 0895      		ret
+ 156               	.L13:
+ 157 0136 8FEF      		ldi r24,lo8(-1)
+ 158 0138 8093 0000 		sts segment_data+4,r24
+ 159 013c 8093 0000 		sts segment_data+3,r24
+ 160 0140 8093 0000 		sts segment_data+2,r24
+ 161 0144 8093 0000 		sts segment_data+1,r24
+ 162 0148 3093 0000 		sts segment_data,r19
+ 163 014c 0895      		ret
+ 164               		.size	segsum, .-segsum
+ 165               	.global	main
+ 166               		.type	main, @function
+ 167               	main:
+ 168 014e 8F92      		push r8
+ 169 0150 9F92      		push r9
+ 170 0152 AF92      		push r10
+ 171 0154 BF92      		push r11
+GAS LISTING /tmp/ccPLD1M4.s 			page 4
+
+
+ 172 0156 CF92      		push r12
+ 173 0158 DF92      		push r13
+ 174 015a EF92      		push r14
+ 175 015c FF92      		push r15
+ 176 015e 0F93      		push r16
+ 177 0160 1F93      		push r17
+ 178 0162 CF93      		push r28
+ 179 0164 DF93      		push r29
+ 180               	/* prologue: function */
+ 181               	/* frame size = 0 */
+ 182 0166 80EF      		ldi r24,lo8(-16)
+ 183 0168 87BB      		out 55-32,r24
+ 184 016a 00E0      		ldi r16,lo8(0)
+ 185 016c 10E0      		ldi r17,hi8(0)
+ 186 016e C0E0      		ldi r28,lo8(0)
+ 187 0170 D0E0      		ldi r29,hi8(0)
+ 188 0172 90E4      		ldi r25,lo8(8000)
+ 189 0174 A92E      		mov r10,r25
+ 190 0176 9FE1      		ldi r25,hi8(8000)
+ 191 0178 B92E      		mov r11,r25
+ 192 017a CC24      		clr r12
+ 193 017c CA94      		dec r12
+ 194 017e 8FE5      		ldi r24,lo8(95)
+ 195 0180 882E      		mov r8,r24
+ 196 0182 B5E3      		ldi r27,lo8(53)
+ 197 0184 9B2E      		mov r9,r27
+ 198 0186 00C0      		rjmp .L26
+ 199               	.L36:
+ 200 0188 00E0      		ldi r16,lo8(0)
+ 201 018a 10E0      		ldi r17,hi8(0)
+ 202 018c DD24      		clr r13
+ 203 018e 31E0      		ldi r19,lo8(1)
+ 204 0190 E32E      		mov r14,r19
+ 205 0192 F12C      		mov r15,__zero_reg__
+ 206               	.L25:
+ 207 0194 D370      		andi r29,hi8(1023)
+ 208 0196 CE01      		movw r24,r28
+ 209 0198 0E94 0000 		call segsum
+ 210 019c CABA      		out 58-32,r12
+ 211 019e 0050      		subi r16,lo8(-(segment_data))
+ 212 01a0 1040      		sbci r17,hi8(-(segment_data))
+ 213 01a2 F801      		movw r30,r16
+ 214 01a4 8081      		ld r24,Z
+ 215 01a6 0E94 0000 		call LED_convert
+ 216 01aa 8BBB      		out 59-32,r24
+ 217 01ac D8BA      		out 56-32,r13
+ 218 01ae 8701      		movw r16,r14
+ 219               	.L26:
+ 220 01b0 C501      		movw r24,r10
+ 221               	/* #APP */
+ 222               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+ 223 01b2 0197      		1: sbiw r24,1
+ 224 01b4 01F4      		brne 1b
+ 225               	 ;  0 "" 2
+ 226               	/* #NOAPP */
+ 227 01b6 1ABA      		out 58-32,__zero_reg__
+ 228 01b8 CBBA      		out 59-32,r12
+GAS LISTING /tmp/ccPLD1M4.s 			page 5
+
+
+ 229 01ba 88BA      		out 56-32,r8
+ 230 01bc 892D      		mov r24,r9
+ 231               	/* #APP */
+ 232               	 ;  83 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+ 233 01be 8A95      		1: dec r24
+ 234 01c0 01F4      		brne 1b
+ 235               	 ;  0 "" 2
+ 236               	/* #NOAPP */
+ 237 01c2 29B3      		in r18,57-32
+ 238 01c4 8091 0000 		lds r24,state.1242
+ 239 01c8 9091 0000 		lds r25,(state.1242)+1
+ 240 01cc 880F      		lsl r24
+ 241 01ce 991F      		rol r25
+ 242 01d0 906E      		ori r25,hi8(-8192)
+ 243 01d2 30E0      		ldi r19,lo8(0)
+ 244 01d4 2170      		andi r18,lo8(1)
+ 245 01d6 3070      		andi r19,hi8(1)
+ 246 01d8 822B      		or r24,r18
+ 247 01da 932B      		or r25,r19
+ 248 01dc 9093 0000 		sts (state.1242)+1,r25
+ 249 01e0 8093 0000 		sts state.1242,r24
+ 250 01e4 8050      		subi r24,lo8(-4096)
+ 251 01e6 904F      		sbci r25,hi8(-4096)
+ 252 01e8 01F4      		brne .+2
+ 253 01ea 00C0      		rjmp .L28
+ 254               	.L16:
+ 255 01ec 89B3      		in r24,57-32
+ 256 01ee 2091 0000 		lds r18,state.1242+2
+ 257 01f2 3091 0000 		lds r19,(state.1242+2)+1
+ 258 01f6 220F      		lsl r18
+ 259 01f8 331F      		rol r19
+ 260 01fa 306E      		ori r19,hi8(-8192)
+ 261 01fc 90E0      		ldi r25,lo8(0)
+ 262 01fe 9595      		asr r25
+ 263 0200 8795      		ror r24
+ 264 0202 8170      		andi r24,lo8(1)
+ 265 0204 9070      		andi r25,hi8(1)
+ 266 0206 282B      		or r18,r24
+ 267 0208 392B      		or r19,r25
+ 268 020a 3093 0000 		sts (state.1242+2)+1,r19
+ 269 020e 2093 0000 		sts state.1242+2,r18
+ 270 0212 2050      		subi r18,lo8(-4096)
+ 271 0214 304F      		sbci r19,hi8(-4096)
+ 272 0216 01F4      		brne .+2
+ 273 0218 00C0      		rjmp .L29
+ 274               	.L17:
+ 275 021a 89B3      		in r24,57-32
+ 276 021c 2091 0000 		lds r18,state.1242+4
+ 277 0220 3091 0000 		lds r19,(state.1242+4)+1
+ 278 0224 220F      		lsl r18
+ 279 0226 331F      		rol r19
+ 280 0228 306E      		ori r19,hi8(-8192)
+ 281 022a 90E0      		ldi r25,lo8(0)
+ 282 022c 9595      		asr r25
+ 283 022e 8795      		ror r24
+ 284 0230 9595      		asr r25
+ 285 0232 8795      		ror r24
+GAS LISTING /tmp/ccPLD1M4.s 			page 6
+
+
+ 286 0234 8170      		andi r24,lo8(1)
+ 287 0236 9070      		andi r25,hi8(1)
+ 288 0238 282B      		or r18,r24
+ 289 023a 392B      		or r19,r25
+ 290 023c 3093 0000 		sts (state.1242+4)+1,r19
+ 291 0240 2093 0000 		sts state.1242+4,r18
+ 292 0244 2050      		subi r18,lo8(-4096)
+ 293 0246 304F      		sbci r19,hi8(-4096)
+ 294 0248 01F4      		brne .+2
+ 295 024a 00C0      		rjmp .L30
+ 296               	.L18:
+ 297 024c 89B3      		in r24,57-32
+ 298 024e 2091 0000 		lds r18,state.1242+6
+ 299 0252 3091 0000 		lds r19,(state.1242+6)+1
+ 300 0256 220F      		lsl r18
+ 301 0258 331F      		rol r19
+ 302 025a 306E      		ori r19,hi8(-8192)
+ 303 025c 90E0      		ldi r25,lo8(0)
+ 304 025e 9595      		asr r25
+ 305 0260 8795      		ror r24
+ 306 0262 9595      		asr r25
+ 307 0264 8795      		ror r24
+ 308 0266 9595      		asr r25
+ 309 0268 8795      		ror r24
+ 310 026a 8170      		andi r24,lo8(1)
+ 311 026c 9070      		andi r25,hi8(1)
+ 312 026e 282B      		or r18,r24
+ 313 0270 392B      		or r19,r25
+ 314 0272 3093 0000 		sts (state.1242+6)+1,r19
+ 315 0276 2093 0000 		sts state.1242+6,r18
+ 316 027a 2050      		subi r18,lo8(-4096)
+ 317 027c 304F      		sbci r19,hi8(-4096)
+ 318 027e 01F4      		brne .+2
+ 319 0280 00C0      		rjmp .L31
+ 320               	.L19:
+ 321 0282 89B3      		in r24,57-32
+ 322 0284 2091 0000 		lds r18,state.1242+8
+ 323 0288 3091 0000 		lds r19,(state.1242+8)+1
+ 324 028c 220F      		lsl r18
+ 325 028e 331F      		rol r19
+ 326 0290 306E      		ori r19,hi8(-8192)
+ 327 0292 90E0      		ldi r25,lo8(0)
+ 328 0294 9595      		asr r25
+ 329 0296 8795      		ror r24
+ 330 0298 9595      		asr r25
+ 331 029a 8795      		ror r24
+ 332 029c 9595      		asr r25
+ 333 029e 8795      		ror r24
+ 334 02a0 9595      		asr r25
+ 335 02a2 8795      		ror r24
+ 336 02a4 8170      		andi r24,lo8(1)
+ 337 02a6 9070      		andi r25,hi8(1)
+ 338 02a8 282B      		or r18,r24
+ 339 02aa 392B      		or r19,r25
+ 340 02ac 3093 0000 		sts (state.1242+8)+1,r19
+ 341 02b0 2093 0000 		sts state.1242+8,r18
+ 342 02b4 2050      		subi r18,lo8(-4096)
+GAS LISTING /tmp/ccPLD1M4.s 			page 7
+
+
+ 343 02b6 304F      		sbci r19,hi8(-4096)
+ 344 02b8 01F4      		brne .+2
+ 345 02ba 00C0      		rjmp .L32
+ 346               	.L20:
+ 347 02bc 89B3      		in r24,57-32
+ 348 02be 2091 0000 		lds r18,state.1242+10
+ 349 02c2 3091 0000 		lds r19,(state.1242+10)+1
+ 350 02c6 220F      		lsl r18
+ 351 02c8 331F      		rol r19
+ 352 02ca 306E      		ori r19,hi8(-8192)
+ 353 02cc 90E0      		ldi r25,lo8(0)
+ 354 02ce 9595      		asr r25
+ 355 02d0 8795      		ror r24
+ 356 02d2 9595      		asr r25
+ 357 02d4 8795      		ror r24
+ 358 02d6 9595      		asr r25
+ 359 02d8 8795      		ror r24
+ 360 02da 9595      		asr r25
+ 361 02dc 8795      		ror r24
+ 362 02de 9595      		asr r25
+ 363 02e0 8795      		ror r24
+ 364 02e2 8170      		andi r24,lo8(1)
+ 365 02e4 9070      		andi r25,hi8(1)
+ 366 02e6 282B      		or r18,r24
+ 367 02e8 392B      		or r19,r25
+ 368 02ea 3093 0000 		sts (state.1242+10)+1,r19
+ 369 02ee 2093 0000 		sts state.1242+10,r18
+ 370 02f2 2050      		subi r18,lo8(-4096)
+ 371 02f4 304F      		sbci r19,hi8(-4096)
+ 372 02f6 01F4      		brne .+2
+ 373 02f8 00C0      		rjmp .L33
+ 374               	.L21:
+ 375 02fa 89B3      		in r24,57-32
+ 376 02fc 2091 0000 		lds r18,state.1242+12
+ 377 0300 3091 0000 		lds r19,(state.1242+12)+1
+ 378 0304 220F      		lsl r18
+ 379 0306 331F      		rol r19
+ 380 0308 306E      		ori r19,hi8(-8192)
+ 381 030a 90E0      		ldi r25,lo8(0)
+ 382 030c 082E      		mov __tmp_reg__,r24
+ 383 030e 892F      		mov r24,r25
+ 384 0310 000C      		lsl __tmp_reg__
+ 385 0312 881F      		rol r24
+ 386 0314 990B      		sbc r25,r25
+ 387 0316 000C      		lsl __tmp_reg__
+ 388 0318 881F      		rol r24
+ 389 031a 991F      		rol r25
+ 390 031c 8170      		andi r24,lo8(1)
+ 391 031e 9070      		andi r25,hi8(1)
+ 392 0320 282B      		or r18,r24
+ 393 0322 392B      		or r19,r25
+ 394 0324 3093 0000 		sts (state.1242+12)+1,r19
+ 395 0328 2093 0000 		sts state.1242+12,r18
+ 396 032c 2050      		subi r18,lo8(-4096)
+ 397 032e 304F      		sbci r19,hi8(-4096)
+ 398 0330 01F0      		breq .L34
+ 399               	.L22:
+GAS LISTING /tmp/ccPLD1M4.s 			page 8
+
+
+ 400 0332 29B3      		in r18,57-32
+ 401 0334 8091 0000 		lds r24,state.1242+14
+ 402 0338 9091 0000 		lds r25,(state.1242+14)+1
+ 403 033c 880F      		lsl r24
+ 404 033e 991F      		rol r25
+ 405 0340 906E      		ori r25,hi8(-8192)
+ 406 0342 30E0      		ldi r19,lo8(0)
+ 407 0344 220F      		lsl r18
+ 408 0346 232F      		mov r18,r19
+ 409 0348 221F      		rol r18
+ 410 034a 330B      		sbc r19,r19
+ 411 034c 3195      		neg r19
+ 412 034e 822B      		or r24,r18
+ 413 0350 932B      		or r25,r19
+ 414 0352 9093 0000 		sts (state.1242+14)+1,r25
+ 415 0356 8093 0000 		sts state.1242+14,r24
+ 416 035a 8050      		subi r24,lo8(-4096)
+ 417 035c 904F      		sbci r25,hi8(-4096)
+ 418 035e 01F0      		breq .L35
+ 419               	.L23:
+ 420 0360 0530      		cpi r16,5
+ 421 0362 1105      		cpc r17,__zero_reg__
+ 422 0364 00F0      		brlo .+2
+ 423 0366 00C0      		rjmp .L36
+ 424 0368 D02E      		mov r13,r16
+ 425 036a DD0C      		lsl r13
+ 426 036c DD0C      		lsl r13
+ 427 036e DD0C      		lsl r13
+ 428 0370 DD0C      		lsl r13
+ 429 0372 7801      		movw r14,r16
+ 430 0374 0894      		sec
+ 431 0376 E11C      		adc r14,__zero_reg__
+ 432 0378 F11C      		adc r15,__zero_reg__
+ 433 037a 00C0      		rjmp .L25
+ 434               	.L35:
+ 435 037c 2196      		adiw r28,1
+ 436 037e 00C0      		rjmp .L23
+ 437               	.L34:
+ 438 0380 2296      		adiw r28,2
+ 439 0382 00C0      		rjmp .L22
+ 440               	.L33:
+ 441 0384 2496      		adiw r28,4
+ 442 0386 00C0      		rjmp .L21
+ 443               	.L32:
+ 444 0388 2896      		adiw r28,8
+ 445 038a 00C0      		rjmp .L20
+ 446               	.L31:
+ 447 038c 6096      		adiw r28,16
+ 448 038e 00C0      		rjmp .L19
+ 449               	.L30:
+ 450 0390 A096      		adiw r28,32
+ 451 0392 00C0      		rjmp .L18
+ 452               	.L29:
+ 453 0394 C05C      		subi r28,lo8(-(64))
+ 454 0396 DF4F      		sbci r29,hi8(-(64))
+ 455 0398 00C0      		rjmp .L17
+ 456               	.L28:
+GAS LISTING /tmp/ccPLD1M4.s 			page 9
+
+
+ 457 039a C058      		subi r28,lo8(-(128))
+ 458 039c DF4F      		sbci r29,hi8(-(128))
+ 459 039e 00C0      		rjmp .L16
+ 460               		.size	main, .-main
+ 461               		.lcomm state.1242,16
+ 462               		.comm segment_data,5,1
+ 463               		.comm dec_to_7seg,12,1
+GAS LISTING /tmp/ccPLD1M4.s 			page 10
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lab2.c
+     /tmp/ccPLD1M4.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccPLD1M4.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccPLD1M4.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccPLD1M4.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccPLD1M4.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccPLD1M4.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccPLD1M4.s:13     .text:00000000 chk_buttons
+                             .bss:00000000 state.1242
+     /tmp/ccPLD1M4.s:51     .text:0000003e segsum
+                            *COM*:00000005 segment_data
+     /tmp/ccPLD1M4.s:167    .text:0000014e main
+                            *COM*:0000000c dec_to_7seg
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
+__udivmodhi4
+LED_convert

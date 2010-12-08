@@ -1,0 +1,3972 @@
+GAS LISTING /tmp/ccY7DmUh.s 			page 1
+
+
+   1               		.file	"kellen_music.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	play_rest
+  12               		.type	play_rest, @function
+  13               	play_rest:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 929A      		sbi 50-32,2
+  17 0002 1092 0000 		sts (beat)+1,__zero_reg__
+  18 0006 1092 0000 		sts beat,__zero_reg__
+  19 000a 90E0      		ldi r25,lo8(0)
+  20 000c 9093 0000 		sts (max_beat)+1,r25
+  21 0010 8093 0000 		sts max_beat,r24
+  22               	/* epilogue start */
+  23 0014 0895      		ret
+  24               		.size	play_rest, .-play_rest
+  25               	.global	play_note
+  26               		.type	play_note, @function
+  27               	play_note:
+  28               	/* prologue: function */
+  29               	/* frame size = 0 */
+  30 0016 9298      		cbi 50-32,2
+  31 0018 1092 0000 		sts (beat)+1,__zero_reg__
+  32 001c 1092 0000 		sts beat,__zero_reg__
+  33 0020 30E0      		ldi r19,lo8(0)
+  34 0022 3093 0000 		sts (max_beat)+1,r19
+  35 0026 2093 0000 		sts max_beat,r18
+  36 002a 4430      		cpi r20,lo8(4)
+  37 002c 01F4      		brne .+2
+  38 002e 00C0      		rjmp .L9
+  39 0030 4530      		cpi r20,lo8(5)
+  40 0032 00F0      		brlo .L135
+  41 0034 4630      		cpi r20,lo8(6)
+  42 0036 01F4      		brne .+2
+  43 0038 00C0      		rjmp .L11
+  44 003a 4630      		cpi r20,lo8(6)
+  45 003c 00F4      		brsh .+2
+  46 003e 00C0      		rjmp .L10
+  47 0040 4730      		cpi r20,lo8(7)
+  48 0042 01F4      		brne .+2
+  49 0044 00C0      		rjmp .L12
+  50 0046 4830      		cpi r20,lo8(8)
+  51 0048 01F4      		brne .+2
+  52 004a 00C0      		rjmp .L136
+  53               	.L4:
+  54 004c 1BBC      		out (74)+1-32,__zero_reg__
+  55 004e 1ABC      		out 74-32,__zero_reg__
+  56               	.L133:
+  57 0050 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 2
+
+
+  58               	.L135:
+  59 0052 4130      		cpi r20,lo8(1)
+  60 0054 01F4      		brne .+2
+  61 0056 00C0      		rjmp .L6
+  62 0058 4130      		cpi r20,lo8(1)
+  63 005a 00F4      		brsh .L137
+  64 005c 8434      		cpi r24,lo8(68)
+  65 005e 01F4      		brne .+2
+  66 0060 00C0      		rjmp .L19
+  67 0062 8534      		cpi r24,lo8(69)
+  68 0064 00F4      		brsh .+2
+  69 0066 00C0      		rjmp .L138
+  70 0068 8634      		cpi r24,lo8(70)
+  71 006a 01F4      		brne .+2
+  72 006c 00C0      		rjmp .L21
+  73 006e 8634      		cpi r24,lo8(70)
+  74 0070 00F4      		brsh .+2
+  75 0072 00C0      		rjmp .L20
+  76 0074 8734      		cpi r24,lo8(71)
+  77 0076 01F4      		brne .L133
+  78 0078 6623      		tst r22
+  79 007a 01F4      		brne .+2
+  80 007c 00C0      		rjmp .L28
+  81 007e 8DE1      		ldi r24,lo8(5405)
+  82 0080 95E1      		ldi r25,hi8(5405)
+  83 0082 9BBD      		out (74)+1-32,r25
+  84 0084 8ABD      		out 74-32,r24
+  85 0086 0895      		ret
+  86               	.L137:
+  87 0088 4230      		cpi r20,lo8(2)
+  88 008a 01F4      		brne .+2
+  89 008c 00C0      		rjmp .L7
+  90 008e 4330      		cpi r20,lo8(3)
+  91 0090 01F4      		brne .L4
+  92 0092 8434      		cpi r24,lo8(68)
+  93 0094 01F4      		brne .+2
+  94 0096 00C0      		rjmp .L58
+  95 0098 8534      		cpi r24,lo8(69)
+  96 009a 00F4      		brsh .+2
+  97 009c 00C0      		rjmp .L139
+  98 009e 8634      		cpi r24,lo8(70)
+  99 00a0 01F4      		brne .+2
+ 100 00a2 00C0      		rjmp .L60
+ 101 00a4 8634      		cpi r24,lo8(70)
+ 102 00a6 00F4      		brsh .+2
+ 103 00a8 00C0      		rjmp .L59
+ 104 00aa 8734      		cpi r24,lo8(71)
+ 105 00ac 01F4      		brne .L133
+ 106 00ae 6623      		tst r22
+ 107 00b0 01F4      		brne .+2
+ 108 00b2 00C0      		rjmp .L67
+ 109 00b4 82EA      		ldi r24,lo8(674)
+ 110 00b6 92E0      		ldi r25,hi8(674)
+ 111 00b8 9BBD      		out (74)+1-32,r25
+ 112 00ba 8ABD      		out 74-32,r24
+ 113 00bc 0895      		ret
+ 114               	.L10:
+GAS LISTING /tmp/ccY7DmUh.s 			page 3
+
+
+ 115 00be 8434      		cpi r24,lo8(68)
+ 116 00c0 01F4      		brne .+2
+ 117 00c2 00C0      		rjmp .L84
+ 118 00c4 8534      		cpi r24,lo8(69)
+ 119 00c6 00F4      		brsh .+2
+ 120 00c8 00C0      		rjmp .L140
+ 121 00ca 8634      		cpi r24,lo8(70)
+ 122 00cc 01F4      		brne .+2
+ 123 00ce 00C0      		rjmp .L86
+ 124 00d0 8634      		cpi r24,lo8(70)
+ 125 00d2 00F4      		brsh .+2
+ 126 00d4 00C0      		rjmp .L85
+ 127 00d6 8734      		cpi r24,lo8(71)
+ 128 00d8 01F0      		breq .+2
+ 129 00da 00C0      		rjmp .L133
+ 130 00dc 6623      		tst r22
+ 131 00de 01F4      		brne .+2
+ 132 00e0 00C0      		rjmp .L93
+ 133 00e2 87EA      		ldi r24,lo8(167)
+ 134 00e4 90E0      		ldi r25,hi8(167)
+ 135 00e6 9BBD      		out (74)+1-32,r25
+ 136 00e8 8ABD      		out 74-32,r24
+ 137 00ea 0895      		ret
+ 138               	.L136:
+ 139 00ec 8434      		cpi r24,lo8(68)
+ 140 00ee 01F4      		brne .+2
+ 141 00f0 00C0      		rjmp .L123
+ 142 00f2 8534      		cpi r24,lo8(69)
+ 143 00f4 00F4      		brsh .+2
+ 144 00f6 00C0      		rjmp .L141
+ 145 00f8 8634      		cpi r24,lo8(70)
+ 146 00fa 01F4      		brne .+2
+ 147 00fc 00C0      		rjmp .L125
+ 148 00fe 8634      		cpi r24,lo8(70)
+ 149 0100 00F4      		brsh .+2
+ 150 0102 00C0      		rjmp .L124
+ 151 0104 8734      		cpi r24,lo8(71)
+ 152 0106 01F0      		breq .+2
+ 153 0108 00C0      		rjmp .L133
+ 154 010a 6623      		tst r22
+ 155 010c 01F4      		brne .+2
+ 156 010e 00C0      		rjmp .L132
+ 157 0110 80E1      		ldi r24,lo8(16)
+ 158 0112 90E0      		ldi r25,hi8(16)
+ 159 0114 9BBD      		out (74)+1-32,r25
+ 160 0116 8ABD      		out 74-32,r24
+ 161 0118 0895      		ret
+ 162               	.L12:
+ 163 011a 8434      		cpi r24,lo8(68)
+ 164 011c 01F4      		brne .+2
+ 165 011e 00C0      		rjmp .L110
+ 166 0120 8534      		cpi r24,lo8(69)
+ 167 0122 00F4      		brsh .+2
+ 168 0124 00C0      		rjmp .L142
+ 169 0126 8634      		cpi r24,lo8(70)
+ 170 0128 01F4      		brne .+2
+ 171 012a 00C0      		rjmp .L112
+GAS LISTING /tmp/ccY7DmUh.s 			page 4
+
+
+ 172 012c 8634      		cpi r24,lo8(70)
+ 173 012e 00F4      		brsh .+2
+ 174 0130 00C0      		rjmp .L111
+ 175 0132 8734      		cpi r24,lo8(71)
+ 176 0134 01F0      		breq .+2
+ 177 0136 00C0      		rjmp .L133
+ 178 0138 6623      		tst r22
+ 179 013a 01F4      		brne .+2
+ 180 013c 00C0      		rjmp .L119
+ 181 013e 89E2      		ldi r24,lo8(41)
+ 182 0140 90E0      		ldi r25,hi8(41)
+ 183 0142 9BBD      		out (74)+1-32,r25
+ 184 0144 8ABD      		out 74-32,r24
+ 185 0146 0895      		ret
+ 186               	.L11:
+ 187 0148 8434      		cpi r24,lo8(68)
+ 188 014a 01F4      		brne .+2
+ 189 014c 00C0      		rjmp .L97
+ 190 014e 8534      		cpi r24,lo8(69)
+ 191 0150 00F4      		brsh .+2
+ 192 0152 00C0      		rjmp .L143
+ 193 0154 8634      		cpi r24,lo8(70)
+ 194 0156 01F4      		brne .+2
+ 195 0158 00C0      		rjmp .L99
+ 196 015a 8634      		cpi r24,lo8(70)
+ 197 015c 00F4      		brsh .+2
+ 198 015e 00C0      		rjmp .L98
+ 199 0160 8734      		cpi r24,lo8(71)
+ 200 0162 01F0      		breq .+2
+ 201 0164 00C0      		rjmp .L133
+ 202 0166 6623      		tst r22
+ 203 0168 01F4      		brne .+2
+ 204 016a 00C0      		rjmp .L106
+ 205 016c 83E5      		ldi r24,lo8(83)
+ 206 016e 90E0      		ldi r25,hi8(83)
+ 207 0170 9BBD      		out (74)+1-32,r25
+ 208 0172 8ABD      		out 74-32,r24
+ 209 0174 0895      		ret
+ 210               	.L7:
+ 211 0176 8434      		cpi r24,lo8(68)
+ 212 0178 01F4      		brne .+2
+ 213 017a 00C0      		rjmp .L45
+ 214 017c 8534      		cpi r24,lo8(69)
+ 215 017e 00F4      		brsh .+2
+ 216 0180 00C0      		rjmp .L144
+ 217 0182 8634      		cpi r24,lo8(70)
+ 218 0184 01F4      		brne .+2
+ 219 0186 00C0      		rjmp .L47
+ 220 0188 8634      		cpi r24,lo8(70)
+ 221 018a 00F4      		brsh .+2
+ 222 018c 00C0      		rjmp .L46
+ 223 018e 8734      		cpi r24,lo8(71)
+ 224 0190 01F0      		breq .+2
+ 225 0192 00C0      		rjmp .L133
+ 226 0194 6623      		tst r22
+ 227 0196 01F4      		brne .+2
+ 228 0198 00C0      		rjmp .L54
+GAS LISTING /tmp/ccY7DmUh.s 			page 5
+
+
+ 229 019a 86E4      		ldi r24,lo8(1350)
+ 230 019c 95E0      		ldi r25,hi8(1350)
+ 231 019e 9BBD      		out (74)+1-32,r25
+ 232 01a0 8ABD      		out 74-32,r24
+ 233 01a2 0895      		ret
+ 234               	.L6:
+ 235 01a4 8434      		cpi r24,lo8(68)
+ 236 01a6 01F4      		brne .+2
+ 237 01a8 00C0      		rjmp .L32
+ 238 01aa 8534      		cpi r24,lo8(69)
+ 239 01ac 00F0      		brlo .L145
+ 240 01ae 8634      		cpi r24,lo8(70)
+ 241 01b0 01F4      		brne .+2
+ 242 01b2 00C0      		rjmp .L34
+ 243 01b4 8634      		cpi r24,lo8(70)
+ 244 01b6 00F4      		brsh .+2
+ 245 01b8 00C0      		rjmp .L33
+ 246 01ba 8734      		cpi r24,lo8(71)
+ 247 01bc 01F0      		breq .+2
+ 248 01be 00C0      		rjmp .L133
+ 249 01c0 6623      		tst r22
+ 250 01c2 01F4      		brne .+2
+ 251 01c4 00C0      		rjmp .L41
+ 252 01c6 8DE8      		ldi r24,lo8(2701)
+ 253 01c8 9AE0      		ldi r25,hi8(2701)
+ 254 01ca 9BBD      		out (74)+1-32,r25
+ 255 01cc 8ABD      		out 74-32,r24
+ 256 01ce 0895      		ret
+ 257               	.L9:
+ 258 01d0 8434      		cpi r24,lo8(68)
+ 259 01d2 01F4      		brne .+2
+ 260 01d4 00C0      		rjmp .L71
+ 261 01d6 8534      		cpi r24,lo8(69)
+ 262 01d8 00F0      		brlo .L146
+ 263 01da 8634      		cpi r24,lo8(70)
+ 264 01dc 01F4      		brne .+2
+ 265 01de 00C0      		rjmp .L73
+ 266 01e0 8634      		cpi r24,lo8(70)
+ 267 01e2 00F4      		brsh .+2
+ 268 01e4 00C0      		rjmp .L72
+ 269 01e6 8734      		cpi r24,lo8(71)
+ 270 01e8 01F0      		breq .+2
+ 271 01ea 00C0      		rjmp .L133
+ 272 01ec 6623      		tst r22
+ 273 01ee 01F4      		brne .+2
+ 274 01f0 00C0      		rjmp .L80
+ 275 01f2 80E5      		ldi r24,lo8(336)
+ 276 01f4 91E0      		ldi r25,hi8(336)
+ 277 01f6 9BBD      		out (74)+1-32,r25
+ 278 01f8 8ABD      		out 74-32,r24
+ 279 01fa 0895      		ret
+ 280               	.L146:
+ 281 01fc 8234      		cpi r24,lo8(66)
+ 282 01fe 01F4      		brne .+2
+ 283 0200 00C0      		rjmp .L69
+ 284 0202 8334      		cpi r24,lo8(67)
+ 285 0204 00F0      		brlo .+2
+GAS LISTING /tmp/ccY7DmUh.s 			page 6
+
+
+ 286 0206 00C0      		rjmp .L70
+ 287 0208 8134      		cpi r24,lo8(65)
+ 288 020a 01F0      		breq .+2
+ 289 020c 00C0      		rjmp .L133
+ 290 020e 6623      		tst r22
+ 291 0210 01F4      		brne .+2
+ 292 0212 00C0      		rjmp .L76
+ 293 0214 8BE2      		ldi r24,lo8(299)
+ 294 0216 91E0      		ldi r25,hi8(299)
+ 295 0218 9BBD      		out (74)+1-32,r25
+ 296 021a 8ABD      		out 74-32,r24
+ 297 021c 0895      		ret
+ 298               	.L145:
+ 299 021e 8234      		cpi r24,lo8(66)
+ 300 0220 01F4      		brne .+2
+ 301 0222 00C0      		rjmp .L30
+ 302 0224 8334      		cpi r24,lo8(67)
+ 303 0226 00F0      		brlo .+2
+ 304 0228 00C0      		rjmp .L31
+ 305 022a 8134      		cpi r24,lo8(65)
+ 306 022c 01F0      		breq .+2
+ 307 022e 00C0      		rjmp .L133
+ 308 0230 6623      		tst r22
+ 309 0232 01F4      		brne .+2
+ 310 0234 00C0      		rjmp .L37
+ 311 0236 87E6      		ldi r24,lo8(2407)
+ 312 0238 99E0      		ldi r25,hi8(2407)
+ 313 023a 9BBD      		out (74)+1-32,r25
+ 314 023c 8ABD      		out 74-32,r24
+ 315 023e 0895      		ret
+ 316               	.L144:
+ 317 0240 8234      		cpi r24,lo8(66)
+ 318 0242 01F4      		brne .+2
+ 319 0244 00C0      		rjmp .L43
+ 320 0246 8334      		cpi r24,lo8(67)
+ 321 0248 00F0      		brlo .+2
+ 322 024a 00C0      		rjmp .L44
+ 323 024c 8134      		cpi r24,lo8(65)
+ 324 024e 01F0      		breq .+2
+ 325 0250 00C0      		rjmp .L133
+ 326 0252 6623      		tst r22
+ 327 0254 01F4      		brne .+2
+ 328 0256 00C0      		rjmp .L50
+ 329 0258 82EB      		ldi r24,lo8(1202)
+ 330 025a 94E0      		ldi r25,hi8(1202)
+ 331 025c 9BBD      		out (74)+1-32,r25
+ 332 025e 8ABD      		out 74-32,r24
+ 333 0260 0895      		ret
+ 334               	.L143:
+ 335 0262 8234      		cpi r24,lo8(66)
+ 336 0264 01F4      		brne .+2
+ 337 0266 00C0      		rjmp .L95
+ 338 0268 8334      		cpi r24,lo8(67)
+ 339 026a 00F0      		brlo .+2
+ 340 026c 00C0      		rjmp .L96
+ 341 026e 8134      		cpi r24,lo8(65)
+ 342 0270 01F0      		breq .+2
+GAS LISTING /tmp/ccY7DmUh.s 			page 7
+
+
+ 343 0272 00C0      		rjmp .L133
+ 344 0274 6623      		tst r22
+ 345 0276 01F4      		brne .+2
+ 346 0278 00C0      		rjmp .L102
+ 347 027a 8AE4      		ldi r24,lo8(74)
+ 348 027c 90E0      		ldi r25,hi8(74)
+ 349 027e 9BBD      		out (74)+1-32,r25
+ 350 0280 8ABD      		out 74-32,r24
+ 351 0282 0895      		ret
+ 352               	.L142:
+ 353 0284 8234      		cpi r24,lo8(66)
+ 354 0286 01F4      		brne .+2
+ 355 0288 00C0      		rjmp .L108
+ 356 028a 8334      		cpi r24,lo8(67)
+ 357 028c 00F0      		brlo .+2
+ 358 028e 00C0      		rjmp .L109
+ 359 0290 8134      		cpi r24,lo8(65)
+ 360 0292 01F0      		breq .+2
+ 361 0294 00C0      		rjmp .L133
+ 362 0296 6623      		tst r22
+ 363 0298 01F4      		brne .+2
+ 364 029a 00C0      		rjmp .L115
+ 365 029c 84E2      		ldi r24,lo8(36)
+ 366 029e 90E0      		ldi r25,hi8(36)
+ 367 02a0 9BBD      		out (74)+1-32,r25
+ 368 02a2 8ABD      		out 74-32,r24
+ 369 02a4 0895      		ret
+ 370               	.L138:
+ 371 02a6 8234      		cpi r24,lo8(66)
+ 372 02a8 01F4      		brne .+2
+ 373 02aa 00C0      		rjmp .L17
+ 374 02ac 8334      		cpi r24,lo8(67)
+ 375 02ae 00F0      		brlo .+2
+ 376 02b0 00C0      		rjmp .L18
+ 377 02b2 8134      		cpi r24,lo8(65)
+ 378 02b4 01F0      		breq .+2
+ 379 02b6 00C0      		rjmp .L133
+ 380 02b8 6623      		tst r22
+ 381 02ba 01F4      		brne .+2
+ 382 02bc 00C0      		rjmp .L24
+ 383 02be 8EEC      		ldi r24,lo8(4814)
+ 384 02c0 92E1      		ldi r25,hi8(4814)
+ 385 02c2 9BBD      		out (74)+1-32,r25
+ 386 02c4 8ABD      		out 74-32,r24
+ 387 02c6 0895      		ret
+ 388               	.L141:
+ 389 02c8 8234      		cpi r24,lo8(66)
+ 390 02ca 01F4      		brne .+2
+ 391 02cc 00C0      		rjmp .L121
+ 392 02ce 8334      		cpi r24,lo8(67)
+ 393 02d0 00F0      		brlo .+2
+ 394 02d2 00C0      		rjmp .L122
+ 395 02d4 8134      		cpi r24,lo8(65)
+ 396 02d6 01F0      		breq .+2
+ 397 02d8 00C0      		rjmp .L133
+ 398 02da 6623      		tst r22
+ 399 02dc 01F4      		brne .+2
+GAS LISTING /tmp/ccY7DmUh.s 			page 8
+
+
+ 400 02de 00C0      		rjmp .L128
+ 401 02e0 8BE0      		ldi r24,lo8(11)
+ 402 02e2 90E0      		ldi r25,hi8(11)
+ 403 02e4 9BBD      		out (74)+1-32,r25
+ 404 02e6 8ABD      		out 74-32,r24
+ 405 02e8 0895      		ret
+ 406               	.L139:
+ 407 02ea 8234      		cpi r24,lo8(66)
+ 408 02ec 01F4      		brne .+2
+ 409 02ee 00C0      		rjmp .L56
+ 410 02f0 8334      		cpi r24,lo8(67)
+ 411 02f2 00F0      		brlo .+2
+ 412 02f4 00C0      		rjmp .L57
+ 413 02f6 8134      		cpi r24,lo8(65)
+ 414 02f8 01F0      		breq .+2
+ 415 02fa 00C0      		rjmp .L133
+ 416 02fc 6623      		tst r22
+ 417 02fe 01F4      		brne .+2
+ 418 0300 00C0      		rjmp .L63
+ 419 0302 88E5      		ldi r24,lo8(600)
+ 420 0304 92E0      		ldi r25,hi8(600)
+ 421 0306 9BBD      		out (74)+1-32,r25
+ 422 0308 8ABD      		out 74-32,r24
+ 423 030a 0895      		ret
+ 424               	.L140:
+ 425 030c 8234      		cpi r24,lo8(66)
+ 426 030e 01F4      		brne .+2
+ 427 0310 00C0      		rjmp .L82
+ 428 0312 8334      		cpi r24,lo8(67)
+ 429 0314 00F0      		brlo .+2
+ 430 0316 00C0      		rjmp .L83
+ 431 0318 8134      		cpi r24,lo8(65)
+ 432 031a 01F0      		breq .+2
+ 433 031c 00C0      		rjmp .L133
+ 434 031e 6623      		tst r22
+ 435 0320 01F4      		brne .+2
+ 436 0322 00C0      		rjmp .L89
+ 437 0324 85E9      		ldi r24,lo8(149)
+ 438 0326 90E0      		ldi r25,hi8(149)
+ 439 0328 9BBD      		out (74)+1-32,r25
+ 440 032a 8ABD      		out 74-32,r24
+ 441 032c 0895      		ret
+ 442               	.L59:
+ 443 032e 6623      		tst r22
+ 444 0330 01F4      		brne .+2
+ 445 0332 00C0      		rjmp .L66
+ 446 0334 82E2      		ldi r24,lo8(802)
+ 447 0336 93E0      		ldi r25,hi8(802)
+ 448 0338 9BBD      		out (74)+1-32,r25
+ 449 033a 8ABD      		out 74-32,r24
+ 450 033c 0895      		ret
+ 451               	.L20:
+ 452 033e 6623      		tst r22
+ 453 0340 01F4      		brne .+2
+ 454 0342 00C0      		rjmp .L27
+ 455 0344 89E1      		ldi r24,lo8(6425)
+ 456 0346 99E1      		ldi r25,hi8(6425)
+GAS LISTING /tmp/ccY7DmUh.s 			page 9
+
+
+ 457 0348 9BBD      		out (74)+1-32,r25
+ 458 034a 8ABD      		out 74-32,r24
+ 459 034c 0895      		ret
+ 460               	.L21:
+ 461 034e 8DE5      		ldi r24,lo8(5725)
+ 462 0350 96E1      		ldi r25,hi8(5725)
+ 463 0352 9BBD      		out (74)+1-32,r25
+ 464 0354 8ABD      		out 74-32,r24
+ 465 0356 0895      		ret
+ 466               	.L60:
+ 467 0358 8AEC      		ldi r24,lo8(714)
+ 468 035a 92E0      		ldi r25,hi8(714)
+ 469 035c 9BBD      		out (74)+1-32,r25
+ 470 035e 8ABD      		out 74-32,r24
+ 471 0360 0895      		ret
+ 472               	.L124:
+ 473 0362 6623      		tst r22
+ 474 0364 01F4      		brne .+2
+ 475 0366 00C0      		rjmp .L131
+ 476 0368 88E1      		ldi r24,lo8(24)
+ 477 036a 90E0      		ldi r25,hi8(24)
+ 478 036c 9BBD      		out (74)+1-32,r25
+ 479 036e 8ABD      		out 74-32,r24
+ 480 0370 0895      		ret
+ 481               	.L125:
+ 482 0372 82E1      		ldi r24,lo8(18)
+ 483 0374 90E0      		ldi r25,hi8(18)
+ 484 0376 9BBD      		out (74)+1-32,r25
+ 485 0378 8ABD      		out 74-32,r24
+ 486 037a 0895      		ret
+ 487               	.L123:
+ 488 037c 6623      		tst r22
+ 489 037e 01F4      		brne .+2
+ 490 0380 00C0      		rjmp .L130
+ 491 0382 8BE1      		ldi r24,lo8(27)
+ 492 0384 90E0      		ldi r25,hi8(27)
+ 493 0386 9BBD      		out (74)+1-32,r25
+ 494 0388 8ABD      		out 74-32,r24
+ 495 038a 0895      		ret
+ 496               	.L122:
+ 497 038c 8CE1      		ldi r24,lo8(28)
+ 498 038e 90E0      		ldi r25,hi8(28)
+ 499 0390 9BBD      		out (74)+1-32,r25
+ 500 0392 8ABD      		out 74-32,r24
+ 501 0394 0895      		ret
+ 502               	.L121:
+ 503 0396 6623      		tst r22
+ 504 0398 01F4      		brne .+2
+ 505 039a 00C0      		rjmp .L129
+ 506 039c 87E0      		ldi r24,lo8(7)
+ 507 039e 90E0      		ldi r25,hi8(7)
+ 508 03a0 9BBD      		out (74)+1-32,r25
+ 509 03a2 8ABD      		out 74-32,r24
+ 510 03a4 0895      		ret
+ 511               	.L84:
+ 512 03a6 6623      		tst r22
+ 513 03a8 01F4      		brne .+2
+GAS LISTING /tmp/ccY7DmUh.s 			page 10
+
+
+ 514 03aa 00C0      		rjmp .L91
+ 515 03ac 80EE      		ldi r24,lo8(224)
+ 516 03ae 90E0      		ldi r25,hi8(224)
+ 517 03b0 9BBD      		out (74)+1-32,r25
+ 518 03b2 8ABD      		out 74-32,r24
+ 519 03b4 0895      		ret
+ 520               	.L83:
+ 521 03b6 8DEE      		ldi r24,lo8(237)
+ 522 03b8 90E0      		ldi r25,hi8(237)
+ 523 03ba 9BBD      		out (74)+1-32,r25
+ 524 03bc 8ABD      		out 74-32,r24
+ 525 03be 0895      		ret
+ 526               	.L82:
+ 527 03c0 6623      		tst r22
+ 528 03c2 01F4      		brne .+2
+ 529 03c4 00C0      		rjmp .L90
+ 530 03c6 85E8      		ldi r24,lo8(133)
+ 531 03c8 90E0      		ldi r25,hi8(133)
+ 532 03ca 9BBD      		out (74)+1-32,r25
+ 533 03cc 8ABD      		out 74-32,r24
+ 534 03ce 0895      		ret
+ 535               	.L96:
+ 536 03d0 86E7      		ldi r24,lo8(118)
+ 537 03d2 90E0      		ldi r25,hi8(118)
+ 538 03d4 9BBD      		out (74)+1-32,r25
+ 539 03d6 8ABD      		out 74-32,r24
+ 540 03d8 0895      		ret
+ 541               	.L46:
+ 542 03da 6623      		tst r22
+ 543 03dc 01F4      		brne .+2
+ 544 03de 00C0      		rjmp .L53
+ 545 03e0 86E4      		ldi r24,lo8(1606)
+ 546 03e2 96E0      		ldi r25,hi8(1606)
+ 547 03e4 9BBD      		out (74)+1-32,r25
+ 548 03e6 8ABD      		out 74-32,r24
+ 549 03e8 0895      		ret
+ 550               	.L47:
+ 551 03ea 86E9      		ldi r24,lo8(1430)
+ 552 03ec 95E0      		ldi r25,hi8(1430)
+ 553 03ee 9BBD      		out (74)+1-32,r25
+ 554 03f0 8ABD      		out 74-32,r24
+ 555 03f2 0895      		ret
+ 556               	.L110:
+ 557 03f4 6623      		tst r22
+ 558 03f6 01F4      		brne .+2
+ 559 03f8 00C0      		rjmp .L117
+ 560 03fa 87E3      		ldi r24,lo8(55)
+ 561 03fc 90E0      		ldi r25,hi8(55)
+ 562 03fe 9BBD      		out (74)+1-32,r25
+ 563 0400 8ABD      		out 74-32,r24
+ 564 0402 0895      		ret
+ 565               	.L109:
+ 566 0404 8AE3      		ldi r24,lo8(58)
+ 567 0406 90E0      		ldi r25,hi8(58)
+ 568 0408 9BBD      		out (74)+1-32,r25
+ 569 040a 8ABD      		out 74-32,r24
+ 570 040c 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 11
+
+
+ 571               	.L108:
+ 572 040e 6623      		tst r22
+ 573 0410 01F4      		brne .+2
+ 574 0412 00C0      		rjmp .L116
+ 575 0414 80E2      		ldi r24,lo8(32)
+ 576 0416 90E0      		ldi r25,hi8(32)
+ 577 0418 9BBD      		out (74)+1-32,r25
+ 578 041a 8ABD      		out 74-32,r24
+ 579 041c 0895      		ret
+ 580               	.L95:
+ 581 041e 6623      		tst r22
+ 582 0420 01F4      		brne .+2
+ 583 0422 00C0      		rjmp .L103
+ 584 0424 82E4      		ldi r24,lo8(66)
+ 585 0426 90E0      		ldi r25,hi8(66)
+ 586 0428 9BBD      		out (74)+1-32,r25
+ 587 042a 8ABD      		out 74-32,r24
+ 588 042c 0895      		ret
+ 589               	.L18:
+ 590 042e 8CED      		ldi r24,lo8(7644)
+ 591 0430 9DE1      		ldi r25,hi8(7644)
+ 592 0432 9BBD      		out (74)+1-32,r25
+ 593 0434 8ABD      		out 74-32,r24
+ 594 0436 0895      		ret
+ 595               	.L72:
+ 596 0438 6623      		tst r22
+ 597 043a 01F4      		brne .+2
+ 598 043c 00C0      		rjmp .L79
+ 599 043e 80E9      		ldi r24,lo8(400)
+ 600 0440 91E0      		ldi r25,hi8(400)
+ 601 0442 9BBD      		out (74)+1-32,r25
+ 602 0444 8ABD      		out 74-32,r24
+ 603 0446 0895      		ret
+ 604               	.L73:
+ 605 0448 84E6      		ldi r24,lo8(356)
+ 606 044a 91E0      		ldi r25,hi8(356)
+ 607 044c 9BBD      		out (74)+1-32,r25
+ 608 044e 8ABD      		out 74-32,r24
+ 609 0450 0895      		ret
+ 610               	.L17:
+ 611 0452 6623      		tst r22
+ 612 0454 01F4      		brne .+2
+ 613 0456 00C0      		rjmp .L25
+ 614 0458 80EC      		ldi r24,lo8(4288)
+ 615 045a 90E1      		ldi r25,hi8(4288)
+ 616 045c 9BBD      		out (74)+1-32,r25
+ 617 045e 8ABD      		out 74-32,r24
+ 618 0460 0895      		ret
+ 619               	.L32:
+ 620 0462 6623      		tst r22
+ 621 0464 01F4      		brne .+2
+ 622 0466 00C0      		rjmp .L39
+ 623 0468 86E1      		ldi r24,lo8(3606)
+ 624 046a 9EE0      		ldi r25,hi8(3606)
+ 625 046c 9BBD      		out (74)+1-32,r25
+ 626 046e 8ABD      		out 74-32,r24
+ 627 0470 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 12
+
+
+ 628               	.L58:
+ 629 0472 6623      		tst r22
+ 630 0474 01F4      		brne .+2
+ 631 0476 00C0      		rjmp .L65
+ 632 0478 84E8      		ldi r24,lo8(900)
+ 633 047a 93E0      		ldi r25,hi8(900)
+ 634 047c 9BBD      		out (74)+1-32,r25
+ 635 047e 8ABD      		out 74-32,r24
+ 636 0480 0895      		ret
+ 637               	.L45:
+ 638 0482 6623      		tst r22
+ 639 0484 01F4      		brne .+2
+ 640 0486 00C0      		rjmp .L52
+ 641 0488 8AE0      		ldi r24,lo8(1802)
+ 642 048a 97E0      		ldi r25,hi8(1802)
+ 643 048c 9BBD      		out (74)+1-32,r25
+ 644 048e 8ABD      		out 74-32,r24
+ 645 0490 0895      		ret
+ 646               	.L97:
+ 647 0492 6623      		tst r22
+ 648 0494 01F4      		brne .+2
+ 649 0496 00C0      		rjmp .L104
+ 650 0498 8FE6      		ldi r24,lo8(111)
+ 651 049a 90E0      		ldi r25,hi8(111)
+ 652 049c 9BBD      		out (74)+1-32,r25
+ 653 049e 8ABD      		out 74-32,r24
+ 654 04a0 0895      		ret
+ 655               	.L71:
+ 656 04a2 6623      		tst r22
+ 657 04a4 01F4      		brne .+2
+ 658 04a6 00C0      		rjmp .L78
+ 659 04a8 81EC      		ldi r24,lo8(449)
+ 660 04aa 91E0      		ldi r25,hi8(449)
+ 661 04ac 9BBD      		out (74)+1-32,r25
+ 662 04ae 8ABD      		out 74-32,r24
+ 663 04b0 0895      		ret
+ 664               	.L19:
+ 665 04b2 6623      		tst r22
+ 666 04b4 01F4      		brne .+2
+ 667 04b6 00C0      		rjmp .L26
+ 668 04b8 80E3      		ldi r24,lo8(7216)
+ 669 04ba 9CE1      		ldi r25,hi8(7216)
+ 670 04bc 9BBD      		out (74)+1-32,r25
+ 671 04be 8ABD      		out 74-32,r24
+ 672 04c0 0895      		ret
+ 673               	.L111:
+ 674 04c2 6623      		tst r22
+ 675 04c4 01F4      		brne .+2
+ 676 04c6 00C0      		rjmp .L118
+ 677 04c8 81E3      		ldi r24,lo8(49)
+ 678 04ca 90E0      		ldi r25,hi8(49)
+ 679 04cc 9BBD      		out (74)+1-32,r25
+ 680 04ce 8ABD      		out 74-32,r24
+ 681 04d0 0895      		ret
+ 682               	.L85:
+ 683 04d2 6623      		tst r22
+ 684 04d4 01F4      		brne .+2
+GAS LISTING /tmp/ccY7DmUh.s 			page 13
+
+
+ 685 04d6 00C0      		rjmp .L92
+ 686 04d8 87EC      		ldi r24,lo8(199)
+ 687 04da 90E0      		ldi r25,hi8(199)
+ 688 04dc 9BBD      		out (74)+1-32,r25
+ 689 04de 8ABD      		out 74-32,r24
+ 690 04e0 0895      		ret
+ 691               	.L31:
+ 692 04e2 8DEE      		ldi r24,lo8(3821)
+ 693 04e4 9EE0      		ldi r25,hi8(3821)
+ 694 04e6 9BBD      		out (74)+1-32,r25
+ 695 04e8 8ABD      		out 74-32,r24
+ 696 04ea 0895      		ret
+ 697               	.L33:
+ 698 04ec 6623      		tst r22
+ 699 04ee 01F4      		brne .+2
+ 700 04f0 00C0      		rjmp .L40
+ 701 04f2 8DE8      		ldi r24,lo8(3213)
+ 702 04f4 9CE0      		ldi r25,hi8(3213)
+ 703 04f6 9BBD      		out (74)+1-32,r25
+ 704 04f8 8ABD      		out 74-32,r24
+ 705 04fa 0895      		ret
+ 706               	.L34:
+ 707 04fc 8EE2      		ldi r24,lo8(2862)
+ 708 04fe 9BE0      		ldi r25,hi8(2862)
+ 709 0500 9BBD      		out (74)+1-32,r25
+ 710 0502 8ABD      		out 74-32,r24
+ 711 0504 0895      		ret
+ 712               	.L57:
+ 713 0506 8AEB      		ldi r24,lo8(954)
+ 714 0508 93E0      		ldi r25,hi8(954)
+ 715 050a 9BBD      		out (74)+1-32,r25
+ 716 050c 8ABD      		out 74-32,r24
+ 717 050e 0895      		ret
+ 718               	.L56:
+ 719 0510 6623      		tst r22
+ 720 0512 01F4      		brne .+2
+ 721 0514 00C0      		rjmp .L64
+ 722 0516 87E1      		ldi r24,lo8(535)
+ 723 0518 92E0      		ldi r25,hi8(535)
+ 724 051a 9BBD      		out (74)+1-32,r25
+ 725 051c 8ABD      		out 74-32,r24
+ 726 051e 0895      		ret
+ 727               	.L98:
+ 728 0520 6623      		tst r22
+ 729 0522 01F4      		brne .+2
+ 730 0524 00C0      		rjmp .L105
+ 731 0526 83E6      		ldi r24,lo8(99)
+ 732 0528 90E0      		ldi r25,hi8(99)
+ 733 052a 9BBD      		out (74)+1-32,r25
+ 734 052c 8ABD      		out 74-32,r24
+ 735 052e 0895      		ret
+ 736               	.L44:
+ 737 0530 86E7      		ldi r24,lo8(1910)
+ 738 0532 97E0      		ldi r25,hi8(1910)
+ 739 0534 9BBD      		out (74)+1-32,r25
+ 740 0536 8ABD      		out 74-32,r24
+ 741 0538 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 14
+
+
+ 742               	.L86:
+ 743 053a 81EB      		ldi r24,lo8(177)
+ 744 053c 90E0      		ldi r25,hi8(177)
+ 745 053e 9BBD      		out (74)+1-32,r25
+ 746 0540 8ABD      		out 74-32,r24
+ 747 0542 0895      		ret
+ 748               	.L99:
+ 749 0544 88E5      		ldi r24,lo8(88)
+ 750 0546 90E0      		ldi r25,hi8(88)
+ 751 0548 9BBD      		out (74)+1-32,r25
+ 752 054a 8ABD      		out 74-32,r24
+ 753 054c 0895      		ret
+ 754               	.L70:
+ 755 054e 8CED      		ldi r24,lo8(476)
+ 756 0550 91E0      		ldi r25,hi8(476)
+ 757 0552 9BBD      		out (74)+1-32,r25
+ 758 0554 8ABD      		out 74-32,r24
+ 759 0556 0895      		ret
+ 760               	.L69:
+ 761 0558 6623      		tst r22
+ 762 055a 01F4      		brne .+2
+ 763 055c 00C0      		rjmp .L77
+ 764 055e 8BE0      		ldi r24,lo8(267)
+ 765 0560 91E0      		ldi r25,hi8(267)
+ 766 0562 9BBD      		out (74)+1-32,r25
+ 767 0564 8ABD      		out 74-32,r24
+ 768 0566 0895      		ret
+ 769               	.L30:
+ 770 0568 6623      		tst r22
+ 771 056a 01F4      		brne .+2
+ 772 056c 00C0      		rjmp .L38
+ 773 056e 80E6      		ldi r24,lo8(2144)
+ 774 0570 98E0      		ldi r25,hi8(2144)
+ 775 0572 9BBD      		out (74)+1-32,r25
+ 776 0574 8ABD      		out 74-32,r24
+ 777 0576 0895      		ret
+ 778               	.L112:
+ 779 0578 8BE2      		ldi r24,lo8(43)
+ 780 057a 90E0      		ldi r25,hi8(43)
+ 781 057c 9BBD      		out (74)+1-32,r25
+ 782 057e 8ABD      		out 74-32,r24
+ 783 0580 0895      		ret
+ 784               	.L43:
+ 785 0582 6623      		tst r22
+ 786 0584 01F0      		breq .L51
+ 787 0586 8FE2      		ldi r24,lo8(1071)
+ 788 0588 94E0      		ldi r25,hi8(1071)
+ 789 058a 9BBD      		out (74)+1-32,r25
+ 790 058c 8ABD      		out 74-32,r24
+ 791 058e 0895      		ret
+ 792               	.L40:
+ 793 0590 88ED      		ldi r24,lo8(3032)
+ 794 0592 9BE0      		ldi r25,hi8(3032)
+ 795 0594 9BBD      		out (74)+1-32,r25
+ 796 0596 8ABD      		out 74-32,r24
+ 797 0598 0895      		ret
+ 798               	.L28:
+GAS LISTING /tmp/ccY7DmUh.s 			page 15
+
+
+ 799 059a 8DEE      		ldi r24,lo8(5101)
+ 800 059c 93E1      		ldi r25,hi8(5101)
+ 801 059e 9BBD      		out (74)+1-32,r25
+ 802 05a0 8ABD      		out 74-32,r24
+ 803 05a2 0895      		ret
+ 804               	.L93:
+ 805 05a4 8EE9      		ldi r24,lo8(158)
+ 806 05a6 90E0      		ldi r25,hi8(158)
+ 807 05a8 9BBD      		out (74)+1-32,r25
+ 808 05aa 8ABD      		out 74-32,r24
+ 809 05ac 0895      		ret
+ 810               	.L118:
+ 811 05ae 8EE2      		ldi r24,lo8(46)
+ 812 05b0 90E0      		ldi r25,hi8(46)
+ 813 05b2 9BBD      		out (74)+1-32,r25
+ 814 05b4 8ABD      		out 74-32,r24
+ 815 05b6 0895      		ret
+ 816               	.L51:
+ 817 05b8 83EF      		ldi r24,lo8(1011)
+ 818 05ba 93E0      		ldi r25,hi8(1011)
+ 819 05bc 9BBD      		out (74)+1-32,r25
+ 820 05be 8ABD      		out 74-32,r24
+ 821 05c0 0895      		ret
+ 822               	.L41:
+ 823 05c2 86EF      		ldi r24,lo8(2550)
+ 824 05c4 99E0      		ldi r25,hi8(2550)
+ 825 05c6 9BBD      		out (74)+1-32,r25
+ 826 05c8 8ABD      		out 74-32,r24
+ 827 05ca 0895      		ret
+ 828               	.L39:
+ 829 05cc 8CE4      		ldi r24,lo8(3404)
+ 830 05ce 9DE0      		ldi r25,hi8(3404)
+ 831 05d0 9BBD      		out (74)+1-32,r25
+ 832 05d2 8ABD      		out 74-32,r24
+ 833 05d4 0895      		ret
+ 834               	.L63:
+ 835 05d6 87E3      		ldi r24,lo8(567)
+ 836 05d8 92E0      		ldi r25,hi8(567)
+ 837 05da 9BBD      		out (74)+1-32,r25
+ 838 05dc 8ABD      		out 74-32,r24
+ 839 05de 0895      		ret
+ 840               	.L78:
+ 841 05e0 88EA      		ldi r24,lo8(424)
+ 842 05e2 91E0      		ldi r25,hi8(424)
+ 843 05e4 9BBD      		out (74)+1-32,r25
+ 844 05e6 8ABD      		out 74-32,r24
+ 845 05e8 0895      		ret
+ 846               	.L54:
+ 847 05ea 8AEF      		ldi r24,lo8(1274)
+ 848 05ec 94E0      		ldi r25,hi8(1274)
+ 849 05ee 9BBD      		out (74)+1-32,r25
+ 850 05f0 8ABD      		out 74-32,r24
+ 851 05f2 0895      		ret
+ 852               	.L102:
+ 853 05f4 86E4      		ldi r24,lo8(70)
+ 854 05f6 90E0      		ldi r25,hi8(70)
+ 855 05f8 9BBD      		out (74)+1-32,r25
+GAS LISTING /tmp/ccY7DmUh.s 			page 16
+
+
+ 856 05fa 8ABD      		out 74-32,r24
+ 857 05fc 0895      		ret
+ 858               	.L90:
+ 859 05fe 8DE7      		ldi r24,lo8(125)
+ 860 0600 90E0      		ldi r25,hi8(125)
+ 861 0602 9BBD      		out (74)+1-32,r25
+ 862 0604 8ABD      		out 74-32,r24
+ 863 0606 0895      		ret
+ 864               	.L116:
+ 865 0608 8EE1      		ldi r24,lo8(30)
+ 866 060a 90E0      		ldi r25,hi8(30)
+ 867 060c 9BBD      		out (74)+1-32,r25
+ 868 060e 8ABD      		out 74-32,r24
+ 869 0610 0895      		ret
+ 870               	.L64:
+ 871 0612 89EF      		ldi r24,lo8(505)
+ 872 0614 91E0      		ldi r25,hi8(505)
+ 873 0616 9BBD      		out (74)+1-32,r25
+ 874 0618 8ABD      		out 74-32,r24
+ 875 061a 0895      		ret
+ 876               	.L105:
+ 877 061c 8DE5      		ldi r24,lo8(93)
+ 878 061e 90E0      		ldi r25,hi8(93)
+ 879 0620 9BBD      		out (74)+1-32,r25
+ 880 0622 8ABD      		out 74-32,r24
+ 881 0624 0895      		ret
+ 882               	.L50:
+ 883 0626 8FE6      		ldi r24,lo8(1135)
+ 884 0628 94E0      		ldi r25,hi8(1135)
+ 885 062a 9BBD      		out (74)+1-32,r25
+ 886 062c 8ABD      		out 74-32,r24
+ 887 062e 0895      		ret
+ 888               	.L65:
+ 889 0630 82E5      		ldi r24,lo8(850)
+ 890 0632 93E0      		ldi r25,hi8(850)
+ 891 0634 9BBD      		out (74)+1-32,r25
+ 892 0636 8ABD      		out 74-32,r24
+ 893 0638 0895      		ret
+ 894               	.L80:
+ 895 063a 8DE3      		ldi r24,lo8(317)
+ 896 063c 91E0      		ldi r25,hi8(317)
+ 897 063e 9BBD      		out (74)+1-32,r25
+ 898 0640 8ABD      		out 74-32,r24
+ 899 0642 0895      		ret
+ 900               	.L119:
+ 901 0644 86E2      		ldi r24,lo8(38)
+ 902 0646 90E0      		ldi r25,hi8(38)
+ 903 0648 9BBD      		out (74)+1-32,r25
+ 904 064a 8ABD      		out 74-32,r24
+ 905 064c 0895      		ret
+ 906               	.L26:
+ 907 064e 8AE9      		ldi r24,lo8(6810)
+ 908 0650 9AE1      		ldi r25,hi8(6810)
+ 909 0652 9BBD      		out (74)+1-32,r25
+ 910 0654 8ABD      		out 74-32,r24
+ 911 0656 0895      		ret
+ 912               	.L38:
+GAS LISTING /tmp/ccY7DmUh.s 			page 17
+
+
+ 913 0658 87EE      		ldi r24,lo8(2023)
+ 914 065a 97E0      		ldi r25,hi8(2023)
+ 915 065c 9BBD      		out (74)+1-32,r25
+ 916 065e 8ABD      		out 74-32,r24
+ 917 0660 0895      		ret
+ 918               	.L106:
+ 919 0662 8EE4      		ldi r24,lo8(78)
+ 920 0664 90E0      		ldi r25,hi8(78)
+ 921 0666 9BBD      		out (74)+1-32,r25
+ 922 0668 8ABD      		out 74-32,r24
+ 923 066a 0895      		ret
+ 924               	.L52:
+ 925 066c 85EA      		ldi r24,lo8(1701)
+ 926 066e 96E0      		ldi r25,hi8(1701)
+ 927 0670 9BBD      		out (74)+1-32,r25
+ 928 0672 8ABD      		out 74-32,r24
+ 929 0674 0895      		ret
+ 930               	.L76:
+ 931 0676 8BE1      		ldi r24,lo8(283)
+ 932 0678 91E0      		ldi r25,hi8(283)
+ 933 067a 9BBD      		out (74)+1-32,r25
+ 934 067c 8ABD      		out 74-32,r24
+ 935 067e 0895      		ret
+ 936               	.L104:
+ 937 0680 89E6      		ldi r24,lo8(105)
+ 938 0682 90E0      		ldi r25,hi8(105)
+ 939 0684 9BBD      		out (74)+1-32,r25
+ 940 0686 8ABD      		out 74-32,r24
+ 941 0688 0895      		ret
+ 942               	.L37:
+ 943 068a 8FED      		ldi r24,lo8(2271)
+ 944 068c 98E0      		ldi r25,hi8(2271)
+ 945 068e 9BBD      		out (74)+1-32,r25
+ 946 0690 8ABD      		out 74-32,r24
+ 947 0692 0895      		ret
+ 948               	.L25:
+ 949 0694 80ED      		ldi r24,lo8(4048)
+ 950 0696 9FE0      		ldi r25,hi8(4048)
+ 951 0698 9BBD      		out (74)+1-32,r25
+ 952 069a 8ABD      		out 74-32,r24
+ 953 069c 0895      		ret
+ 954               	.L92:
+ 955 069e 8CEB      		ldi r24,lo8(188)
+ 956 06a0 90E0      		ldi r25,hi8(188)
+ 957 06a2 9BBD      		out (74)+1-32,r25
+ 958 06a4 8ABD      		out 74-32,r24
+ 959 06a6 0895      		ret
+ 960               	.L77:
+ 961 06a8 8CEF      		ldi r24,lo8(252)
+ 962 06aa 90E0      		ldi r25,hi8(252)
+ 963 06ac 9BBD      		out (74)+1-32,r25
+ 964 06ae 8ABD      		out 74-32,r24
+ 965 06b0 0895      		ret
+ 966               	.L79:
+ 967 06b2 8AE7      		ldi r24,lo8(378)
+ 968 06b4 91E0      		ldi r25,hi8(378)
+ 969 06b6 9BBD      		out (74)+1-32,r25
+GAS LISTING /tmp/ccY7DmUh.s 			page 18
+
+
+ 970 06b8 8ABD      		out 74-32,r24
+ 971 06ba 0895      		ret
+ 972               	.L103:
+ 973 06bc 8EE3      		ldi r24,lo8(62)
+ 974 06be 90E0      		ldi r25,hi8(62)
+ 975 06c0 9BBD      		out (74)+1-32,r25
+ 976 06c2 8ABD      		out 74-32,r24
+ 977 06c4 0895      		ret
+ 978               	.L67:
+ 979 06c6 8CE7      		ldi r24,lo8(636)
+ 980 06c8 92E0      		ldi r25,hi8(636)
+ 981 06ca 9BBD      		out (74)+1-32,r25
+ 982 06cc 8ABD      		out 74-32,r24
+ 983 06ce 0895      		ret
+ 984               	.L24:
+ 985 06d0 80EC      		ldi r24,lo8(4544)
+ 986 06d2 91E1      		ldi r25,hi8(4544)
+ 987 06d4 9BBD      		out (74)+1-32,r25
+ 988 06d6 8ABD      		out 74-32,r24
+ 989 06d8 0895      		ret
+ 990               	.L115:
+ 991 06da 82E2      		ldi r24,lo8(34)
+ 992 06dc 90E0      		ldi r25,hi8(34)
+ 993 06de 9BBD      		out (74)+1-32,r25
+ 994 06e0 8ABD      		out 74-32,r24
+ 995 06e2 0895      		ret
+ 996               	.L117:
+ 997 06e4 84E3      		ldi r24,lo8(52)
+ 998 06e6 90E0      		ldi r25,hi8(52)
+ 999 06e8 9BBD      		out (74)+1-32,r25
+ 1000 06ea 8ABD      		out 74-32,r24
+ 1001 06ec 0895      		ret
+ 1002               	.L91:
+ 1003 06ee 83ED      		ldi r24,lo8(211)
+ 1004 06f0 90E0      		ldi r25,hi8(211)
+ 1005 06f2 9BBD      		out (74)+1-32,r25
+ 1006 06f4 8ABD      		out 74-32,r24
+ 1007 06f6 0895      		ret
+ 1008               	.L53:
+ 1009 06f8 8BEE      		ldi r24,lo8(1515)
+ 1010 06fa 95E0      		ldi r25,hi8(1515)
+ 1011 06fc 9BBD      		out (74)+1-32,r25
+ 1012 06fe 8ABD      		out 74-32,r24
+ 1013 0700 0895      		ret
+ 1014               	.L128:
+ 1015 0702 89E0      		ldi r24,lo8(9)
+ 1016 0704 90E0      		ldi r25,hi8(9)
+ 1017 0706 9BBD      		out (74)+1-32,r25
+ 1018 0708 8ABD      		out 74-32,r24
+ 1019 070a 0895      		ret
+ 1020               	.L130:
+ 1021 070c 89E1      		ldi r24,lo8(25)
+ 1022 070e 90E0      		ldi r25,hi8(25)
+ 1023 0710 9BBD      		out (74)+1-32,r25
+ 1024 0712 8ABD      		out 74-32,r24
+ 1025 0714 0895      		ret
+ 1026               	.L89:
+GAS LISTING /tmp/ccY7DmUh.s 			page 19
+
+
+ 1027 0716 8DE8      		ldi r24,lo8(141)
+ 1028 0718 90E0      		ldi r25,hi8(141)
+ 1029 071a 9BBD      		out (74)+1-32,r25
+ 1030 071c 8ABD      		out 74-32,r24
+ 1031 071e 0895      		ret
+ 1032               	.L129:
+ 1033 0720 85E0      		ldi r24,lo8(5)
+ 1034 0722 90E0      		ldi r25,hi8(5)
+ 1035 0724 9BBD      		out (74)+1-32,r25
+ 1036 0726 8ABD      		out 74-32,r24
+ 1037 0728 0895      		ret
+ 1038               	.L66:
+ 1039 072a 85EF      		ldi r24,lo8(757)
+ 1040 072c 92E0      		ldi r25,hi8(757)
+ 1041 072e 9BBD      		out (74)+1-32,r25
+ 1042 0730 8ABD      		out 74-32,r24
+ 1043 0732 0895      		ret
+ 1044               	.L27:
+ 1045 0734 82EB      		ldi r24,lo8(6066)
+ 1046 0736 97E1      		ldi r25,hi8(6066)
+ 1047 0738 9BBD      		out (74)+1-32,r25
+ 1048 073a 8ABD      		out 74-32,r24
+ 1049 073c 0895      		ret
+ 1050               	.L132:
+ 1051 073e 8DE0      		ldi r24,lo8(13)
+ 1052 0740 90E0      		ldi r25,hi8(13)
+ 1053 0742 9BBD      		out (74)+1-32,r25
+ 1054 0744 8ABD      		out 74-32,r24
+ 1055 0746 0895      		ret
+ 1056               	.L131:
+ 1057 0748 85E1      		ldi r24,lo8(21)
+ 1058 074a 90E0      		ldi r25,hi8(21)
+ 1059 074c 9BBD      		out (74)+1-32,r25
+ 1060 074e 8ABD      		out 74-32,r24
+ 1061 0750 0895      		ret
+ 1062               		.size	play_note, .-play_note
+ 1063               	.global	song5
+ 1064               		.type	song5, @function
+ 1065               	song5:
+ 1066               	/* prologue: function */
+ 1067               	/* frame size = 0 */
+ 1068 0752 FC01      		movw r30,r24
+ 1069 0754 8F32      		cpi r24,47
+ 1070 0756 9105      		cpc r25,__zero_reg__
+ 1071 0758 00F0      		brlo .L199
+ 1072 075a 8FEF      		ldi r24,lo8(-1)
+ 1073 075c 8093 0000 		sts notes,r24
+ 1074 0760 0895      		ret
+ 1075               	.L199:
+ 1076 0762 E050      		subi r30,lo8(-(gs(.L196)))
+ 1077 0764 F040      		sbci r31,hi8(-(gs(.L196)))
+ 1078 0766 EE0F      		lsl r30
+ 1079 0768 FF1F      		rol r31
+ 1080 076a 0590      		lpm __tmp_reg__,Z+
+ 1081 076c F491      		lpm r31,Z
+ 1082 076e E02D      		mov r30,__tmp_reg__
+ 1083 0770 0994      		ijmp
+GAS LISTING /tmp/ccY7DmUh.s 			page 20
+
+
+ 1084               		.data
+ 1085               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1086               		.p2align 1
+ 1087               	.L196:
+ 1088               		.data
+ 1089               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1090               		.p2align 1
+ 1091 0000 0000      		.word gs(.L176)
+ 1092 0002 0000      		.word gs(.L171)
+ 1093 0004 0000      		.word gs(.L172)
+ 1094 0006 0000      		.word gs(.L189)
+ 1095 0008 0000      		.word gs(.L191)
+ 1096 000a 0000      		.word gs(.L187)
+ 1097 000c 0000      		.word gs(.L176)
+ 1098 000e 0000      		.word gs(.L177)
+ 1099 0010 0000      		.word gs(.L190)
+ 1100 0012 0000      		.word gs(.L191)
+ 1101 0014 0000      		.word gs(.L187)
+ 1102 0016 0000      		.word gs(.L186)
+ 1103 0018 0000      		.word gs(.L182)
+ 1104 001a 0000      		.word gs(.L183)
+ 1105 001c 0000      		.word gs(.L184)
+ 1106 001e 0000      		.word gs(.L185)
+ 1107 0020 0000      		.word gs(.L186)
+ 1108 0022 0000      		.word gs(.L187)
+ 1109 0024 0000      		.word gs(.L191)
+ 1110 0026 0000      		.word gs(.L171)
+ 1111 0028 0000      		.word gs(.L169)
+ 1112 002a 0000      		.word gs(.L170)
+ 1113 002c 0000      		.word gs(.L171)
+ 1114 002e 0000      		.word gs(.L172)
+ 1115 0030 0000      		.word gs(.L189)
+ 1116 0032 0000      		.word gs(.L191)
+ 1117 0034 0000      		.word gs(.L187)
+ 1118 0036 0000      		.word gs(.L176)
+ 1119 0038 0000      		.word gs(.L177)
+ 1120 003a 0000      		.word gs(.L190)
+ 1121 003c 0000      		.word gs(.L191)
+ 1122 003e 0000      		.word gs(.L187)
+ 1123 0040 0000      		.word gs(.L186)
+ 1124 0042 0000      		.word gs(.L182)
+ 1125 0044 0000      		.word gs(.L183)
+ 1126 0046 0000      		.word gs(.L184)
+ 1127 0048 0000      		.word gs(.L185)
+ 1128 004a 0000      		.word gs(.L186)
+ 1129 004c 0000      		.word gs(.L187)
+ 1130 004e 0000      		.word gs(.L191)
+ 1131 0050 0000      		.word gs(.L189)
+ 1132 0052 0000      		.word gs(.L190)
+ 1133 0054 0000      		.word gs(.L191)
+ 1134 0056 0000      		.word gs(.L192)
+ 1135 0058 0000      		.word gs(.L195)
+ 1136 005a 0000      		.word gs(.L194)
+ 1137 005c 0000      		.word gs(.L195)
+ 1138               		.text
+ 1139               	.L191:
+ 1140 0772 83E4      		ldi r24,lo8(67)
+GAS LISTING /tmp/ccY7DmUh.s 			page 21
+
+
+ 1141 0774 60E0      		ldi r22,lo8(0)
+ 1142 0776 43E0      		ldi r20,lo8(3)
+ 1143 0778 28E0      		ldi r18,lo8(8)
+ 1144 077a 0E94 0000 		call play_note
+ 1145 077e 0895      		ret
+ 1146               	.L187:
+ 1147 0780 81E4      		ldi r24,lo8(65)
+ 1148 0782 60E0      		ldi r22,lo8(0)
+ 1149 0784 42E0      		ldi r20,lo8(2)
+ 1150 0786 28E0      		ldi r18,lo8(8)
+ 1151 0788 0E94 0000 		call play_note
+ 1152 078c 0895      		ret
+ 1153               	.L186:
+ 1154 078e 86E4      		ldi r24,lo8(70)
+ 1155 0790 60E0      		ldi r22,lo8(0)
+ 1156 0792 42E0      		ldi r20,lo8(2)
+ 1157 0794 28E0      		ldi r18,lo8(8)
+ 1158 0796 0E94 0000 		call play_note
+ 1159 079a 0895      		ret
+ 1160               	.L190:
+ 1161 079c 84E4      		ldi r24,lo8(68)
+ 1162 079e 60E0      		ldi r22,lo8(0)
+ 1163 07a0 43E0      		ldi r20,lo8(3)
+ 1164 07a2 28E0      		ldi r18,lo8(8)
+ 1165 07a4 0E94 0000 		call play_note
+ 1166 07a8 0895      		ret
+ 1167               	.L189:
+ 1168 07aa 85E4      		ldi r24,lo8(69)
+ 1169 07ac 60E0      		ldi r22,lo8(0)
+ 1170 07ae 43E0      		ldi r20,lo8(3)
+ 1171 07b0 28E0      		ldi r18,lo8(8)
+ 1172 07b2 0E94 0000 		call play_note
+ 1173 07b6 0895      		ret
+ 1174               	.L176:
+ 1175 07b8 84E4      		ldi r24,lo8(68)
+ 1176 07ba 60E0      		ldi r22,lo8(0)
+ 1177 07bc 43E0      		ldi r20,lo8(3)
+ 1178 07be 20E1      		ldi r18,lo8(16)
+ 1179 07c0 0E94 0000 		call play_note
+ 1180 07c4 0895      		ret
+ 1181               	.L171:
+ 1182 07c6 85E4      		ldi r24,lo8(69)
+ 1183 07c8 60E0      		ldi r22,lo8(0)
+ 1184 07ca 43E0      		ldi r20,lo8(3)
+ 1185 07cc 20E1      		ldi r18,lo8(16)
+ 1186 07ce 0E94 0000 		call play_note
+ 1187 07d2 0895      		ret
+ 1188               	.L172:
+ 1189 07d4 86E4      		ldi r24,lo8(70)
+ 1190 07d6 60E0      		ldi r22,lo8(0)
+ 1191 07d8 43E0      		ldi r20,lo8(3)
+ 1192 07da 28E0      		ldi r18,lo8(8)
+ 1193 07dc 0E94 0000 		call play_note
+ 1194 07e0 0895      		ret
+ 1195               	.L182:
+ 1196 07e2 87E4      		ldi r24,lo8(71)
+ 1197 07e4 60E0      		ldi r22,lo8(0)
+GAS LISTING /tmp/ccY7DmUh.s 			page 22
+
+
+ 1198 07e6 42E0      		ldi r20,lo8(2)
+ 1199 07e8 28E0      		ldi r18,lo8(8)
+ 1200 07ea 0E94 0000 		call play_note
+ 1201 07ee 0895      		ret
+ 1202               	.L183:
+ 1203 07f0 81E4      		ldi r24,lo8(65)
+ 1204 07f2 60E0      		ldi r22,lo8(0)
+ 1205 07f4 42E0      		ldi r20,lo8(2)
+ 1206 07f6 20E1      		ldi r18,lo8(16)
+ 1207 07f8 0E94 0000 		call play_note
+ 1208 07fc 0895      		ret
+ 1209               	.L184:
+ 1210 07fe 87E4      		ldi r24,lo8(71)
+ 1211 0800 60E0      		ldi r22,lo8(0)
+ 1212 0802 42E0      		ldi r20,lo8(2)
+ 1213 0804 20E1      		ldi r18,lo8(16)
+ 1214 0806 0E94 0000 		call play_note
+ 1215 080a 0895      		ret
+ 1216               	.L185:
+ 1217 080c 85E4      		ldi r24,lo8(69)
+ 1218 080e 60E0      		ldi r22,lo8(0)
+ 1219 0810 42E0      		ldi r20,lo8(2)
+ 1220 0812 28E0      		ldi r18,lo8(8)
+ 1221 0814 0E94 0000 		call play_note
+ 1222 0818 0895      		ret
+ 1223               	.L195:
+ 1224 081a 929A      		sbi 50-32,2
+ 1225 081c 1092 0000 		sts (beat)+1,__zero_reg__
+ 1226 0820 1092 0000 		sts beat,__zero_reg__
+ 1227 0824 82E0      		ldi r24,lo8(2)
+ 1228 0826 90E0      		ldi r25,hi8(2)
+ 1229 0828 9093 0000 		sts (max_beat)+1,r25
+ 1230 082c 8093 0000 		sts max_beat,r24
+ 1231 0830 0895      		ret
+ 1232               	.L177:
+ 1233 0832 929A      		sbi 50-32,2
+ 1234 0834 1092 0000 		sts (beat)+1,__zero_reg__
+ 1235 0838 1092 0000 		sts beat,__zero_reg__
+ 1236 083c 88E0      		ldi r24,lo8(8)
+ 1237 083e 90E0      		ldi r25,hi8(8)
+ 1238 0840 9093 0000 		sts (max_beat)+1,r25
+ 1239 0844 8093 0000 		sts max_beat,r24
+ 1240 0848 0895      		ret
+ 1241               	.L194:
+ 1242 084a 84E4      		ldi r24,lo8(68)
+ 1243 084c 60E0      		ldi r22,lo8(0)
+ 1244 084e 43E0      		ldi r20,lo8(3)
+ 1245 0850 2EE1      		ldi r18,lo8(30)
+ 1246 0852 0E94 0000 		call play_note
+ 1247 0856 0895      		ret
+ 1248               	.L169:
+ 1249 0858 86E4      		ldi r24,lo8(70)
+ 1250 085a 60E0      		ldi r22,lo8(0)
+ 1251 085c 43E0      		ldi r20,lo8(3)
+ 1252 085e 20E1      		ldi r18,lo8(16)
+ 1253 0860 0E94 0000 		call play_note
+ 1254 0864 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 23
+
+
+ 1255               	.L192:
+ 1256 0866 84E4      		ldi r24,lo8(68)
+ 1257 0868 60E0      		ldi r22,lo8(0)
+ 1258 086a 43E0      		ldi r20,lo8(3)
+ 1259 086c 26E0      		ldi r18,lo8(6)
+ 1260 086e 0E94 0000 		call play_note
+ 1261 0872 0895      		ret
+ 1262               	.L170:
+ 1263 0874 83E4      		ldi r24,lo8(67)
+ 1264 0876 60E0      		ldi r22,lo8(0)
+ 1265 0878 43E0      		ldi r20,lo8(3)
+ 1266 087a 20E3      		ldi r18,lo8(48)
+ 1267 087c 0E94 0000 		call play_note
+ 1268 0880 0895      		ret
+ 1269               		.size	song5, .-song5
+ 1270               	.global	song4
+ 1271               		.type	song4, @function
+ 1272               	song4:
+ 1273               	/* prologue: function */
+ 1274               	/* frame size = 0 */
+ 1275 0882 FC01      		movw r30,r24
+ 1276 0884 8131      		cpi r24,17
+ 1277 0886 9105      		cpc r25,__zero_reg__
+ 1278 0888 00F0      		brlo .L222
+ 1279 088a 8FEF      		ldi r24,lo8(-1)
+ 1280 088c 8093 0000 		sts notes,r24
+ 1281 0890 0895      		ret
+ 1282               	.L222:
+ 1283 0892 E050      		subi r30,lo8(-(gs(.L219)))
+ 1284 0894 F040      		sbci r31,hi8(-(gs(.L219)))
+ 1285 0896 EE0F      		lsl r30
+ 1286 0898 FF1F      		rol r31
+ 1287 089a 0590      		lpm __tmp_reg__,Z+
+ 1288 089c F491      		lpm r31,Z
+ 1289 089e E02D      		mov r30,__tmp_reg__
+ 1290 08a0 0994      		ijmp
+ 1291               		.data
+ 1292               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1293               		.p2align 1
+ 1294               	.L219:
+ 1295               		.data
+ 1296               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1297               		.p2align 1
+ 1298 005e 0000      		.word gs(.L206)
+ 1299 0060 0000      		.word gs(.L203)
+ 1300 0062 0000      		.word gs(.L204)
+ 1301 0064 0000      		.word gs(.L205)
+ 1302 0066 0000      		.word gs(.L206)
+ 1303 0068 0000      		.word gs(.L207)
+ 1304 006a 0000      		.word gs(.L208)
+ 1305 006c 0000      		.word gs(.L209)
+ 1306 006e 0000      		.word gs(.L210)
+ 1307 0070 0000      		.word gs(.L211)
+ 1308 0072 0000      		.word gs(.L216)
+ 1309 0074 0000      		.word gs(.L213)
+ 1310 0076 0000      		.word gs(.L214)
+ 1311 0078 0000      		.word gs(.L215)
+GAS LISTING /tmp/ccY7DmUh.s 			page 24
+
+
+ 1312 007a 0000      		.word gs(.L216)
+ 1313 007c 0000      		.word gs(.L217)
+ 1314 007e 0000      		.word gs(.L218)
+ 1315               		.text
+ 1316               	.L216:
+ 1317 08a2 81E4      		ldi r24,lo8(65)
+ 1318 08a4 60E0      		ldi r22,lo8(0)
+ 1319 08a6 44E0      		ldi r20,lo8(4)
+ 1320 08a8 24E0      		ldi r18,lo8(4)
+ 1321 08aa 0E94 0000 		call play_note
+ 1322 08ae 0895      		ret
+ 1323               	.L206:
+ 1324 08b0 82E4      		ldi r24,lo8(66)
+ 1325 08b2 60E0      		ldi r22,lo8(0)
+ 1326 08b4 43E0      		ldi r20,lo8(3)
+ 1327 08b6 28E0      		ldi r18,lo8(8)
+ 1328 08b8 0E94 0000 		call play_note
+ 1329 08bc 0895      		ret
+ 1330               	.L207:
+ 1331 08be 87E4      		ldi r24,lo8(71)
+ 1332 08c0 61E0      		ldi r22,lo8(1)
+ 1333 08c2 44E0      		ldi r20,lo8(4)
+ 1334 08c4 28E0      		ldi r18,lo8(8)
+ 1335 08c6 0E94 0000 		call play_note
+ 1336 08ca 0895      		ret
+ 1337               	.L204:
+ 1338 08cc 87E4      		ldi r24,lo8(71)
+ 1339 08ce 61E0      		ldi r22,lo8(1)
+ 1340 08d0 44E0      		ldi r20,lo8(4)
+ 1341 08d2 2CE0      		ldi r18,lo8(12)
+ 1342 08d4 0E94 0000 		call play_note
+ 1343 08d8 0895      		ret
+ 1344               	.L205:
+ 1345 08da 87E4      		ldi r24,lo8(71)
+ 1346 08dc 60E0      		ldi r22,lo8(0)
+ 1347 08de 44E0      		ldi r20,lo8(4)
+ 1348 08e0 20E1      		ldi r18,lo8(16)
+ 1349 08e2 0E94 0000 		call play_note
+ 1350 08e6 0895      		ret
+ 1351               	.L208:
+ 1352 08e8 84E4      		ldi r24,lo8(68)
+ 1353 08ea 60E0      		ldi r22,lo8(0)
+ 1354 08ec 44E0      		ldi r20,lo8(4)
+ 1355 08ee 20E3      		ldi r18,lo8(48)
+ 1356 08f0 0E94 0000 		call play_note
+ 1357 08f4 0895      		ret
+ 1358               	.L209:
+ 1359 08f6 81E4      		ldi r24,lo8(65)
+ 1360 08f8 60E0      		ldi r22,lo8(0)
+ 1361 08fa 43E0      		ldi r20,lo8(3)
+ 1362 08fc 2CE0      		ldi r18,lo8(12)
+ 1363 08fe 0E94 0000 		call play_note
+ 1364 0902 0895      		ret
+ 1365               	.L218:
+ 1366 0904 85E4      		ldi r24,lo8(69)
+ 1367 0906 60E0      		ldi r22,lo8(0)
+ 1368 0908 44E0      		ldi r20,lo8(4)
+GAS LISTING /tmp/ccY7DmUh.s 			page 25
+
+
+ 1369 090a 20E5      		ldi r18,lo8(80)
+ 1370 090c 0E94 0000 		call play_note
+ 1371 0910 0895      		ret
+ 1372               	.L203:
+ 1373 0912 85E4      		ldi r24,lo8(69)
+ 1374 0914 60E0      		ldi r22,lo8(0)
+ 1375 0916 44E0      		ldi r20,lo8(4)
+ 1376 0918 2CE0      		ldi r18,lo8(12)
+ 1377 091a 0E94 0000 		call play_note
+ 1378 091e 0895      		ret
+ 1379               	.L217:
+ 1380 0920 81E4      		ldi r24,lo8(65)
+ 1381 0922 61E0      		ldi r22,lo8(1)
+ 1382 0924 44E0      		ldi r20,lo8(4)
+ 1383 0926 24E0      		ldi r18,lo8(4)
+ 1384 0928 0E94 0000 		call play_note
+ 1385 092c 0895      		ret
+ 1386               	.L213:
+ 1387 092e 82E4      		ldi r24,lo8(66)
+ 1388 0930 60E0      		ldi r22,lo8(0)
+ 1389 0932 44E0      		ldi r20,lo8(4)
+ 1390 0934 2AE0      		ldi r18,lo8(10)
+ 1391 0936 0E94 0000 		call play_note
+ 1392 093a 0895      		ret
+ 1393               	.L214:
+ 1394 093c 929A      		sbi 50-32,2
+ 1395 093e 1092 0000 		sts (beat)+1,__zero_reg__
+ 1396 0942 1092 0000 		sts beat,__zero_reg__
+ 1397 0946 82E0      		ldi r24,lo8(2)
+ 1398 0948 90E0      		ldi r25,hi8(2)
+ 1399 094a 9093 0000 		sts (max_beat)+1,r25
+ 1400 094e 8093 0000 		sts max_beat,r24
+ 1401 0952 0895      		ret
+ 1402               	.L215:
+ 1403 0954 82E4      		ldi r24,lo8(66)
+ 1404 0956 60E0      		ldi r22,lo8(0)
+ 1405 0958 44E0      		ldi r20,lo8(4)
+ 1406 095a 2CE0      		ldi r18,lo8(12)
+ 1407 095c 0E94 0000 		call play_note
+ 1408 0960 0895      		ret
+ 1409               	.L210:
+ 1410 0962 82E4      		ldi r24,lo8(66)
+ 1411 0964 60E0      		ldi r22,lo8(0)
+ 1412 0966 43E0      		ldi r20,lo8(3)
+ 1413 0968 24E0      		ldi r18,lo8(4)
+ 1414 096a 0E94 0000 		call play_note
+ 1415 096e 0895      		ret
+ 1416               	.L211:
+ 1417 0970 85E4      		ldi r24,lo8(69)
+ 1418 0972 60E0      		ldi r22,lo8(0)
+ 1419 0974 44E0      		ldi r20,lo8(4)
+ 1420 0976 24E0      		ldi r18,lo8(4)
+ 1421 0978 0E94 0000 		call play_note
+ 1422 097c 0895      		ret
+ 1423               		.size	song4, .-song4
+ 1424               	.global	song3
+ 1425               		.type	song3, @function
+GAS LISTING /tmp/ccY7DmUh.s 			page 26
+
+
+ 1426               	song3:
+ 1427               	/* prologue: function */
+ 1428               	/* frame size = 0 */
+ 1429 097e FC01      		movw r30,r24
+ 1430 0980 8F31      		cpi r24,31
+ 1431 0982 9105      		cpc r25,__zero_reg__
+ 1432 0984 00F0      		brlo .L259
+ 1433 0986 8FEF      		ldi r24,lo8(-1)
+ 1434 0988 8093 0000 		sts notes,r24
+ 1435 098c 0895      		ret
+ 1436               	.L259:
+ 1437 098e E050      		subi r30,lo8(-(gs(.L256)))
+ 1438 0990 F040      		sbci r31,hi8(-(gs(.L256)))
+ 1439 0992 EE0F      		lsl r30
+ 1440 0994 FF1F      		rol r31
+ 1441 0996 0590      		lpm __tmp_reg__,Z+
+ 1442 0998 F491      		lpm r31,Z
+ 1443 099a E02D      		mov r30,__tmp_reg__
+ 1444 099c 0994      		ijmp
+ 1445               		.data
+ 1446               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1447               		.p2align 1
+ 1448               	.L256:
+ 1449               		.data
+ 1450               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1451               		.p2align 1
+ 1452 0080 0000      		.word gs(.L229)
+ 1453 0082 0000      		.word gs(.L252)
+ 1454 0084 0000      		.word gs(.L229)
+ 1455 0086 0000      		.word gs(.L252)
+ 1456 0088 0000      		.word gs(.L229)
+ 1457 008a 0000      		.word gs(.L252)
+ 1458 008c 0000      		.word gs(.L233)
+ 1459 008e 0000      		.word gs(.L252)
+ 1460 0090 0000      		.word gs(.L233)
+ 1461 0092 0000      		.word gs(.L249)
+ 1462 0094 0000      		.word gs(.L253)
+ 1463 0096 0000      		.word gs(.L236)
+ 1464 0098 0000      		.word gs(.L253)
+ 1465 009a 0000      		.word gs(.L238)
+ 1466 009c 0000      		.word gs(.L255)
+ 1467 009e 0000      		.word gs(.L244)
+ 1468 00a0 0000      		.word gs(.L252)
+ 1469 00a2 0000      		.word gs(.L244)
+ 1470 00a4 0000      		.word gs(.L252)
+ 1471 00a6 0000      		.word gs(.L244)
+ 1472 00a8 0000      		.word gs(.L252)
+ 1473 00aa 0000      		.word gs(.L248)
+ 1474 00ac 0000      		.word gs(.L252)
+ 1475 00ae 0000      		.word gs(.L248)
+ 1476 00b0 0000      		.word gs(.L249)
+ 1477 00b2 0000      		.word gs(.L250)
+ 1478 00b4 0000      		.word gs(.L251)
+ 1479 00b6 0000      		.word gs(.L252)
+ 1480 00b8 0000      		.word gs(.L253)
+ 1481 00ba 0000      		.word gs(.L254)
+ 1482 00bc 0000      		.word gs(.L255)
+GAS LISTING /tmp/ccY7DmUh.s 			page 27
+
+
+ 1483               		.text
+ 1484               	.L252:
+ 1485 099e 929A      		sbi 50-32,2
+ 1486 09a0 1092 0000 		sts (beat)+1,__zero_reg__
+ 1487 09a4 1092 0000 		sts beat,__zero_reg__
+ 1488 09a8 81E0      		ldi r24,lo8(1)
+ 1489 09aa 90E0      		ldi r25,hi8(1)
+ 1490 09ac 9093 0000 		sts (max_beat)+1,r25
+ 1491 09b0 8093 0000 		sts max_beat,r24
+ 1492 09b4 0895      		ret
+ 1493               	.L253:
+ 1494 09b6 85E4      		ldi r24,lo8(69)
+ 1495 09b8 60E0      		ldi r22,lo8(0)
+ 1496 09ba 45E0      		ldi r20,lo8(5)
+ 1497 09bc 24E0      		ldi r18,lo8(4)
+ 1498 09be 0E94 0000 		call play_note
+ 1499 09c2 0895      		ret
+ 1500               	.L229:
+ 1501 09c4 85E4      		ldi r24,lo8(69)
+ 1502 09c6 60E0      		ldi r22,lo8(0)
+ 1503 09c8 44E0      		ldi r20,lo8(4)
+ 1504 09ca 27E0      		ldi r18,lo8(7)
+ 1505 09cc 0E94 0000 		call play_note
+ 1506 09d0 0895      		ret
+ 1507               	.L244:
+ 1508 09d2 85E4      		ldi r24,lo8(69)
+ 1509 09d4 61E0      		ldi r22,lo8(1)
+ 1510 09d6 44E0      		ldi r20,lo8(4)
+ 1511 09d8 27E0      		ldi r18,lo8(7)
+ 1512 09da 0E94 0000 		call play_note
+ 1513 09de 0895      		ret
+ 1514               	.L249:
+ 1515 09e0 929A      		sbi 50-32,2
+ 1516 09e2 1092 0000 		sts (beat)+1,__zero_reg__
+ 1517 09e6 1092 0000 		sts beat,__zero_reg__
+ 1518 09ea 85E0      		ldi r24,lo8(5)
+ 1519 09ec 90E0      		ldi r25,hi8(5)
+ 1520 09ee 9093 0000 		sts (max_beat)+1,r25
+ 1521 09f2 8093 0000 		sts max_beat,r24
+ 1522 09f6 0895      		ret
+ 1523               	.L255:
+ 1524 09f8 85E4      		ldi r24,lo8(69)
+ 1525 09fa 60E0      		ldi r22,lo8(0)
+ 1526 09fc 45E0      		ldi r20,lo8(5)
+ 1527 09fe 28E0      		ldi r18,lo8(8)
+ 1528 0a00 0E94 0000 		call play_note
+ 1529 0a04 0895      		ret
+ 1530               	.L233:
+ 1531 0a06 85E4      		ldi r24,lo8(69)
+ 1532 0a08 60E0      		ldi r22,lo8(0)
+ 1533 0a0a 44E0      		ldi r20,lo8(4)
+ 1534 0a0c 23E0      		ldi r18,lo8(3)
+ 1535 0a0e 0E94 0000 		call play_note
+ 1536 0a12 0895      		ret
+ 1537               	.L248:
+ 1538 0a14 85E4      		ldi r24,lo8(69)
+ 1539 0a16 61E0      		ldi r22,lo8(1)
+GAS LISTING /tmp/ccY7DmUh.s 			page 28
+
+
+ 1540 0a18 44E0      		ldi r20,lo8(4)
+ 1541 0a1a 23E0      		ldi r18,lo8(3)
+ 1542 0a1c 0E94 0000 		call play_note
+ 1543 0a20 0895      		ret
+ 1544               	.L236:
+ 1545 0a22 87E4      		ldi r24,lo8(71)
+ 1546 0a24 61E0      		ldi r22,lo8(1)
+ 1547 0a26 45E0      		ldi r20,lo8(5)
+ 1548 0a28 24E0      		ldi r18,lo8(4)
+ 1549 0a2a 0E94 0000 		call play_note
+ 1550 0a2e 0895      		ret
+ 1551               	.L250:
+ 1552 0a30 85E4      		ldi r24,lo8(69)
+ 1553 0a32 61E0      		ldi r22,lo8(1)
+ 1554 0a34 45E0      		ldi r20,lo8(5)
+ 1555 0a36 24E0      		ldi r18,lo8(4)
+ 1556 0a38 0E94 0000 		call play_note
+ 1557 0a3c 0895      		ret
+ 1558               	.L251:
+ 1559 0a3e 85E4      		ldi r24,lo8(69)
+ 1560 0a40 60E0      		ldi r22,lo8(0)
+ 1561 0a42 45E0      		ldi r20,lo8(5)
+ 1562 0a44 23E0      		ldi r18,lo8(3)
+ 1563 0a46 0E94 0000 		call play_note
+ 1564 0a4a 0895      		ret
+ 1565               	.L238:
+ 1566 0a4c 87E4      		ldi r24,lo8(71)
+ 1567 0a4e 60E0      		ldi r22,lo8(0)
+ 1568 0a50 45E0      		ldi r20,lo8(5)
+ 1569 0a52 28E0      		ldi r18,lo8(8)
+ 1570 0a54 0E94 0000 		call play_note
+ 1571 0a58 0895      		ret
+ 1572               	.L254:
+ 1573 0a5a 87E4      		ldi r24,lo8(71)
+ 1574 0a5c 61E0      		ldi r22,lo8(1)
+ 1575 0a5e 45E0      		ldi r20,lo8(5)
+ 1576 0a60 28E0      		ldi r18,lo8(8)
+ 1577 0a62 0E94 0000 		call play_note
+ 1578 0a66 0895      		ret
+ 1579               		.size	song3, .-song3
+ 1580               	.global	song2
+ 1581               		.type	song2, @function
+ 1582               	song2:
+ 1583               	/* prologue: function */
+ 1584               	/* frame size = 0 */
+ 1585 0a68 FC01      		movw r30,r24
+ 1586 0a6a 8539      		cpi r24,149
+ 1587 0a6c 9105      		cpc r25,__zero_reg__
+ 1588 0a6e 00F0      		brlo .L414
+ 1589 0a70 8FEF      		ldi r24,lo8(-1)
+ 1590 0a72 8093 0000 		sts notes,r24
+ 1591 0a76 0895      		ret
+ 1592               	.L414:
+ 1593 0a78 E050      		subi r30,lo8(-(gs(.L411)))
+ 1594 0a7a F040      		sbci r31,hi8(-(gs(.L411)))
+ 1595 0a7c EE0F      		lsl r30
+ 1596 0a7e FF1F      		rol r31
+GAS LISTING /tmp/ccY7DmUh.s 			page 29
+
+
+ 1597 0a80 0590      		lpm __tmp_reg__,Z+
+ 1598 0a82 F491      		lpm r31,Z
+ 1599 0a84 E02D      		mov r30,__tmp_reg__
+ 1600 0a86 0994      		ijmp
+ 1601               		.data
+ 1602               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1603               		.p2align 1
+ 1604               	.L411:
+ 1605               		.data
+ 1606               		.section .progmem.gcc_sw_table, "a", @progbits
+ 1607               		.p2align 1
+ 1608 00be 0000      		.word gs(.L262)
+ 1609 00c0 0000      		.word gs(.L263)
+ 1610 00c2 0000      		.word gs(.L264)
+ 1611 00c4 0000      		.word gs(.L265)
+ 1612 00c6 0000      		.word gs(.L266)
+ 1613 00c8 0000      		.word gs(.L267)
+ 1614 00ca 0000      		.word gs(.L268)
+ 1615 00cc 0000      		.word gs(.L269)
+ 1616 00ce 0000      		.word gs(.L270)
+ 1617 00d0 0000      		.word gs(.L271)
+ 1618 00d2 0000      		.word gs(.L272)
+ 1619 00d4 0000      		.word gs(.L273)
+ 1620 00d6 0000      		.word gs(.L274)
+ 1621 00d8 0000      		.word gs(.L275)
+ 1622 00da 0000      		.word gs(.L276)
+ 1623 00dc 0000      		.word gs(.L277)
+ 1624 00de 0000      		.word gs(.L278)
+ 1625 00e0 0000      		.word gs(.L279)
+ 1626 00e2 0000      		.word gs(.L280)
+ 1627 00e4 0000      		.word gs(.L281)
+ 1628 00e6 0000      		.word gs(.L282)
+ 1629 00e8 0000      		.word gs(.L283)
+ 1630 00ea 0000      		.word gs(.L284)
+ 1631 00ec 0000      		.word gs(.L285)
+ 1632 00ee 0000      		.word gs(.L286)
+ 1633 00f0 0000      		.word gs(.L287)
+ 1634 00f2 0000      		.word gs(.L288)
+ 1635 00f4 0000      		.word gs(.L289)
+ 1636 00f6 0000      		.word gs(.L290)
+ 1637 00f8 0000      		.word gs(.L291)
+ 1638 00fa 0000      		.word gs(.L292)
+ 1639 00fc 0000      		.word gs(.L293)
+ 1640 00fe 0000      		.word gs(.L294)
+ 1641 0100 0000      		.word gs(.L295)
+ 1642 0102 0000      		.word gs(.L296)
+ 1643 0104 0000      		.word gs(.L297)
+ 1644 0106 0000      		.word gs(.L298)
+ 1645 0108 0000      		.word gs(.L299)
+ 1646 010a 0000      		.word gs(.L300)
+ 1647 010c 0000      		.word gs(.L301)
+ 1648 010e 0000      		.word gs(.L302)
+ 1649 0110 0000      		.word gs(.L303)
+ 1650 0112 0000      		.word gs(.L304)
+ 1651 0114 0000      		.word gs(.L305)
+ 1652 0116 0000      		.word gs(.L306)
+ 1653 0118 0000      		.word gs(.L307)
+GAS LISTING /tmp/ccY7DmUh.s 			page 30
+
+
+ 1654 011a 0000      		.word gs(.L308)
+ 1655 011c 0000      		.word gs(.L309)
+ 1656 011e 0000      		.word gs(.L310)
+ 1657 0120 0000      		.word gs(.L311)
+ 1658 0122 0000      		.word gs(.L312)
+ 1659 0124 0000      		.word gs(.L313)
+ 1660 0126 0000      		.word gs(.L314)
+ 1661 0128 0000      		.word gs(.L315)
+ 1662 012a 0000      		.word gs(.L316)
+ 1663 012c 0000      		.word gs(.L317)
+ 1664 012e 0000      		.word gs(.L318)
+ 1665 0130 0000      		.word gs(.L319)
+ 1666 0132 0000      		.word gs(.L320)
+ 1667 0134 0000      		.word gs(.L321)
+ 1668 0136 0000      		.word gs(.L322)
+ 1669 0138 0000      		.word gs(.L323)
+ 1670 013a 0000      		.word gs(.L324)
+ 1671 013c 0000      		.word gs(.L325)
+ 1672 013e 0000      		.word gs(.L326)
+ 1673 0140 0000      		.word gs(.L327)
+ 1674 0142 0000      		.word gs(.L328)
+ 1675 0144 0000      		.word gs(.L329)
+ 1676 0146 0000      		.word gs(.L330)
+ 1677 0148 0000      		.word gs(.L331)
+ 1678 014a 0000      		.word gs(.L332)
+ 1679 014c 0000      		.word gs(.L333)
+ 1680 014e 0000      		.word gs(.L334)
+ 1681 0150 0000      		.word gs(.L335)
+ 1682 0152 0000      		.word gs(.L336)
+ 1683 0154 0000      		.word gs(.L337)
+ 1684 0156 0000      		.word gs(.L338)
+ 1685 0158 0000      		.word gs(.L339)
+ 1686 015a 0000      		.word gs(.L340)
+ 1687 015c 0000      		.word gs(.L341)
+ 1688 015e 0000      		.word gs(.L342)
+ 1689 0160 0000      		.word gs(.L343)
+ 1690 0162 0000      		.word gs(.L344)
+ 1691 0164 0000      		.word gs(.L345)
+ 1692 0166 0000      		.word gs(.L346)
+ 1693 0168 0000      		.word gs(.L347)
+ 1694 016a 0000      		.word gs(.L348)
+ 1695 016c 0000      		.word gs(.L349)
+ 1696 016e 0000      		.word gs(.L350)
+ 1697 0170 0000      		.word gs(.L351)
+ 1698 0172 0000      		.word gs(.L352)
+ 1699 0174 0000      		.word gs(.L353)
+ 1700 0176 0000      		.word gs(.L354)
+ 1701 0178 0000      		.word gs(.L355)
+ 1702 017a 0000      		.word gs(.L356)
+ 1703 017c 0000      		.word gs(.L357)
+ 1704 017e 0000      		.word gs(.L358)
+ 1705 0180 0000      		.word gs(.L359)
+ 1706 0182 0000      		.word gs(.L360)
+ 1707 0184 0000      		.word gs(.L361)
+ 1708 0186 0000      		.word gs(.L362)
+ 1709 0188 0000      		.word gs(.L363)
+ 1710 018a 0000      		.word gs(.L364)
+GAS LISTING /tmp/ccY7DmUh.s 			page 31
+
+
+ 1711 018c 0000      		.word gs(.L365)
+ 1712 018e 0000      		.word gs(.L366)
+ 1713 0190 0000      		.word gs(.L367)
+ 1714 0192 0000      		.word gs(.L368)
+ 1715 0194 0000      		.word gs(.L369)
+ 1716 0196 0000      		.word gs(.L370)
+ 1717 0198 0000      		.word gs(.L371)
+ 1718 019a 0000      		.word gs(.L372)
+ 1719 019c 0000      		.word gs(.L373)
+ 1720 019e 0000      		.word gs(.L374)
+ 1721 01a0 0000      		.word gs(.L375)
+ 1722 01a2 0000      		.word gs(.L376)
+ 1723 01a4 0000      		.word gs(.L377)
+ 1724 01a6 0000      		.word gs(.L378)
+ 1725 01a8 0000      		.word gs(.L379)
+ 1726 01aa 0000      		.word gs(.L380)
+ 1727 01ac 0000      		.word gs(.L381)
+ 1728 01ae 0000      		.word gs(.L382)
+ 1729 01b0 0000      		.word gs(.L383)
+ 1730 01b2 0000      		.word gs(.L384)
+ 1731 01b4 0000      		.word gs(.L385)
+ 1732 01b6 0000      		.word gs(.L386)
+ 1733 01b8 0000      		.word gs(.L387)
+ 1734 01ba 0000      		.word gs(.L388)
+ 1735 01bc 0000      		.word gs(.L389)
+ 1736 01be 0000      		.word gs(.L390)
+ 1737 01c0 0000      		.word gs(.L391)
+ 1738 01c2 0000      		.word gs(.L392)
+ 1739 01c4 0000      		.word gs(.L393)
+ 1740 01c6 0000      		.word gs(.L394)
+ 1741 01c8 0000      		.word gs(.L395)
+ 1742 01ca 0000      		.word gs(.L396)
+ 1743 01cc 0000      		.word gs(.L397)
+ 1744 01ce 0000      		.word gs(.L398)
+ 1745 01d0 0000      		.word gs(.L399)
+ 1746 01d2 0000      		.word gs(.L400)
+ 1747 01d4 0000      		.word gs(.L401)
+ 1748 01d6 0000      		.word gs(.L402)
+ 1749 01d8 0000      		.word gs(.L403)
+ 1750 01da 0000      		.word gs(.L404)
+ 1751 01dc 0000      		.word gs(.L405)
+ 1752 01de 0000      		.word gs(.L406)
+ 1753 01e0 0000      		.word gs(.L407)
+ 1754 01e2 0000      		.word gs(.L408)
+ 1755 01e4 0000      		.word gs(.L409)
+ 1756 01e6 0000      		.word gs(.L410)
+ 1757               		.text
+ 1758               	.L410:
+ 1759 0a88 929A      		sbi 50-32,2
+ 1760 0a8a 1092 0000 		sts (beat)+1,__zero_reg__
+ 1761 0a8e 1092 0000 		sts beat,__zero_reg__
+ 1762 0a92 88E0      		ldi r24,lo8(8)
+ 1763 0a94 90E0      		ldi r25,hi8(8)
+ 1764 0a96 9093 0000 		sts (max_beat)+1,r25
+ 1765 0a9a 8093 0000 		sts max_beat,r24
+ 1766 0a9e 0895      		ret
+ 1767               	.L409:
+GAS LISTING /tmp/ccY7DmUh.s 			page 32
+
+
+ 1768 0aa0 87E4      		ldi r24,lo8(71)
+ 1769 0aa2 60E0      		ldi r22,lo8(0)
+ 1770 0aa4 43E0      		ldi r20,lo8(3)
+ 1771 0aa6 24E0      		ldi r18,lo8(4)
+ 1772 0aa8 0E94 0000 		call play_note
+ 1773 0aac 0895      		ret
+ 1774               	.L408:
+ 1775 0aae 81E4      		ldi r24,lo8(65)
+ 1776 0ab0 60E0      		ldi r22,lo8(0)
+ 1777 0ab2 43E0      		ldi r20,lo8(3)
+ 1778 0ab4 22E0      		ldi r18,lo8(2)
+ 1779 0ab6 0E94 0000 		call play_note
+ 1780 0aba 0895      		ret
+ 1781               	.L407:
+ 1782 0abc 929A      		sbi 50-32,2
+ 1783 0abe 1092 0000 		sts (beat)+1,__zero_reg__
+ 1784 0ac2 1092 0000 		sts beat,__zero_reg__
+ 1785 0ac6 82E0      		ldi r24,lo8(2)
+ 1786 0ac8 90E0      		ldi r25,hi8(2)
+ 1787 0aca 9093 0000 		sts (max_beat)+1,r25
+ 1788 0ace 8093 0000 		sts max_beat,r24
+ 1789 0ad2 0895      		ret
+ 1790               	.L406:
+ 1791 0ad4 83E4      		ldi r24,lo8(67)
+ 1792 0ad6 60E0      		ldi r22,lo8(0)
+ 1793 0ad8 44E0      		ldi r20,lo8(4)
+ 1794 0ada 22E0      		ldi r18,lo8(2)
+ 1795 0adc 0E94 0000 		call play_note
+ 1796 0ae0 0895      		ret
+ 1797               	.L405:
+ 1798 0ae2 85E4      		ldi r24,lo8(69)
+ 1799 0ae4 60E0      		ldi r22,lo8(0)
+ 1800 0ae6 44E0      		ldi r20,lo8(4)
+ 1801 0ae8 22E0      		ldi r18,lo8(2)
+ 1802 0aea 0E94 0000 		call play_note
+ 1803 0aee 0895      		ret
+ 1804               	.L404:
+ 1805 0af0 84E4      		ldi r24,lo8(68)
+ 1806 0af2 60E0      		ldi r22,lo8(0)
+ 1807 0af4 44E0      		ldi r20,lo8(4)
+ 1808 0af6 24E0      		ldi r18,lo8(4)
+ 1809 0af8 0E94 0000 		call play_note
+ 1810 0afc 0895      		ret
+ 1811               	.L403:
+ 1812 0afe 83E4      		ldi r24,lo8(67)
+ 1813 0b00 60E0      		ldi r22,lo8(0)
+ 1814 0b02 44E0      		ldi r20,lo8(4)
+ 1815 0b04 22E0      		ldi r18,lo8(2)
+ 1816 0b06 0E94 0000 		call play_note
+ 1817 0b0a 0895      		ret
+ 1818               	.L402:
+ 1819 0b0c 929A      		sbi 50-32,2
+ 1820 0b0e 1092 0000 		sts (beat)+1,__zero_reg__
+ 1821 0b12 1092 0000 		sts beat,__zero_reg__
+ 1822 0b16 82E0      		ldi r24,lo8(2)
+ 1823 0b18 90E0      		ldi r25,hi8(2)
+ 1824 0b1a 9093 0000 		sts (max_beat)+1,r25
+GAS LISTING /tmp/ccY7DmUh.s 			page 33
+
+
+ 1825 0b1e 8093 0000 		sts max_beat,r24
+ 1826 0b22 0895      		ret
+ 1827               	.L401:
+ 1828 0b24 83E4      		ldi r24,lo8(67)
+ 1829 0b26 60E0      		ldi r22,lo8(0)
+ 1830 0b28 44E0      		ldi r20,lo8(4)
+ 1831 0b2a 22E0      		ldi r18,lo8(2)
+ 1832 0b2c 0E94 0000 		call play_note
+ 1833 0b30 0895      		ret
+ 1834               	.L400:
+ 1835 0b32 929A      		sbi 50-32,2
+ 1836 0b34 1092 0000 		sts (beat)+1,__zero_reg__
+ 1837 0b38 1092 0000 		sts beat,__zero_reg__
+ 1838 0b3c 82E0      		ldi r24,lo8(2)
+ 1839 0b3e 90E0      		ldi r25,hi8(2)
+ 1840 0b40 9093 0000 		sts (max_beat)+1,r25
+ 1841 0b44 8093 0000 		sts max_beat,r24
+ 1842 0b48 0895      		ret
+ 1843               	.L399:
+ 1844 0b4a 83E4      		ldi r24,lo8(67)
+ 1845 0b4c 60E0      		ldi r22,lo8(0)
+ 1846 0b4e 44E0      		ldi r20,lo8(4)
+ 1847 0b50 22E0      		ldi r18,lo8(2)
+ 1848 0b52 0E94 0000 		call play_note
+ 1849 0b56 0895      		ret
+ 1850               	.L398:
+ 1851 0b58 929A      		sbi 50-32,2
+ 1852 0b5a 1092 0000 		sts (beat)+1,__zero_reg__
+ 1853 0b5e 1092 0000 		sts beat,__zero_reg__
+ 1854 0b62 81E0      		ldi r24,lo8(1)
+ 1855 0b64 90E0      		ldi r25,hi8(1)
+ 1856 0b66 9093 0000 		sts (max_beat)+1,r25
+ 1857 0b6a 8093 0000 		sts max_beat,r24
+ 1858 0b6e 0895      		ret
+ 1859               	.L397:
+ 1860 0b70 83E4      		ldi r24,lo8(67)
+ 1861 0b72 60E0      		ldi r22,lo8(0)
+ 1862 0b74 44E0      		ldi r20,lo8(4)
+ 1863 0b76 22E0      		ldi r18,lo8(2)
+ 1864 0b78 0E94 0000 		call play_note
+ 1865 0b7c 0895      		ret
+ 1866               	.L396:
+ 1867 0b7e 929A      		sbi 50-32,2
+ 1868 0b80 1092 0000 		sts (beat)+1,__zero_reg__
+ 1869 0b84 1092 0000 		sts beat,__zero_reg__
+ 1870 0b88 80E1      		ldi r24,lo8(16)
+ 1871 0b8a 90E0      		ldi r25,hi8(16)
+ 1872 0b8c 9093 0000 		sts (max_beat)+1,r25
+ 1873 0b90 8093 0000 		sts max_beat,r24
+ 1874 0b94 0895      		ret
+ 1875               	.L395:
+ 1876 0b96 85E4      		ldi r24,lo8(69)
+ 1877 0b98 60E0      		ldi r22,lo8(0)
+ 1878 0b9a 44E0      		ldi r20,lo8(4)
+ 1879 0b9c 22E0      		ldi r18,lo8(2)
+ 1880 0b9e 0E94 0000 		call play_note
+ 1881 0ba2 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 34
+
+
+ 1882               	.L394:
+ 1883 0ba4 84E4      		ldi r24,lo8(68)
+ 1884 0ba6 60E0      		ldi r22,lo8(0)
+ 1885 0ba8 44E0      		ldi r20,lo8(4)
+ 1886 0baa 22E0      		ldi r18,lo8(2)
+ 1887 0bac 0E94 0000 		call play_note
+ 1888 0bb0 0895      		ret
+ 1889               	.L393:
+ 1890 0bb2 83E4      		ldi r24,lo8(67)
+ 1891 0bb4 60E0      		ldi r22,lo8(0)
+ 1892 0bb6 44E0      		ldi r20,lo8(4)
+ 1893 0bb8 22E0      		ldi r18,lo8(2)
+ 1894 0bba 0E94 0000 		call play_note
+ 1895 0bbe 0895      		ret
+ 1896               	.L392:
+ 1897 0bc0 929A      		sbi 50-32,2
+ 1898 0bc2 1092 0000 		sts (beat)+1,__zero_reg__
+ 1899 0bc6 1092 0000 		sts beat,__zero_reg__
+ 1900 0bca 82E0      		ldi r24,lo8(2)
+ 1901 0bcc 90E0      		ldi r25,hi8(2)
+ 1902 0bce 9093 0000 		sts (max_beat)+1,r25
+ 1903 0bd2 8093 0000 		sts max_beat,r24
+ 1904 0bd6 0895      		ret
+ 1905               	.L391:
+ 1906 0bd8 83E4      		ldi r24,lo8(67)
+ 1907 0bda 60E0      		ldi r22,lo8(0)
+ 1908 0bdc 44E0      		ldi r20,lo8(4)
+ 1909 0bde 22E0      		ldi r18,lo8(2)
+ 1910 0be0 0E94 0000 		call play_note
+ 1911 0be4 0895      		ret
+ 1912               	.L390:
+ 1913 0be6 929A      		sbi 50-32,2
+ 1914 0be8 1092 0000 		sts (beat)+1,__zero_reg__
+ 1915 0bec 1092 0000 		sts beat,__zero_reg__
+ 1916 0bf0 82E0      		ldi r24,lo8(2)
+ 1917 0bf2 90E0      		ldi r25,hi8(2)
+ 1918 0bf4 9093 0000 		sts (max_beat)+1,r25
+ 1919 0bf8 8093 0000 		sts max_beat,r24
+ 1920 0bfc 0895      		ret
+ 1921               	.L389:
+ 1922 0bfe 83E4      		ldi r24,lo8(67)
+ 1923 0c00 60E0      		ldi r22,lo8(0)
+ 1924 0c02 44E0      		ldi r20,lo8(4)
+ 1925 0c04 22E0      		ldi r18,lo8(2)
+ 1926 0c06 0E94 0000 		call play_note
+ 1927 0c0a 0895      		ret
+ 1928               	.L388:
+ 1929 0c0c 929A      		sbi 50-32,2
+ 1930 0c0e 1092 0000 		sts (beat)+1,__zero_reg__
+ 1931 0c12 1092 0000 		sts beat,__zero_reg__
+ 1932 0c16 81E0      		ldi r24,lo8(1)
+ 1933 0c18 90E0      		ldi r25,hi8(1)
+ 1934 0c1a 9093 0000 		sts (max_beat)+1,r25
+ 1935 0c1e 8093 0000 		sts max_beat,r24
+ 1936 0c22 0895      		ret
+ 1937               	.L387:
+ 1938 0c24 83E4      		ldi r24,lo8(67)
+GAS LISTING /tmp/ccY7DmUh.s 			page 35
+
+
+ 1939 0c26 60E0      		ldi r22,lo8(0)
+ 1940 0c28 44E0      		ldi r20,lo8(4)
+ 1941 0c2a 22E0      		ldi r18,lo8(2)
+ 1942 0c2c 0E94 0000 		call play_note
+ 1943 0c30 0895      		ret
+ 1944               	.L386:
+ 1945 0c32 929A      		sbi 50-32,2
+ 1946 0c34 1092 0000 		sts (beat)+1,__zero_reg__
+ 1947 0c38 1092 0000 		sts beat,__zero_reg__
+ 1948 0c3c 84E0      		ldi r24,lo8(4)
+ 1949 0c3e 90E0      		ldi r25,hi8(4)
+ 1950 0c40 9093 0000 		sts (max_beat)+1,r25
+ 1951 0c44 8093 0000 		sts max_beat,r24
+ 1952 0c48 0895      		ret
+ 1953               	.L385:
+ 1954 0c4a 87E4      		ldi r24,lo8(71)
+ 1955 0c4c 60E0      		ldi r22,lo8(0)
+ 1956 0c4e 43E0      		ldi r20,lo8(3)
+ 1957 0c50 24E0      		ldi r18,lo8(4)
+ 1958 0c52 0E94 0000 		call play_note
+ 1959 0c56 0895      		ret
+ 1960               	.L384:
+ 1961 0c58 81E4      		ldi r24,lo8(65)
+ 1962 0c5a 60E0      		ldi r22,lo8(0)
+ 1963 0c5c 43E0      		ldi r20,lo8(3)
+ 1964 0c5e 22E0      		ldi r18,lo8(2)
+ 1965 0c60 0E94 0000 		call play_note
+ 1966 0c64 0895      		ret
+ 1967               	.L383:
+ 1968 0c66 929A      		sbi 50-32,2
+ 1969 0c68 1092 0000 		sts (beat)+1,__zero_reg__
+ 1970 0c6c 1092 0000 		sts beat,__zero_reg__
+ 1971 0c70 82E0      		ldi r24,lo8(2)
+ 1972 0c72 90E0      		ldi r25,hi8(2)
+ 1973 0c74 9093 0000 		sts (max_beat)+1,r25
+ 1974 0c78 8093 0000 		sts max_beat,r24
+ 1975 0c7c 0895      		ret
+ 1976               	.L382:
+ 1977 0c7e 83E4      		ldi r24,lo8(67)
+ 1978 0c80 60E0      		ldi r22,lo8(0)
+ 1979 0c82 44E0      		ldi r20,lo8(4)
+ 1980 0c84 22E0      		ldi r18,lo8(2)
+ 1981 0c86 0E94 0000 		call play_note
+ 1982 0c8a 0895      		ret
+ 1983               	.L381:
+ 1984 0c8c 85E4      		ldi r24,lo8(69)
+ 1985 0c8e 60E0      		ldi r22,lo8(0)
+ 1986 0c90 44E0      		ldi r20,lo8(4)
+ 1987 0c92 22E0      		ldi r18,lo8(2)
+ 1988 0c94 0E94 0000 		call play_note
+ 1989 0c98 0895      		ret
+ 1990               	.L380:
+ 1991 0c9a 84E4      		ldi r24,lo8(68)
+ 1992 0c9c 60E0      		ldi r22,lo8(0)
+ 1993 0c9e 44E0      		ldi r20,lo8(4)
+ 1994 0ca0 24E0      		ldi r18,lo8(4)
+ 1995 0ca2 0E94 0000 		call play_note
+GAS LISTING /tmp/ccY7DmUh.s 			page 36
+
+
+ 1996 0ca6 0895      		ret
+ 1997               	.L379:
+ 1998 0ca8 83E4      		ldi r24,lo8(67)
+ 1999 0caa 60E0      		ldi r22,lo8(0)
+ 2000 0cac 44E0      		ldi r20,lo8(4)
+ 2001 0cae 22E0      		ldi r18,lo8(2)
+ 2002 0cb0 0E94 0000 		call play_note
+ 2003 0cb4 0895      		ret
+ 2004               	.L378:
+ 2005 0cb6 929A      		sbi 50-32,2
+ 2006 0cb8 1092 0000 		sts (beat)+1,__zero_reg__
+ 2007 0cbc 1092 0000 		sts beat,__zero_reg__
+ 2008 0cc0 82E0      		ldi r24,lo8(2)
+ 2009 0cc2 90E0      		ldi r25,hi8(2)
+ 2010 0cc4 9093 0000 		sts (max_beat)+1,r25
+ 2011 0cc8 8093 0000 		sts max_beat,r24
+ 2012 0ccc 0895      		ret
+ 2013               	.L377:
+ 2014 0cce 83E4      		ldi r24,lo8(67)
+ 2015 0cd0 60E0      		ldi r22,lo8(0)
+ 2016 0cd2 44E0      		ldi r20,lo8(4)
+ 2017 0cd4 22E0      		ldi r18,lo8(2)
+ 2018 0cd6 0E94 0000 		call play_note
+ 2019 0cda 0895      		ret
+ 2020               	.L376:
+ 2021 0cdc 929A      		sbi 50-32,2
+ 2022 0cde 1092 0000 		sts (beat)+1,__zero_reg__
+ 2023 0ce2 1092 0000 		sts beat,__zero_reg__
+ 2024 0ce6 82E0      		ldi r24,lo8(2)
+ 2025 0ce8 90E0      		ldi r25,hi8(2)
+ 2026 0cea 9093 0000 		sts (max_beat)+1,r25
+ 2027 0cee 8093 0000 		sts max_beat,r24
+ 2028 0cf2 0895      		ret
+ 2029               	.L375:
+ 2030 0cf4 83E4      		ldi r24,lo8(67)
+ 2031 0cf6 60E0      		ldi r22,lo8(0)
+ 2032 0cf8 44E0      		ldi r20,lo8(4)
+ 2033 0cfa 22E0      		ldi r18,lo8(2)
+ 2034 0cfc 0E94 0000 		call play_note
+ 2035 0d00 0895      		ret
+ 2036               	.L374:
+ 2037 0d02 929A      		sbi 50-32,2
+ 2038 0d04 1092 0000 		sts (beat)+1,__zero_reg__
+ 2039 0d08 1092 0000 		sts beat,__zero_reg__
+ 2040 0d0c 81E0      		ldi r24,lo8(1)
+ 2041 0d0e 90E0      		ldi r25,hi8(1)
+ 2042 0d10 9093 0000 		sts (max_beat)+1,r25
+ 2043 0d14 8093 0000 		sts max_beat,r24
+ 2044 0d18 0895      		ret
+ 2045               	.L373:
+ 2046 0d1a 83E4      		ldi r24,lo8(67)
+ 2047 0d1c 60E0      		ldi r22,lo8(0)
+ 2048 0d1e 44E0      		ldi r20,lo8(4)
+ 2049 0d20 22E0      		ldi r18,lo8(2)
+ 2050 0d22 0E94 0000 		call play_note
+ 2051 0d26 0895      		ret
+ 2052               	.L372:
+GAS LISTING /tmp/ccY7DmUh.s 			page 37
+
+
+ 2053 0d28 929A      		sbi 50-32,2
+ 2054 0d2a 1092 0000 		sts (beat)+1,__zero_reg__
+ 2055 0d2e 1092 0000 		sts beat,__zero_reg__
+ 2056 0d32 8AE0      		ldi r24,lo8(10)
+ 2057 0d34 90E0      		ldi r25,hi8(10)
+ 2058 0d36 9093 0000 		sts (max_beat)+1,r25
+ 2059 0d3a 8093 0000 		sts max_beat,r24
+ 2060 0d3e 0895      		ret
+ 2061               	.L371:
+ 2062 0d40 83E4      		ldi r24,lo8(67)
+ 2063 0d42 60E0      		ldi r22,lo8(0)
+ 2064 0d44 44E0      		ldi r20,lo8(4)
+ 2065 0d46 24E0      		ldi r18,lo8(4)
+ 2066 0d48 0E94 0000 		call play_note
+ 2067 0d4c 0895      		ret
+ 2068               	.L370:
+ 2069 0d4e 929A      		sbi 50-32,2
+ 2070 0d50 1092 0000 		sts (beat)+1,__zero_reg__
+ 2071 0d54 1092 0000 		sts beat,__zero_reg__
+ 2072 0d58 84E0      		ldi r24,lo8(4)
+ 2073 0d5a 90E0      		ldi r25,hi8(4)
+ 2074 0d5c 9093 0000 		sts (max_beat)+1,r25
+ 2075 0d60 8093 0000 		sts max_beat,r24
+ 2076 0d64 0895      		ret
+ 2077               	.L369:
+ 2078 0d66 84E4      		ldi r24,lo8(68)
+ 2079 0d68 60E0      		ldi r22,lo8(0)
+ 2080 0d6a 44E0      		ldi r20,lo8(4)
+ 2081 0d6c 22E0      		ldi r18,lo8(2)
+ 2082 0d6e 0E94 0000 		call play_note
+ 2083 0d72 0895      		ret
+ 2084               	.L368:
+ 2085 0d74 929A      		sbi 50-32,2
+ 2086 0d76 1092 0000 		sts (beat)+1,__zero_reg__
+ 2087 0d7a 1092 0000 		sts beat,__zero_reg__
+ 2088 0d7e 82E0      		ldi r24,lo8(2)
+ 2089 0d80 90E0      		ldi r25,hi8(2)
+ 2090 0d82 9093 0000 		sts (max_beat)+1,r25
+ 2091 0d86 8093 0000 		sts max_beat,r24
+ 2092 0d8a 0895      		ret
+ 2093               	.L367:
+ 2094 0d8c 85E4      		ldi r24,lo8(69)
+ 2095 0d8e 61E0      		ldi r22,lo8(1)
+ 2096 0d90 44E0      		ldi r20,lo8(4)
+ 2097 0d92 24E0      		ldi r18,lo8(4)
+ 2098 0d94 0E94 0000 		call play_note
+ 2099 0d98 0895      		ret
+ 2100               	.L366:
+ 2101 0d9a 929A      		sbi 50-32,2
+ 2102 0d9c 1092 0000 		sts (beat)+1,__zero_reg__
+ 2103 0da0 1092 0000 		sts beat,__zero_reg__
+ 2104 0da4 84E0      		ldi r24,lo8(4)
+ 2105 0da6 90E0      		ldi r25,hi8(4)
+ 2106 0da8 9093 0000 		sts (max_beat)+1,r25
+ 2107 0dac 8093 0000 		sts max_beat,r24
+ 2108 0db0 0895      		ret
+ 2109               	.L365:
+GAS LISTING /tmp/ccY7DmUh.s 			page 38
+
+
+ 2110 0db2 84E4      		ldi r24,lo8(68)
+ 2111 0db4 60E0      		ldi r22,lo8(0)
+ 2112 0db6 44E0      		ldi r20,lo8(4)
+ 2113 0db8 22E0      		ldi r18,lo8(2)
+ 2114 0dba 0E94 0000 		call play_note
+ 2115 0dbe 0895      		ret
+ 2116               	.L364:
+ 2117 0dc0 83E4      		ldi r24,lo8(67)
+ 2118 0dc2 60E0      		ldi r22,lo8(0)
+ 2119 0dc4 44E0      		ldi r20,lo8(4)
+ 2120 0dc6 22E0      		ldi r18,lo8(2)
+ 2121 0dc8 0E94 0000 		call play_note
+ 2122 0dcc 0895      		ret
+ 2123               	.L363:
+ 2124 0dce 81E4      		ldi r24,lo8(65)
+ 2125 0dd0 60E0      		ldi r22,lo8(0)
+ 2126 0dd2 43E0      		ldi r20,lo8(3)
+ 2127 0dd4 22E0      		ldi r18,lo8(2)
+ 2128 0dd6 0E94 0000 		call play_note
+ 2129 0dda 0895      		ret
+ 2130               	.L362:
+ 2131 0ddc 929A      		sbi 50-32,2
+ 2132 0dde 1092 0000 		sts (beat)+1,__zero_reg__
+ 2133 0de2 1092 0000 		sts beat,__zero_reg__
+ 2134 0de6 82E0      		ldi r24,lo8(2)
+ 2135 0de8 90E0      		ldi r25,hi8(2)
+ 2136 0dea 9093 0000 		sts (max_beat)+1,r25
+ 2137 0dee 8093 0000 		sts max_beat,r24
+ 2138 0df2 0895      		ret
+ 2139               	.L361:
+ 2140 0df4 83E4      		ldi r24,lo8(67)
+ 2141 0df6 60E0      		ldi r22,lo8(0)
+ 2142 0df8 44E0      		ldi r20,lo8(4)
+ 2143 0dfa 22E0      		ldi r18,lo8(2)
+ 2144 0dfc 0E94 0000 		call play_note
+ 2145 0e00 0895      		ret
+ 2146               	.L360:
+ 2147 0e02 81E4      		ldi r24,lo8(65)
+ 2148 0e04 60E0      		ldi r22,lo8(0)
+ 2149 0e06 43E0      		ldi r20,lo8(3)
+ 2150 0e08 22E0      		ldi r18,lo8(2)
+ 2151 0e0a 0E94 0000 		call play_note
+ 2152 0e0e 0895      		ret
+ 2153               	.L359:
+ 2154 0e10 81E4      		ldi r24,lo8(65)
+ 2155 0e12 61E0      		ldi r22,lo8(1)
+ 2156 0e14 43E0      		ldi r20,lo8(3)
+ 2157 0e16 22E0      		ldi r18,lo8(2)
+ 2158 0e18 0E94 0000 		call play_note
+ 2159 0e1c 0895      		ret
+ 2160               	.L358:
+ 2161 0e1e 929A      		sbi 50-32,2
+ 2162 0e20 1092 0000 		sts (beat)+1,__zero_reg__
+ 2163 0e24 1092 0000 		sts beat,__zero_reg__
+ 2164 0e28 82E0      		ldi r24,lo8(2)
+ 2165 0e2a 90E0      		ldi r25,hi8(2)
+ 2166 0e2c 9093 0000 		sts (max_beat)+1,r25
+GAS LISTING /tmp/ccY7DmUh.s 			page 39
+
+
+ 2167 0e30 8093 0000 		sts max_beat,r24
+ 2168 0e34 0895      		ret
+ 2169               	.L357:
+ 2170 0e36 85E4      		ldi r24,lo8(69)
+ 2171 0e38 60E0      		ldi r22,lo8(0)
+ 2172 0e3a 44E0      		ldi r20,lo8(4)
+ 2173 0e3c 22E0      		ldi r18,lo8(2)
+ 2174 0e3e 0E94 0000 		call play_note
+ 2175 0e42 0895      		ret
+ 2176               	.L356:
+ 2177 0e44 929A      		sbi 50-32,2
+ 2178 0e46 1092 0000 		sts (beat)+1,__zero_reg__
+ 2179 0e4a 1092 0000 		sts beat,__zero_reg__
+ 2180 0e4e 82E0      		ldi r24,lo8(2)
+ 2181 0e50 90E0      		ldi r25,hi8(2)
+ 2182 0e52 9093 0000 		sts (max_beat)+1,r25
+ 2183 0e56 8093 0000 		sts max_beat,r24
+ 2184 0e5a 0895      		ret
+ 2185               	.L355:
+ 2186 0e5c 85E4      		ldi r24,lo8(69)
+ 2187 0e5e 61E0      		ldi r22,lo8(1)
+ 2188 0e60 44E0      		ldi r20,lo8(4)
+ 2189 0e62 22E0      		ldi r18,lo8(2)
+ 2190 0e64 0E94 0000 		call play_note
+ 2191 0e68 0895      		ret
+ 2192               	.L354:
+ 2193 0e6a 86E4      		ldi r24,lo8(70)
+ 2194 0e6c 60E0      		ldi r22,lo8(0)
+ 2195 0e6e 44E0      		ldi r20,lo8(4)
+ 2196 0e70 22E0      		ldi r18,lo8(2)
+ 2197 0e72 0E94 0000 		call play_note
+ 2198 0e76 0895      		ret
+ 2199               	.L353:
+ 2200 0e78 87E4      		ldi r24,lo8(71)
+ 2201 0e7a 61E0      		ldi r22,lo8(1)
+ 2202 0e7c 44E0      		ldi r20,lo8(4)
+ 2203 0e7e 22E0      		ldi r18,lo8(2)
+ 2204 0e80 0E94 0000 		call play_note
+ 2205 0e84 0895      		ret
+ 2206               	.L352:
+ 2207 0e86 87E4      		ldi r24,lo8(71)
+ 2208 0e88 60E0      		ldi r22,lo8(0)
+ 2209 0e8a 44E0      		ldi r20,lo8(4)
+ 2210 0e8c 22E0      		ldi r18,lo8(2)
+ 2211 0e8e 0E94 0000 		call play_note
+ 2212 0e92 0895      		ret
+ 2213               	.L351:
+ 2214 0e94 929A      		sbi 50-32,2
+ 2215 0e96 1092 0000 		sts (beat)+1,__zero_reg__
+ 2216 0e9a 1092 0000 		sts beat,__zero_reg__
+ 2217 0e9e 88E0      		ldi r24,lo8(8)
+ 2218 0ea0 90E0      		ldi r25,hi8(8)
+ 2219 0ea2 9093 0000 		sts (max_beat)+1,r25
+ 2220 0ea6 8093 0000 		sts max_beat,r24
+ 2221 0eaa 0895      		ret
+ 2222               	.L350:
+ 2223 0eac 87E4      		ldi r24,lo8(71)
+GAS LISTING /tmp/ccY7DmUh.s 			page 40
+
+
+ 2224 0eae 60E0      		ldi r22,lo8(0)
+ 2225 0eb0 44E0      		ldi r20,lo8(4)
+ 2226 0eb2 24E0      		ldi r18,lo8(4)
+ 2227 0eb4 0E94 0000 		call play_note
+ 2228 0eb8 0895      		ret
+ 2229               	.L349:
+ 2230 0eba 929A      		sbi 50-32,2
+ 2231 0ebc 1092 0000 		sts (beat)+1,__zero_reg__
+ 2232 0ec0 1092 0000 		sts beat,__zero_reg__
+ 2233 0ec4 81E0      		ldi r24,lo8(1)
+ 2234 0ec6 90E0      		ldi r25,hi8(1)
+ 2235 0ec8 9093 0000 		sts (max_beat)+1,r25
+ 2236 0ecc 8093 0000 		sts max_beat,r24
+ 2237 0ed0 0895      		ret
+ 2238               	.L348:
+ 2239 0ed2 87E4      		ldi r24,lo8(71)
+ 2240 0ed4 60E0      		ldi r22,lo8(0)
+ 2241 0ed6 44E0      		ldi r20,lo8(4)
+ 2242 0ed8 21E0      		ldi r18,lo8(1)
+ 2243 0eda 0E94 0000 		call play_note
+ 2244 0ede 0895      		ret
+ 2245               	.L347:
+ 2246 0ee0 929A      		sbi 50-32,2
+ 2247 0ee2 1092 0000 		sts (beat)+1,__zero_reg__
+ 2248 0ee6 1092 0000 		sts beat,__zero_reg__
+ 2249 0eea 82E0      		ldi r24,lo8(2)
+ 2250 0eec 90E0      		ldi r25,hi8(2)
+ 2251 0eee 9093 0000 		sts (max_beat)+1,r25
+ 2252 0ef2 8093 0000 		sts max_beat,r24
+ 2253 0ef6 0895      		ret
+ 2254               	.L346:
+ 2255 0ef8 87E4      		ldi r24,lo8(71)
+ 2256 0efa 60E0      		ldi r22,lo8(0)
+ 2257 0efc 44E0      		ldi r20,lo8(4)
+ 2258 0efe 22E0      		ldi r18,lo8(2)
+ 2259 0f00 0E94 0000 		call play_note
+ 2260 0f04 0895      		ret
+ 2261               	.L345:
+ 2262 0f06 929A      		sbi 50-32,2
+ 2263 0f08 1092 0000 		sts (beat)+1,__zero_reg__
+ 2264 0f0c 1092 0000 		sts beat,__zero_reg__
+ 2265 0f10 82E0      		ldi r24,lo8(2)
+ 2266 0f12 90E0      		ldi r25,hi8(2)
+ 2267 0f14 9093 0000 		sts (max_beat)+1,r25
+ 2268 0f18 8093 0000 		sts max_beat,r24
+ 2269 0f1c 0895      		ret
+ 2270               	.L344:
+ 2271 0f1e 85E4      		ldi r24,lo8(69)
+ 2272 0f20 60E0      		ldi r22,lo8(0)
+ 2273 0f22 43E0      		ldi r20,lo8(3)
+ 2274 0f24 22E0      		ldi r18,lo8(2)
+ 2275 0f26 0E94 0000 		call play_note
+ 2276 0f2a 0895      		ret
+ 2277               	.L343:
+ 2278 0f2c 929A      		sbi 50-32,2
+ 2279 0f2e 1092 0000 		sts (beat)+1,__zero_reg__
+ 2280 0f32 1092 0000 		sts beat,__zero_reg__
+GAS LISTING /tmp/ccY7DmUh.s 			page 41
+
+
+ 2281 0f36 82E0      		ldi r24,lo8(2)
+ 2282 0f38 90E0      		ldi r25,hi8(2)
+ 2283 0f3a 9093 0000 		sts (max_beat)+1,r25
+ 2284 0f3e 8093 0000 		sts max_beat,r24
+ 2285 0f42 0895      		ret
+ 2286               	.L342:
+ 2287 0f44 85E4      		ldi r24,lo8(69)
+ 2288 0f46 61E0      		ldi r22,lo8(1)
+ 2289 0f48 43E0      		ldi r20,lo8(3)
+ 2290 0f4a 22E0      		ldi r18,lo8(2)
+ 2291 0f4c 0E94 0000 		call play_note
+ 2292 0f50 0895      		ret
+ 2293               	.L341:
+ 2294 0f52 86E4      		ldi r24,lo8(70)
+ 2295 0f54 60E0      		ldi r22,lo8(0)
+ 2296 0f56 43E0      		ldi r20,lo8(3)
+ 2297 0f58 22E0      		ldi r18,lo8(2)
+ 2298 0f5a 0E94 0000 		call play_note
+ 2299 0f5e 0895      		ret
+ 2300               	.L340:
+ 2301 0f60 87E4      		ldi r24,lo8(71)
+ 2302 0f62 61E0      		ldi r22,lo8(1)
+ 2303 0f64 43E0      		ldi r20,lo8(3)
+ 2304 0f66 22E0      		ldi r18,lo8(2)
+ 2305 0f68 0E94 0000 		call play_note
+ 2306 0f6c 0895      		ret
+ 2307               	.L339:
+ 2308 0f6e 87E4      		ldi r24,lo8(71)
+ 2309 0f70 60E0      		ldi r22,lo8(0)
+ 2310 0f72 43E0      		ldi r20,lo8(3)
+ 2311 0f74 22E0      		ldi r18,lo8(2)
+ 2312 0f76 0E94 0000 		call play_note
+ 2313 0f7a 0895      		ret
+ 2314               	.L338:
+ 2315 0f7c 929A      		sbi 50-32,2
+ 2316 0f7e 1092 0000 		sts (beat)+1,__zero_reg__
+ 2317 0f82 1092 0000 		sts beat,__zero_reg__
+ 2318 0f86 84E0      		ldi r24,lo8(4)
+ 2319 0f88 90E0      		ldi r25,hi8(4)
+ 2320 0f8a 9093 0000 		sts (max_beat)+1,r25
+ 2321 0f8e 8093 0000 		sts max_beat,r24
+ 2322 0f92 0895      		ret
+ 2323               	.L337:
+ 2324 0f94 84E4      		ldi r24,lo8(68)
+ 2325 0f96 60E0      		ldi r22,lo8(0)
+ 2326 0f98 44E0      		ldi r20,lo8(4)
+ 2327 0f9a 22E0      		ldi r18,lo8(2)
+ 2328 0f9c 0E94 0000 		call play_note
+ 2329 0fa0 0895      		ret
+ 2330               	.L336:
+ 2331 0fa2 83E4      		ldi r24,lo8(67)
+ 2332 0fa4 60E0      		ldi r22,lo8(0)
+ 2333 0fa6 44E0      		ldi r20,lo8(4)
+ 2334 0fa8 22E0      		ldi r18,lo8(2)
+ 2335 0faa 0E94 0000 		call play_note
+ 2336 0fae 0895      		ret
+ 2337               	.L335:
+GAS LISTING /tmp/ccY7DmUh.s 			page 42
+
+
+ 2338 0fb0 81E4      		ldi r24,lo8(65)
+ 2339 0fb2 60E0      		ldi r22,lo8(0)
+ 2340 0fb4 43E0      		ldi r20,lo8(3)
+ 2341 0fb6 22E0      		ldi r18,lo8(2)
+ 2342 0fb8 0E94 0000 		call play_note
+ 2343 0fbc 0895      		ret
+ 2344               	.L334:
+ 2345 0fbe 929A      		sbi 50-32,2
+ 2346 0fc0 1092 0000 		sts (beat)+1,__zero_reg__
+ 2347 0fc4 1092 0000 		sts beat,__zero_reg__
+ 2348 0fc8 82E0      		ldi r24,lo8(2)
+ 2349 0fca 90E0      		ldi r25,hi8(2)
+ 2350 0fcc 9093 0000 		sts (max_beat)+1,r25
+ 2351 0fd0 8093 0000 		sts max_beat,r24
+ 2352 0fd4 0895      		ret
+ 2353               	.L333:
+ 2354 0fd6 83E4      		ldi r24,lo8(67)
+ 2355 0fd8 60E0      		ldi r22,lo8(0)
+ 2356 0fda 44E0      		ldi r20,lo8(4)
+ 2357 0fdc 22E0      		ldi r18,lo8(2)
+ 2358 0fde 0E94 0000 		call play_note
+ 2359 0fe2 0895      		ret
+ 2360               	.L332:
+ 2361 0fe4 81E4      		ldi r24,lo8(65)
+ 2362 0fe6 60E0      		ldi r22,lo8(0)
+ 2363 0fe8 43E0      		ldi r20,lo8(3)
+ 2364 0fea 22E0      		ldi r18,lo8(2)
+ 2365 0fec 0E94 0000 		call play_note
+ 2366 0ff0 0895      		ret
+ 2367               	.L331:
+ 2368 0ff2 81E4      		ldi r24,lo8(65)
+ 2369 0ff4 61E0      		ldi r22,lo8(1)
+ 2370 0ff6 43E0      		ldi r20,lo8(3)
+ 2371 0ff8 22E0      		ldi r18,lo8(2)
+ 2372 0ffa 0E94 0000 		call play_note
+ 2373 0ffe 0895      		ret
+ 2374               	.L330:
+ 2375 1000 929A      		sbi 50-32,2
+ 2376 1002 1092 0000 		sts (beat)+1,__zero_reg__
+ 2377 1006 1092 0000 		sts beat,__zero_reg__
+ 2378 100a 82E0      		ldi r24,lo8(2)
+ 2379 100c 90E0      		ldi r25,hi8(2)
+ 2380 100e 9093 0000 		sts (max_beat)+1,r25
+ 2381 1012 8093 0000 		sts max_beat,r24
+ 2382 1016 0895      		ret
+ 2383               	.L329:
+ 2384 1018 85E4      		ldi r24,lo8(69)
+ 2385 101a 60E0      		ldi r22,lo8(0)
+ 2386 101c 44E0      		ldi r20,lo8(4)
+ 2387 101e 22E0      		ldi r18,lo8(2)
+ 2388 1020 0E94 0000 		call play_note
+ 2389 1024 0895      		ret
+ 2390               	.L328:
+ 2391 1026 929A      		sbi 50-32,2
+ 2392 1028 1092 0000 		sts (beat)+1,__zero_reg__
+ 2393 102c 1092 0000 		sts beat,__zero_reg__
+ 2394 1030 82E0      		ldi r24,lo8(2)
+GAS LISTING /tmp/ccY7DmUh.s 			page 43
+
+
+ 2395 1032 90E0      		ldi r25,hi8(2)
+ 2396 1034 9093 0000 		sts (max_beat)+1,r25
+ 2397 1038 8093 0000 		sts max_beat,r24
+ 2398 103c 0895      		ret
+ 2399               	.L327:
+ 2400 103e 85E4      		ldi r24,lo8(69)
+ 2401 1040 61E0      		ldi r22,lo8(1)
+ 2402 1042 44E0      		ldi r20,lo8(4)
+ 2403 1044 22E0      		ldi r18,lo8(2)
+ 2404 1046 0E94 0000 		call play_note
+ 2405 104a 0895      		ret
+ 2406               	.L326:
+ 2407 104c 86E4      		ldi r24,lo8(70)
+ 2408 104e 60E0      		ldi r22,lo8(0)
+ 2409 1050 44E0      		ldi r20,lo8(4)
+ 2410 1052 22E0      		ldi r18,lo8(2)
+ 2411 1054 0E94 0000 		call play_note
+ 2412 1058 0895      		ret
+ 2413               	.L325:
+ 2414 105a 87E4      		ldi r24,lo8(71)
+ 2415 105c 61E0      		ldi r22,lo8(1)
+ 2416 105e 44E0      		ldi r20,lo8(4)
+ 2417 1060 22E0      		ldi r18,lo8(2)
+ 2418 1062 0E94 0000 		call play_note
+ 2419 1066 0895      		ret
+ 2420               	.L324:
+ 2421 1068 87E4      		ldi r24,lo8(71)
+ 2422 106a 60E0      		ldi r22,lo8(0)
+ 2423 106c 44E0      		ldi r20,lo8(4)
+ 2424 106e 22E0      		ldi r18,lo8(2)
+ 2425 1070 0E94 0000 		call play_note
+ 2426 1074 0895      		ret
+ 2427               	.L323:
+ 2428 1076 929A      		sbi 50-32,2
+ 2429 1078 1092 0000 		sts (beat)+1,__zero_reg__
+ 2430 107c 1092 0000 		sts beat,__zero_reg__
+ 2431 1080 88E0      		ldi r24,lo8(8)
+ 2432 1082 90E0      		ldi r25,hi8(8)
+ 2433 1084 9093 0000 		sts (max_beat)+1,r25
+ 2434 1088 8093 0000 		sts max_beat,r24
+ 2435 108c 0895      		ret
+ 2436               	.L322:
+ 2437 108e 82E4      		ldi r24,lo8(66)
+ 2438 1090 60E0      		ldi r22,lo8(0)
+ 2439 1092 43E0      		ldi r20,lo8(3)
+ 2440 1094 22E0      		ldi r18,lo8(2)
+ 2441 1096 0E94 0000 		call play_note
+ 2442 109a 0895      		ret
+ 2443               	.L321:
+ 2444 109c 84E4      		ldi r24,lo8(68)
+ 2445 109e 60E0      		ldi r22,lo8(0)
+ 2446 10a0 44E0      		ldi r20,lo8(4)
+ 2447 10a2 22E0      		ldi r18,lo8(2)
+ 2448 10a4 0E94 0000 		call play_note
+ 2449 10a8 0895      		ret
+ 2450               	.L320:
+ 2451 10aa 83E4      		ldi r24,lo8(67)
+GAS LISTING /tmp/ccY7DmUh.s 			page 44
+
+
+ 2452 10ac 60E0      		ldi r22,lo8(0)
+ 2453 10ae 44E0      		ldi r20,lo8(4)
+ 2454 10b0 22E0      		ldi r18,lo8(2)
+ 2455 10b2 0E94 0000 		call play_note
+ 2456 10b6 0895      		ret
+ 2457               	.L319:
+ 2458 10b8 929A      		sbi 50-32,2
+ 2459 10ba 1092 0000 		sts (beat)+1,__zero_reg__
+ 2460 10be 1092 0000 		sts beat,__zero_reg__
+ 2461 10c2 82E0      		ldi r24,lo8(2)
+ 2462 10c4 90E0      		ldi r25,hi8(2)
+ 2463 10c6 9093 0000 		sts (max_beat)+1,r25
+ 2464 10ca 8093 0000 		sts max_beat,r24
+ 2465 10ce 0895      		ret
+ 2466               	.L318:
+ 2467 10d0 85E4      		ldi r24,lo8(69)
+ 2468 10d2 60E0      		ldi r22,lo8(0)
+ 2469 10d4 44E0      		ldi r20,lo8(4)
+ 2470 10d6 22E0      		ldi r18,lo8(2)
+ 2471 10d8 0E94 0000 		call play_note
+ 2472 10dc 0895      		ret
+ 2473               	.L317:
+ 2474 10de 929A      		sbi 50-32,2
+ 2475 10e0 1092 0000 		sts (beat)+1,__zero_reg__
+ 2476 10e4 1092 0000 		sts beat,__zero_reg__
+ 2477 10e8 82E0      		ldi r24,lo8(2)
+ 2478 10ea 90E0      		ldi r25,hi8(2)
+ 2479 10ec 9093 0000 		sts (max_beat)+1,r25
+ 2480 10f0 8093 0000 		sts max_beat,r24
+ 2481 10f4 0895      		ret
+ 2482               	.L316:
+ 2483 10f6 87E4      		ldi r24,lo8(71)
+ 2484 10f8 60E0      		ldi r22,lo8(0)
+ 2485 10fa 44E0      		ldi r20,lo8(4)
+ 2486 10fc 22E0      		ldi r18,lo8(2)
+ 2487 10fe 0E94 0000 		call play_note
+ 2488 1102 0895      		ret
+ 2489               	.L315:
+ 2490 1104 86E4      		ldi r24,lo8(70)
+ 2491 1106 60E0      		ldi r22,lo8(0)
+ 2492 1108 44E0      		ldi r20,lo8(4)
+ 2493 110a 22E0      		ldi r18,lo8(2)
+ 2494 110c 0E94 0000 		call play_note
+ 2495 1110 0895      		ret
+ 2496               	.L314:
+ 2497 1112 81E4      		ldi r24,lo8(65)
+ 2498 1114 60E0      		ldi r22,lo8(0)
+ 2499 1116 44E0      		ldi r20,lo8(4)
+ 2500 1118 24E0      		ldi r18,lo8(4)
+ 2501 111a 0E94 0000 		call play_note
+ 2502 111e 0895      		ret
+ 2503               	.L313:
+ 2504 1120 87E4      		ldi r24,lo8(71)
+ 2505 1122 60E0      		ldi r22,lo8(0)
+ 2506 1124 44E0      		ldi r20,lo8(4)
+ 2507 1126 22E0      		ldi r18,lo8(2)
+ 2508 1128 0E94 0000 		call play_note
+GAS LISTING /tmp/ccY7DmUh.s 			page 45
+
+
+ 2509 112c 0895      		ret
+ 2510               	.L312:
+ 2511 112e 929A      		sbi 50-32,2
+ 2512 1130 1092 0000 		sts (beat)+1,__zero_reg__
+ 2513 1134 1092 0000 		sts beat,__zero_reg__
+ 2514 1138 81E0      		ldi r24,lo8(1)
+ 2515 113a 90E0      		ldi r25,hi8(1)
+ 2516 113c 9093 0000 		sts (max_beat)+1,r25
+ 2517 1140 8093 0000 		sts max_beat,r24
+ 2518 1144 0895      		ret
+ 2519               	.L311:
+ 2520 1146 85E4      		ldi r24,lo8(69)
+ 2521 1148 60E0      		ldi r22,lo8(0)
+ 2522 114a 44E0      		ldi r20,lo8(4)
+ 2523 114c 22E0      		ldi r18,lo8(2)
+ 2524 114e 0E94 0000 		call play_note
+ 2525 1152 0895      		ret
+ 2526               	.L310:
+ 2527 1154 87E4      		ldi r24,lo8(71)
+ 2528 1156 60E0      		ldi r22,lo8(0)
+ 2529 1158 43E0      		ldi r20,lo8(3)
+ 2530 115a 23E0      		ldi r18,lo8(3)
+ 2531 115c 0E94 0000 		call play_note
+ 2532 1160 0895      		ret
+ 2533               	.L309:
+ 2534 1162 81E4      		ldi r24,lo8(65)
+ 2535 1164 60E0      		ldi r22,lo8(0)
+ 2536 1166 43E0      		ldi r20,lo8(3)
+ 2537 1168 24E0      		ldi r18,lo8(4)
+ 2538 116a 0E94 0000 		call play_note
+ 2539 116e 0895      		ret
+ 2540               	.L308:
+ 2541 1170 82E4      		ldi r24,lo8(66)
+ 2542 1172 61E0      		ldi r22,lo8(1)
+ 2543 1174 43E0      		ldi r20,lo8(3)
+ 2544 1176 22E0      		ldi r18,lo8(2)
+ 2545 1178 0E94 0000 		call play_note
+ 2546 117c 0895      		ret
+ 2547               	.L307:
+ 2548 117e 929A      		sbi 50-32,2
+ 2549 1180 1092 0000 		sts (beat)+1,__zero_reg__
+ 2550 1184 1092 0000 		sts beat,__zero_reg__
+ 2551 1188 82E0      		ldi r24,lo8(2)
+ 2552 118a 90E0      		ldi r25,hi8(2)
+ 2553 118c 9093 0000 		sts (max_beat)+1,r25
+ 2554 1190 8093 0000 		sts max_beat,r24
+ 2555 1194 0895      		ret
+ 2556               	.L306:
+ 2557 1196 82E4      		ldi r24,lo8(66)
+ 2558 1198 60E0      		ldi r22,lo8(0)
+ 2559 119a 43E0      		ldi r20,lo8(3)
+ 2560 119c 22E0      		ldi r18,lo8(2)
+ 2561 119e 0E94 0000 		call play_note
+ 2562 11a2 0895      		ret
+ 2563               	.L305:
+ 2564 11a4 929A      		sbi 50-32,2
+ 2565 11a6 1092 0000 		sts (beat)+1,__zero_reg__
+GAS LISTING /tmp/ccY7DmUh.s 			page 46
+
+
+ 2566 11aa 1092 0000 		sts beat,__zero_reg__
+ 2567 11ae 82E0      		ldi r24,lo8(2)
+ 2568 11b0 90E0      		ldi r25,hi8(2)
+ 2569 11b2 9093 0000 		sts (max_beat)+1,r25
+ 2570 11b6 8093 0000 		sts max_beat,r24
+ 2571 11ba 0895      		ret
+ 2572               	.L304:
+ 2573 11bc 81E4      		ldi r24,lo8(65)
+ 2574 11be 60E0      		ldi r22,lo8(0)
+ 2575 11c0 43E0      		ldi r20,lo8(3)
+ 2576 11c2 22E0      		ldi r18,lo8(2)
+ 2577 11c4 0E94 0000 		call play_note
+ 2578 11c8 0895      		ret
+ 2579               	.L303:
+ 2580 11ca 929A      		sbi 50-32,2
+ 2581 11cc 1092 0000 		sts (beat)+1,__zero_reg__
+ 2582 11d0 1092 0000 		sts beat,__zero_reg__
+ 2583 11d4 82E0      		ldi r24,lo8(2)
+ 2584 11d6 90E0      		ldi r25,hi8(2)
+ 2585 11d8 9093 0000 		sts (max_beat)+1,r25
+ 2586 11dc 8093 0000 		sts max_beat,r24
+ 2587 11e0 0895      		ret
+ 2588               	.L302:
+ 2589 11e2 85E4      		ldi r24,lo8(69)
+ 2590 11e4 60E0      		ldi r22,lo8(0)
+ 2591 11e6 43E0      		ldi r20,lo8(3)
+ 2592 11e8 24E0      		ldi r18,lo8(4)
+ 2593 11ea 0E94 0000 		call play_note
+ 2594 11ee 0895      		ret
+ 2595               	.L301:
+ 2596 11f0 929A      		sbi 50-32,2
+ 2597 11f2 1092 0000 		sts (beat)+1,__zero_reg__
+ 2598 11f6 1092 0000 		sts beat,__zero_reg__
+ 2599 11fa 83E0      		ldi r24,lo8(3)
+ 2600 11fc 90E0      		ldi r25,hi8(3)
+ 2601 11fe 9093 0000 		sts (max_beat)+1,r25
+ 2602 1202 8093 0000 		sts max_beat,r24
+ 2603 1206 0895      		ret
+ 2604               	.L300:
+ 2605 1208 87E4      		ldi r24,lo8(71)
+ 2606 120a 60E0      		ldi r22,lo8(0)
+ 2607 120c 43E0      		ldi r20,lo8(3)
+ 2608 120e 22E0      		ldi r18,lo8(2)
+ 2609 1210 0E94 0000 		call play_note
+ 2610 1214 0895      		ret
+ 2611               	.L299:
+ 2612 1216 929A      		sbi 50-32,2
+ 2613 1218 1092 0000 		sts (beat)+1,__zero_reg__
+ 2614 121c 1092 0000 		sts beat,__zero_reg__
+ 2615 1220 82E0      		ldi r24,lo8(2)
+ 2616 1222 90E0      		ldi r25,hi8(2)
+ 2617 1224 9093 0000 		sts (max_beat)+1,r25
+ 2618 1228 8093 0000 		sts max_beat,r24
+ 2619 122c 0895      		ret
+ 2620               	.L298:
+ 2621 122e 83E4      		ldi r24,lo8(67)
+ 2622 1230 60E0      		ldi r22,lo8(0)
+GAS LISTING /tmp/ccY7DmUh.s 			page 47
+
+
+ 2623 1232 44E0      		ldi r20,lo8(4)
+ 2624 1234 25E0      		ldi r18,lo8(5)
+ 2625 1236 0E94 0000 		call play_note
+ 2626 123a 0895      		ret
+ 2627               	.L297:
+ 2628 123c 929A      		sbi 50-32,2
+ 2629 123e 1092 0000 		sts (beat)+1,__zero_reg__
+ 2630 1242 1092 0000 		sts beat,__zero_reg__
+ 2631 1246 84E0      		ldi r24,lo8(4)
+ 2632 1248 90E0      		ldi r25,hi8(4)
+ 2633 124a 9093 0000 		sts (max_beat)+1,r25
+ 2634 124e 8093 0000 		sts max_beat,r24
+ 2635 1252 0895      		ret
+ 2636               	.L296:
+ 2637 1254 82E4      		ldi r24,lo8(66)
+ 2638 1256 60E0      		ldi r22,lo8(0)
+ 2639 1258 43E0      		ldi r20,lo8(3)
+ 2640 125a 22E0      		ldi r18,lo8(2)
+ 2641 125c 0E94 0000 		call play_note
+ 2642 1260 0895      		ret
+ 2643               	.L295:
+ 2644 1262 84E4      		ldi r24,lo8(68)
+ 2645 1264 60E0      		ldi r22,lo8(0)
+ 2646 1266 44E0      		ldi r20,lo8(4)
+ 2647 1268 22E0      		ldi r18,lo8(2)
+ 2648 126a 0E94 0000 		call play_note
+ 2649 126e 0895      		ret
+ 2650               	.L294:
+ 2651 1270 83E4      		ldi r24,lo8(67)
+ 2652 1272 60E0      		ldi r22,lo8(0)
+ 2653 1274 44E0      		ldi r20,lo8(4)
+ 2654 1276 22E0      		ldi r18,lo8(2)
+ 2655 1278 0E94 0000 		call play_note
+ 2656 127c 0895      		ret
+ 2657               	.L293:
+ 2658 127e 929A      		sbi 50-32,2
+ 2659 1280 1092 0000 		sts (beat)+1,__zero_reg__
+ 2660 1284 1092 0000 		sts beat,__zero_reg__
+ 2661 1288 82E0      		ldi r24,lo8(2)
+ 2662 128a 90E0      		ldi r25,hi8(2)
+ 2663 128c 9093 0000 		sts (max_beat)+1,r25
+ 2664 1290 8093 0000 		sts max_beat,r24
+ 2665 1294 0895      		ret
+ 2666               	.L292:
+ 2667 1296 85E4      		ldi r24,lo8(69)
+ 2668 1298 60E0      		ldi r22,lo8(0)
+ 2669 129a 44E0      		ldi r20,lo8(4)
+ 2670 129c 22E0      		ldi r18,lo8(2)
+ 2671 129e 0E94 0000 		call play_note
+ 2672 12a2 0895      		ret
+ 2673               	.L291:
+ 2674 12a4 929A      		sbi 50-32,2
+ 2675 12a6 1092 0000 		sts (beat)+1,__zero_reg__
+ 2676 12aa 1092 0000 		sts beat,__zero_reg__
+ 2677 12ae 82E0      		ldi r24,lo8(2)
+ 2678 12b0 90E0      		ldi r25,hi8(2)
+ 2679 12b2 9093 0000 		sts (max_beat)+1,r25
+GAS LISTING /tmp/ccY7DmUh.s 			page 48
+
+
+ 2680 12b6 8093 0000 		sts max_beat,r24
+ 2681 12ba 0895      		ret
+ 2682               	.L290:
+ 2683 12bc 87E4      		ldi r24,lo8(71)
+ 2684 12be 60E0      		ldi r22,lo8(0)
+ 2685 12c0 44E0      		ldi r20,lo8(4)
+ 2686 12c2 22E0      		ldi r18,lo8(2)
+ 2687 12c4 0E94 0000 		call play_note
+ 2688 12c8 0895      		ret
+ 2689               	.L289:
+ 2690 12ca 86E4      		ldi r24,lo8(70)
+ 2691 12cc 60E0      		ldi r22,lo8(0)
+ 2692 12ce 44E0      		ldi r20,lo8(4)
+ 2693 12d0 22E0      		ldi r18,lo8(2)
+ 2694 12d2 0E94 0000 		call play_note
+ 2695 12d6 0895      		ret
+ 2696               	.L288:
+ 2697 12d8 81E4      		ldi r24,lo8(65)
+ 2698 12da 60E0      		ldi r22,lo8(0)
+ 2699 12dc 44E0      		ldi r20,lo8(4)
+ 2700 12de 24E0      		ldi r18,lo8(4)
+ 2701 12e0 0E94 0000 		call play_note
+ 2702 12e4 0895      		ret
+ 2703               	.L287:
+ 2704 12e6 87E4      		ldi r24,lo8(71)
+ 2705 12e8 60E0      		ldi r22,lo8(0)
+ 2706 12ea 44E0      		ldi r20,lo8(4)
+ 2707 12ec 22E0      		ldi r18,lo8(2)
+ 2708 12ee 0E94 0000 		call play_note
+ 2709 12f2 0895      		ret
+ 2710               	.L286:
+ 2711 12f4 929A      		sbi 50-32,2
+ 2712 12f6 1092 0000 		sts (beat)+1,__zero_reg__
+ 2713 12fa 1092 0000 		sts beat,__zero_reg__
+ 2714 12fe 81E0      		ldi r24,lo8(1)
+ 2715 1300 90E0      		ldi r25,hi8(1)
+ 2716 1302 9093 0000 		sts (max_beat)+1,r25
+ 2717 1306 8093 0000 		sts max_beat,r24
+ 2718 130a 0895      		ret
+ 2719               	.L285:
+ 2720 130c 85E4      		ldi r24,lo8(69)
+ 2721 130e 60E0      		ldi r22,lo8(0)
+ 2722 1310 44E0      		ldi r20,lo8(4)
+ 2723 1312 22E0      		ldi r18,lo8(2)
+ 2724 1314 0E94 0000 		call play_note
+ 2725 1318 0895      		ret
+ 2726               	.L284:
+ 2727 131a 87E4      		ldi r24,lo8(71)
+ 2728 131c 60E0      		ldi r22,lo8(0)
+ 2729 131e 43E0      		ldi r20,lo8(3)
+ 2730 1320 23E0      		ldi r18,lo8(3)
+ 2731 1322 0E94 0000 		call play_note
+ 2732 1326 0895      		ret
+ 2733               	.L283:
+ 2734 1328 81E4      		ldi r24,lo8(65)
+ 2735 132a 60E0      		ldi r22,lo8(0)
+ 2736 132c 43E0      		ldi r20,lo8(3)
+GAS LISTING /tmp/ccY7DmUh.s 			page 49
+
+
+ 2737 132e 24E0      		ldi r18,lo8(4)
+ 2738 1330 0E94 0000 		call play_note
+ 2739 1334 0895      		ret
+ 2740               	.L282:
+ 2741 1336 82E4      		ldi r24,lo8(66)
+ 2742 1338 61E0      		ldi r22,lo8(1)
+ 2743 133a 43E0      		ldi r20,lo8(3)
+ 2744 133c 22E0      		ldi r18,lo8(2)
+ 2745 133e 0E94 0000 		call play_note
+ 2746 1342 0895      		ret
+ 2747               	.L281:
+ 2748 1344 929A      		sbi 50-32,2
+ 2749 1346 1092 0000 		sts (beat)+1,__zero_reg__
+ 2750 134a 1092 0000 		sts beat,__zero_reg__
+ 2751 134e 82E0      		ldi r24,lo8(2)
+ 2752 1350 90E0      		ldi r25,hi8(2)
+ 2753 1352 9093 0000 		sts (max_beat)+1,r25
+ 2754 1356 8093 0000 		sts max_beat,r24
+ 2755 135a 0895      		ret
+ 2756               	.L280:
+ 2757 135c 82E4      		ldi r24,lo8(66)
+ 2758 135e 60E0      		ldi r22,lo8(0)
+ 2759 1360 43E0      		ldi r20,lo8(3)
+ 2760 1362 22E0      		ldi r18,lo8(2)
+ 2761 1364 0E94 0000 		call play_note
+ 2762 1368 0895      		ret
+ 2763               	.L279:
+ 2764 136a 929A      		sbi 50-32,2
+ 2765 136c 1092 0000 		sts (beat)+1,__zero_reg__
+ 2766 1370 1092 0000 		sts beat,__zero_reg__
+ 2767 1374 82E0      		ldi r24,lo8(2)
+ 2768 1376 90E0      		ldi r25,hi8(2)
+ 2769 1378 9093 0000 		sts (max_beat)+1,r25
+ 2770 137c 8093 0000 		sts max_beat,r24
+ 2771 1380 0895      		ret
+ 2772               	.L278:
+ 2773 1382 81E4      		ldi r24,lo8(65)
+ 2774 1384 60E0      		ldi r22,lo8(0)
+ 2775 1386 43E0      		ldi r20,lo8(3)
+ 2776 1388 22E0      		ldi r18,lo8(2)
+ 2777 138a 0E94 0000 		call play_note
+ 2778 138e 0895      		ret
+ 2779               	.L277:
+ 2780 1390 929A      		sbi 50-32,2
+ 2781 1392 1092 0000 		sts (beat)+1,__zero_reg__
+ 2782 1396 1092 0000 		sts beat,__zero_reg__
+ 2783 139a 82E0      		ldi r24,lo8(2)
+ 2784 139c 90E0      		ldi r25,hi8(2)
+ 2785 139e 9093 0000 		sts (max_beat)+1,r25
+ 2786 13a2 8093 0000 		sts max_beat,r24
+ 2787 13a6 0895      		ret
+ 2788               	.L276:
+ 2789 13a8 85E4      		ldi r24,lo8(69)
+ 2790 13aa 60E0      		ldi r22,lo8(0)
+ 2791 13ac 43E0      		ldi r20,lo8(3)
+ 2792 13ae 24E0      		ldi r18,lo8(4)
+ 2793 13b0 0E94 0000 		call play_note
+GAS LISTING /tmp/ccY7DmUh.s 			page 50
+
+
+ 2794 13b4 0895      		ret
+ 2795               	.L275:
+ 2796 13b6 929A      		sbi 50-32,2
+ 2797 13b8 1092 0000 		sts (beat)+1,__zero_reg__
+ 2798 13bc 1092 0000 		sts beat,__zero_reg__
+ 2799 13c0 84E0      		ldi r24,lo8(4)
+ 2800 13c2 90E0      		ldi r25,hi8(4)
+ 2801 13c4 9093 0000 		sts (max_beat)+1,r25
+ 2802 13c8 8093 0000 		sts max_beat,r24
+ 2803 13cc 0895      		ret
+ 2804               	.L274:
+ 2805 13ce 87E4      		ldi r24,lo8(71)
+ 2806 13d0 60E0      		ldi r22,lo8(0)
+ 2807 13d2 43E0      		ldi r20,lo8(3)
+ 2808 13d4 22E0      		ldi r18,lo8(2)
+ 2809 13d6 0E94 0000 		call play_note
+ 2810 13da 0895      		ret
+ 2811               	.L273:
+ 2812 13dc 83E4      		ldi r24,lo8(67)
+ 2813 13de 60E0      		ldi r22,lo8(0)
+ 2814 13e0 44E0      		ldi r20,lo8(4)
+ 2815 13e2 25E0      		ldi r18,lo8(5)
+ 2816 13e4 0E94 0000 		call play_note
+ 2817 13e8 0895      		ret
+ 2818               	.L272:
+ 2819 13ea 929A      		sbi 50-32,2
+ 2820 13ec 1092 0000 		sts (beat)+1,__zero_reg__
+ 2821 13f0 1092 0000 		sts beat,__zero_reg__
+ 2822 13f4 88E0      		ldi r24,lo8(8)
+ 2823 13f6 90E0      		ldi r25,hi8(8)
+ 2824 13f8 9093 0000 		sts (max_beat)+1,r25
+ 2825 13fc 8093 0000 		sts max_beat,r24
+ 2826 1400 0895      		ret
+ 2827               	.L271:
+ 2828 1402 87E4      		ldi r24,lo8(71)
+ 2829 1404 60E0      		ldi r22,lo8(0)
+ 2830 1406 42E0      		ldi r20,lo8(2)
+ 2831 1408 28E0      		ldi r18,lo8(8)
+ 2832 140a 0E94 0000 		call play_note
+ 2833 140e 0895      		ret
+ 2834               	.L270:
+ 2835 1410 87E4      		ldi r24,lo8(71)
+ 2836 1412 60E0      		ldi r22,lo8(0)
+ 2837 1414 44E0      		ldi r20,lo8(4)
+ 2838 1416 28E0      		ldi r18,lo8(8)
+ 2839 1418 0E94 0000 		call play_note
+ 2840 141c 0895      		ret
+ 2841               	.L269:
+ 2842 141e 85E4      		ldi r24,lo8(69)
+ 2843 1420 60E0      		ldi r22,lo8(0)
+ 2844 1422 44E0      		ldi r20,lo8(4)
+ 2845 1424 24E0      		ldi r18,lo8(4)
+ 2846 1426 0E94 0000 		call play_note
+ 2847 142a 0895      		ret
+ 2848               	.L268:
+ 2849 142c 83E4      		ldi r24,lo8(67)
+ 2850 142e 60E0      		ldi r22,lo8(0)
+GAS LISTING /tmp/ccY7DmUh.s 			page 51
+
+
+ 2851 1430 44E0      		ldi r20,lo8(4)
+ 2852 1432 22E0      		ldi r18,lo8(2)
+ 2853 1434 0E94 0000 		call play_note
+ 2854 1438 0895      		ret
+ 2855               	.L267:
+ 2856 143a 929A      		sbi 50-32,2
+ 2857 143c 1092 0000 		sts (beat)+1,__zero_reg__
+ 2858 1440 1092 0000 		sts beat,__zero_reg__
+ 2859 1444 82E0      		ldi r24,lo8(2)
+ 2860 1446 90E0      		ldi r25,hi8(2)
+ 2861 1448 9093 0000 		sts (max_beat)+1,r25
+ 2862 144c 8093 0000 		sts max_beat,r24
+ 2863 1450 0895      		ret
+ 2864               	.L266:
+ 2865 1452 85E4      		ldi r24,lo8(69)
+ 2866 1454 60E0      		ldi r22,lo8(0)
+ 2867 1456 44E0      		ldi r20,lo8(4)
+ 2868 1458 22E0      		ldi r18,lo8(2)
+ 2869 145a 0E94 0000 		call play_note
+ 2870 145e 0895      		ret
+ 2871               	.L265:
+ 2872 1460 929A      		sbi 50-32,2
+ 2873 1462 1092 0000 		sts (beat)+1,__zero_reg__
+ 2874 1466 1092 0000 		sts beat,__zero_reg__
+ 2875 146a 81E0      		ldi r24,lo8(1)
+ 2876 146c 90E0      		ldi r25,hi8(1)
+ 2877 146e 9093 0000 		sts (max_beat)+1,r25
+ 2878 1472 8093 0000 		sts max_beat,r24
+ 2879 1476 0895      		ret
+ 2880               	.L264:
+ 2881 1478 85E4      		ldi r24,lo8(69)
+ 2882 147a 60E0      		ldi r22,lo8(0)
+ 2883 147c 44E0      		ldi r20,lo8(4)
+ 2884 147e 23E0      		ldi r18,lo8(3)
+ 2885 1480 0E94 0000 		call play_note
+ 2886 1484 0895      		ret
+ 2887               	.L263:
+ 2888 1486 929A      		sbi 50-32,2
+ 2889 1488 1092 0000 		sts (beat)+1,__zero_reg__
+ 2890 148c 1092 0000 		sts beat,__zero_reg__
+ 2891 1490 81E0      		ldi r24,lo8(1)
+ 2892 1492 90E0      		ldi r25,hi8(1)
+ 2893 1494 9093 0000 		sts (max_beat)+1,r25
+ 2894 1498 8093 0000 		sts max_beat,r24
+ 2895 149c 0895      		ret
+ 2896               	.L262:
+ 2897 149e 85E4      		ldi r24,lo8(69)
+ 2898 14a0 60E0      		ldi r22,lo8(0)
+ 2899 14a2 44E0      		ldi r20,lo8(4)
+ 2900 14a4 21E0      		ldi r18,lo8(1)
+ 2901 14a6 0E94 0000 		call play_note
+ 2902 14aa 0895      		ret
+ 2903               		.size	song2, .-song2
+ 2904               	.global	song1
+ 2905               		.type	song1, @function
+ 2906               	song1:
+ 2907               	/* prologue: function */
+GAS LISTING /tmp/ccY7DmUh.s 			page 52
+
+
+ 2908               	/* frame size = 0 */
+ 2909 14ac FC01      		movw r30,r24
+ 2910 14ae 8F33      		cpi r24,63
+ 2911 14b0 9105      		cpc r25,__zero_reg__
+ 2912 14b2 00F0      		brlo .L483
+ 2913 14b4 8FEF      		ldi r24,lo8(-1)
+ 2914 14b6 8093 0000 		sts notes,r24
+ 2915 14ba 0895      		ret
+ 2916               	.L483:
+ 2917 14bc E050      		subi r30,lo8(-(gs(.L480)))
+ 2918 14be F040      		sbci r31,hi8(-(gs(.L480)))
+ 2919 14c0 EE0F      		lsl r30
+ 2920 14c2 FF1F      		rol r31
+ 2921 14c4 0590      		lpm __tmp_reg__,Z+
+ 2922 14c6 F491      		lpm r31,Z
+ 2923 14c8 E02D      		mov r30,__tmp_reg__
+ 2924 14ca 0994      		ijmp
+ 2925               		.data
+ 2926               		.section .progmem.gcc_sw_table, "a", @progbits
+ 2927               		.p2align 1
+ 2928               	.L480:
+ 2929               		.data
+ 2930               		.section .progmem.gcc_sw_table, "a", @progbits
+ 2931               		.p2align 1
+ 2932 01e8 0000      		.word gs(.L456)
+ 2933 01ea 0000      		.word gs(.L453)
+ 2934 01ec 0000      		.word gs(.L454)
+ 2935 01ee 0000      		.word gs(.L449)
+ 2936 01f0 0000      		.word gs(.L421)
+ 2937 01f2 0000      		.word gs(.L422)
+ 2938 01f4 0000      		.word gs(.L454)
+ 2939 01f6 0000      		.word gs(.L453)
+ 2940 01f8 0000      		.word gs(.L458)
+ 2941 01fa 0000      		.word gs(.L459)
+ 2942 01fc 0000      		.word gs(.L427)
+ 2943 01fe 0000      		.word gs(.L454)
+ 2944 0200 0000      		.word gs(.L456)
+ 2945 0202 0000      		.word gs(.L449)
+ 2946 0204 0000      		.word gs(.L454)
+ 2947 0206 0000      		.word gs(.L432)
+ 2948 0208 0000      		.word gs(.L454)
+ 2949 020a 0000      		.word gs(.L455)
+ 2950 020c 0000      		.word gs(.L456)
+ 2951 020e 0000      		.word gs(.L457)
+ 2952 0210 0000      		.word gs(.L458)
+ 2953 0212 0000      		.word gs(.L459)
+ 2954 0214 0000      		.word gs(.L477)
+ 2955 0216 0000      		.word gs(.L440)
+ 2956 0218 0000      		.word gs(.L455)
+ 2957 021a 0000      		.word gs(.L445)
+ 2958 021c 0000      		.word gs(.L443)
+ 2959 021e 0000      		.word gs(.L444)
+ 2960 0220 0000      		.word gs(.L445)
+ 2961 0222 0000      		.word gs(.L446)
+ 2962 0224 0000      		.word gs(.L454)
+ 2963 0226 0000      		.word gs(.L456)
+ 2964 0228 0000      		.word gs(.L449)
+GAS LISTING /tmp/ccY7DmUh.s 			page 53
+
+
+ 2965 022a 0000      		.word gs(.L454)
+ 2966 022c 0000      		.word gs(.L451)
+ 2967 022e 0000      		.word gs(.L459)
+ 2968 0230 0000      		.word gs(.L453)
+ 2969 0232 0000      		.word gs(.L454)
+ 2970 0234 0000      		.word gs(.L455)
+ 2971 0236 0000      		.word gs(.L456)
+ 2972 0238 0000      		.word gs(.L457)
+ 2973 023a 0000      		.word gs(.L458)
+ 2974 023c 0000      		.word gs(.L459)
+ 2975 023e 0000      		.word gs(.L460)
+ 2976 0240 0000      		.word gs(.L470)
+ 2977 0242 0000      		.word gs(.L471)
+ 2978 0244 0000      		.word gs(.L472)
+ 2979 0246 0000      		.word gs(.L473)
+ 2980 0248 0000      		.word gs(.L474)
+ 2981 024a 0000      		.word gs(.L472)
+ 2982 024c 0000      		.word gs(.L467)
+ 2983 024e 0000      		.word gs(.L468)
+ 2984 0250 0000      		.word gs(.L469)
+ 2985 0252 0000      		.word gs(.L470)
+ 2986 0254 0000      		.word gs(.L471)
+ 2987 0256 0000      		.word gs(.L472)
+ 2988 0258 0000      		.word gs(.L473)
+ 2989 025a 0000      		.word gs(.L474)
+ 2990 025c 0000      		.word gs(.L475)
+ 2991 025e 0000      		.word gs(.L476)
+ 2992 0260 0000      		.word gs(.L477)
+ 2993 0262 0000      		.word gs(.L478)
+ 2994 0264 0000      		.word gs(.L479)
+ 2995               		.text
+ 2996               	.L454:
+ 2997 14cc 83E4      		ldi r24,lo8(67)
+ 2998 14ce 60E0      		ldi r22,lo8(0)
+ 2999 14d0 44E0      		ldi r20,lo8(4)
+ 3000 14d2 24E0      		ldi r18,lo8(4)
+ 3001 14d4 0E94 0000 		call play_note
+ 3002 14d8 0895      		ret
+ 3003               	.L456:
+ 3004 14da 85E4      		ldi r24,lo8(69)
+ 3005 14dc 60E0      		ldi r22,lo8(0)
+ 3006 14de 44E0      		ldi r20,lo8(4)
+ 3007 14e0 28E0      		ldi r18,lo8(8)
+ 3008 14e2 0E94 0000 		call play_note
+ 3009 14e6 0895      		ret
+ 3010               	.L459:
+ 3011 14e8 929A      		sbi 50-32,2
+ 3012 14ea 1092 0000 		sts (beat)+1,__zero_reg__
+ 3013 14ee 1092 0000 		sts beat,__zero_reg__
+ 3014 14f2 81E0      		ldi r24,lo8(1)
+ 3015 14f4 90E0      		ldi r25,hi8(1)
+ 3016 14f6 9093 0000 		sts (max_beat)+1,r25
+ 3017 14fa 8093 0000 		sts max_beat,r24
+ 3018 14fe 0895      		ret
+ 3019               	.L458:
+ 3020 1500 81E4      		ldi r24,lo8(65)
+ 3021 1502 60E0      		ldi r22,lo8(0)
+GAS LISTING /tmp/ccY7DmUh.s 			page 54
+
+
+ 3022 1504 43E0      		ldi r20,lo8(3)
+ 3023 1506 27E0      		ldi r18,lo8(7)
+ 3024 1508 0E94 0000 		call play_note
+ 3025 150c 0895      		ret
+ 3026               	.L472:
+ 3027 150e 83E4      		ldi r24,lo8(67)
+ 3028 1510 60E0      		ldi r22,lo8(0)
+ 3029 1512 43E0      		ldi r20,lo8(3)
+ 3030 1514 20E1      		ldi r18,lo8(16)
+ 3031 1516 0E94 0000 		call play_note
+ 3032 151a 0895      		ret
+ 3033               	.L449:
+ 3034 151c 84E4      		ldi r24,lo8(68)
+ 3035 151e 60E0      		ldi r22,lo8(0)
+ 3036 1520 44E0      		ldi r20,lo8(4)
+ 3037 1522 24E0      		ldi r18,lo8(4)
+ 3038 1524 0E94 0000 		call play_note
+ 3039 1528 0895      		ret
+ 3040               	.L453:
+ 3041 152a 82E4      		ldi r24,lo8(66)
+ 3042 152c 60E0      		ldi r22,lo8(0)
+ 3043 152e 43E0      		ldi r20,lo8(3)
+ 3044 1530 24E0      		ldi r18,lo8(4)
+ 3045 1532 0E94 0000 		call play_note
+ 3046 1536 0895      		ret
+ 3047               	.L455:
+ 3048 1538 84E4      		ldi r24,lo8(68)
+ 3049 153a 60E0      		ldi r22,lo8(0)
+ 3050 153c 44E0      		ldi r20,lo8(4)
+ 3051 153e 28E0      		ldi r18,lo8(8)
+ 3052 1540 0E94 0000 		call play_note
+ 3053 1544 0895      		ret
+ 3054               	.L473:
+ 3055 1546 84E4      		ldi r24,lo8(68)
+ 3056 1548 60E0      		ldi r22,lo8(0)
+ 3057 154a 43E0      		ldi r20,lo8(3)
+ 3058 154c 20E1      		ldi r18,lo8(16)
+ 3059 154e 0E94 0000 		call play_note
+ 3060 1552 0895      		ret
+ 3061               	.L474:
+ 3062 1554 82E4      		ldi r24,lo8(66)
+ 3063 1556 60E0      		ldi r22,lo8(0)
+ 3064 1558 42E0      		ldi r20,lo8(2)
+ 3065 155a 20E1      		ldi r18,lo8(16)
+ 3066 155c 0E94 0000 		call play_note
+ 3067 1560 0895      		ret
+ 3068               	.L477:
+ 3069 1562 81E4      		ldi r24,lo8(65)
+ 3070 1564 60E0      		ldi r22,lo8(0)
+ 3071 1566 43E0      		ldi r20,lo8(3)
+ 3072 1568 20E1      		ldi r18,lo8(16)
+ 3073 156a 0E94 0000 		call play_note
+ 3074 156e 0895      		ret
+ 3075               	.L457:
+ 3076 1570 83E4      		ldi r24,lo8(67)
+ 3077 1572 60E0      		ldi r22,lo8(0)
+ 3078 1574 44E0      		ldi r20,lo8(4)
+GAS LISTING /tmp/ccY7DmUh.s 			page 55
+
+
+ 3079 1576 28E0      		ldi r18,lo8(8)
+ 3080 1578 0E94 0000 		call play_note
+ 3081 157c 0895      		ret
+ 3082               	.L470:
+ 3083 157e 929A      		sbi 50-32,2
+ 3084 1580 1092 0000 		sts (beat)+1,__zero_reg__
+ 3085 1584 1092 0000 		sts beat,__zero_reg__
+ 3086 1588 88E0      		ldi r24,lo8(8)
+ 3087 158a 90E0      		ldi r25,hi8(8)
+ 3088 158c 9093 0000 		sts (max_beat)+1,r25
+ 3089 1590 8093 0000 		sts max_beat,r24
+ 3090 1594 0895      		ret
+ 3091               	.L471:
+ 3092 1596 85E4      		ldi r24,lo8(69)
+ 3093 1598 60E0      		ldi r22,lo8(0)
+ 3094 159a 43E0      		ldi r20,lo8(3)
+ 3095 159c 20E1      		ldi r18,lo8(16)
+ 3096 159e 0E94 0000 		call play_note
+ 3097 15a2 0895      		ret
+ 3098               	.L445:
+ 3099 15a4 86E4      		ldi r24,lo8(70)
+ 3100 15a6 60E0      		ldi r22,lo8(0)
+ 3101 15a8 44E0      		ldi r20,lo8(4)
+ 3102 15aa 24E0      		ldi r18,lo8(4)
+ 3103 15ac 0E94 0000 		call play_note
+ 3104 15b0 0895      		ret
+ 3105               	.L446:
+ 3106 15b2 85E4      		ldi r24,lo8(69)
+ 3107 15b4 60E0      		ldi r22,lo8(0)
+ 3108 15b6 44E0      		ldi r20,lo8(4)
+ 3109 15b8 2CE0      		ldi r18,lo8(12)
+ 3110 15ba 0E94 0000 		call play_note
+ 3111 15be 0895      		ret
+ 3112               	.L422:
+ 3113 15c0 84E4      		ldi r24,lo8(68)
+ 3114 15c2 60E0      		ldi r22,lo8(0)
+ 3115 15c4 44E0      		ldi r20,lo8(4)
+ 3116 15c6 22E0      		ldi r18,lo8(2)
+ 3117 15c8 0E94 0000 		call play_note
+ 3118 15cc 0895      		ret
+ 3119               	.L421:
+ 3120 15ce 85E4      		ldi r24,lo8(69)
+ 3121 15d0 60E0      		ldi r22,lo8(0)
+ 3122 15d2 44E0      		ldi r20,lo8(4)
+ 3123 15d4 22E0      		ldi r18,lo8(2)
+ 3124 15d6 0E94 0000 		call play_note
+ 3125 15da 0895      		ret
+ 3126               	.L476:
+ 3127 15dc 85E4      		ldi r24,lo8(69)
+ 3128 15de 60E0      		ldi r22,lo8(0)
+ 3129 15e0 43E0      		ldi r20,lo8(3)
+ 3130 15e2 28E0      		ldi r18,lo8(8)
+ 3131 15e4 0E94 0000 		call play_note
+ 3132 15e8 0895      		ret
+ 3133               	.L467:
+ 3134 15ea 81E4      		ldi r24,lo8(65)
+ 3135 15ec 60E0      		ldi r22,lo8(0)
+GAS LISTING /tmp/ccY7DmUh.s 			page 56
+
+
+ 3136 15ee 42E0      		ldi r20,lo8(2)
+ 3137 15f0 20E1      		ldi r18,lo8(16)
+ 3138 15f2 0E94 0000 		call play_note
+ 3139 15f6 0895      		ret
+ 3140               	.L444:
+ 3141 15f8 87E4      		ldi r24,lo8(71)
+ 3142 15fa 60E0      		ldi r22,lo8(0)
+ 3143 15fc 44E0      		ldi r20,lo8(4)
+ 3144 15fe 24E0      		ldi r18,lo8(4)
+ 3145 1600 0E94 0000 		call play_note
+ 3146 1604 0895      		ret
+ 3147               	.L479:
+ 3148 1606 929A      		sbi 50-32,2
+ 3149 1608 1092 0000 		sts (beat)+1,__zero_reg__
+ 3150 160c 1092 0000 		sts beat,__zero_reg__
+ 3151 1610 80E1      		ldi r24,lo8(16)
+ 3152 1612 90E0      		ldi r25,hi8(16)
+ 3153 1614 9093 0000 		sts (max_beat)+1,r25
+ 3154 1618 8093 0000 		sts max_beat,r24
+ 3155 161c 0895      		ret
+ 3156               	.L443:
+ 3157 161e 81E4      		ldi r24,lo8(65)
+ 3158 1620 60E0      		ldi r22,lo8(0)
+ 3159 1622 44E0      		ldi r20,lo8(4)
+ 3160 1624 28E0      		ldi r18,lo8(8)
+ 3161 1626 0E94 0000 		call play_note
+ 3162 162a 0895      		ret
+ 3163               	.L460:
+ 3164 162c 81E4      		ldi r24,lo8(65)
+ 3165 162e 60E0      		ldi r22,lo8(0)
+ 3166 1630 43E0      		ldi r20,lo8(3)
+ 3167 1632 28E0      		ldi r18,lo8(8)
+ 3168 1634 0E94 0000 		call play_note
+ 3169 1638 0895      		ret
+ 3170               	.L432:
+ 3171 163a 82E4      		ldi r24,lo8(66)
+ 3172 163c 60E0      		ldi r22,lo8(0)
+ 3173 163e 43E0      		ldi r20,lo8(3)
+ 3174 1640 2CE0      		ldi r18,lo8(12)
+ 3175 1642 0E94 0000 		call play_note
+ 3176 1646 0895      		ret
+ 3177               	.L468:
+ 3178 1648 81E4      		ldi r24,lo8(65)
+ 3179 164a 61E0      		ldi r22,lo8(1)
+ 3180 164c 42E0      		ldi r20,lo8(2)
+ 3181 164e 20E1      		ldi r18,lo8(16)
+ 3182 1650 0E94 0000 		call play_note
+ 3183 1654 0895      		ret
+ 3184               	.L469:
+ 3185 1656 82E4      		ldi r24,lo8(66)
+ 3186 1658 60E0      		ldi r22,lo8(0)
+ 3187 165a 42E0      		ldi r20,lo8(2)
+ 3188 165c 28E0      		ldi r18,lo8(8)
+ 3189 165e 0E94 0000 		call play_note
+ 3190 1662 0895      		ret
+ 3191               	.L427:
+ 3192 1664 81E4      		ldi r24,lo8(65)
+GAS LISTING /tmp/ccY7DmUh.s 			page 57
+
+
+ 3193 1666 60E0      		ldi r22,lo8(0)
+ 3194 1668 43E0      		ldi r20,lo8(3)
+ 3195 166a 24E0      		ldi r18,lo8(4)
+ 3196 166c 0E94 0000 		call play_note
+ 3197 1670 0895      		ret
+ 3198               	.L478:
+ 3199 1672 81E4      		ldi r24,lo8(65)
+ 3200 1674 61E0      		ldi r22,lo8(1)
+ 3201 1676 43E0      		ldi r20,lo8(3)
+ 3202 1678 20E1      		ldi r18,lo8(16)
+ 3203 167a 0E94 0000 		call play_note
+ 3204 167e 0895      		ret
+ 3205               	.L475:
+ 3206 1680 83E4      		ldi r24,lo8(67)
+ 3207 1682 60E0      		ldi r22,lo8(0)
+ 3208 1684 43E0      		ldi r20,lo8(3)
+ 3209 1686 28E0      		ldi r18,lo8(8)
+ 3210 1688 0E94 0000 		call play_note
+ 3211 168c 0895      		ret
+ 3212               	.L440:
+ 3213 168e 929A      		sbi 50-32,2
+ 3214 1690 1092 0000 		sts (beat)+1,__zero_reg__
+ 3215 1694 1092 0000 		sts beat,__zero_reg__
+ 3216 1698 84E0      		ldi r24,lo8(4)
+ 3217 169a 90E0      		ldi r25,hi8(4)
+ 3218 169c 9093 0000 		sts (max_beat)+1,r25
+ 3219 16a0 8093 0000 		sts max_beat,r24
+ 3220 16a4 0895      		ret
+ 3221               	.L451:
+ 3222 16a6 82E4      		ldi r24,lo8(66)
+ 3223 16a8 60E0      		ldi r22,lo8(0)
+ 3224 16aa 43E0      		ldi r20,lo8(3)
+ 3225 16ac 27E0      		ldi r18,lo8(7)
+ 3226 16ae 0E94 0000 		call play_note
+ 3227 16b2 0895      		ret
+ 3228               		.size	song1, .-song1
+ 3229               	.global	song0
+ 3230               		.type	song0, @function
+ 3231               	song0:
+ 3232               	/* prologue: function */
+ 3233               	/* frame size = 0 */
+ 3234 16b4 FC01      		movw r30,r24
+ 3235 16b6 8634      		cpi r24,70
+ 3236 16b8 9105      		cpc r25,__zero_reg__
+ 3237 16ba 00F0      		brlo .L559
+ 3238 16bc 8FEF      		ldi r24,lo8(-1)
+ 3239 16be 8093 0000 		sts notes,r24
+ 3240 16c2 0895      		ret
+ 3241               	.L559:
+ 3242 16c4 E050      		subi r30,lo8(-(gs(.L556)))
+ 3243 16c6 F040      		sbci r31,hi8(-(gs(.L556)))
+ 3244 16c8 EE0F      		lsl r30
+ 3245 16ca FF1F      		rol r31
+ 3246 16cc 0590      		lpm __tmp_reg__,Z+
+ 3247 16ce F491      		lpm r31,Z
+ 3248 16d0 E02D      		mov r30,__tmp_reg__
+ 3249 16d2 0994      		ijmp
+GAS LISTING /tmp/ccY7DmUh.s 			page 58
+
+
+ 3250               		.data
+ 3251               		.section .progmem.gcc_sw_table, "a", @progbits
+ 3252               		.p2align 1
+ 3253               	.L556:
+ 3254               		.data
+ 3255               		.section .progmem.gcc_sw_table, "a", @progbits
+ 3256               		.p2align 1
+ 3257 0266 0000      		.word gs(.L536)
+ 3258 0268 0000      		.word gs(.L528)
+ 3259 026a 0000      		.word gs(.L539)
+ 3260 026c 0000      		.word gs(.L530)
+ 3261 026e 0000      		.word gs(.L533)
+ 3262 0270 0000      		.word gs(.L534)
+ 3263 0272 0000      		.word gs(.L533)
+ 3264 0274 0000      		.word gs(.L534)
+ 3265 0276 0000      		.word gs(.L547)
+ 3266 0278 0000      		.word gs(.L536)
+ 3267 027a 0000      		.word gs(.L528)
+ 3268 027c 0000      		.word gs(.L539)
+ 3269 027e 0000      		.word gs(.L530)
+ 3270 0280 0000      		.word gs(.L542)
+ 3271 0282 0000      		.word gs(.L543)
+ 3272 0284 0000      		.word gs(.L542)
+ 3273 0286 0000      		.word gs(.L543)
+ 3274 0288 0000      		.word gs(.L544)
+ 3275 028a 0000      		.word gs(.L504)
+ 3276 028c 0000      		.word gs(.L507)
+ 3277 028e 0000      		.word gs(.L506)
+ 3278 0290 0000      		.word gs(.L507)
+ 3279 0292 0000      		.word gs(.L508)
+ 3280 0294 0000      		.word gs(.L509)
+ 3281 0296 0000      		.word gs(.L543)
+ 3282 0298 0000      		.word gs(.L549)
+ 3283 029a 0000      		.word gs(.L543)
+ 3284 029c 0000      		.word gs(.L513)
+ 3285 029e 0000      		.word gs(.L552)
+ 3286 02a0 0000      		.word gs(.L515)
+ 3287 02a2 0000      		.word gs(.L533)
+ 3288 02a4 0000      		.word gs(.L517)
+ 3289 02a6 0000      		.word gs(.L550)
+ 3290 02a8 0000      		.word gs(.L519)
+ 3291 02aa 0000      		.word gs(.L551)
+ 3292 02ac 0000      		.word gs(.L521)
+ 3293 02ae 0000      		.word gs(.L522)
+ 3294 02b0 0000      		.word gs(.L553)
+ 3295 02b2 0000      		.word gs(.L552)
+ 3296 02b4 0000      		.word gs(.L525)
+ 3297 02b6 0000      		.word gs(.L555)
+ 3298 02b8 0000      		.word gs(.L536)
+ 3299 02ba 0000      		.word gs(.L528)
+ 3300 02bc 0000      		.word gs(.L539)
+ 3301 02be 0000      		.word gs(.L530)
+ 3302 02c0 0000      		.word gs(.L533)
+ 3303 02c2 0000      		.word gs(.L534)
+ 3304 02c4 0000      		.word gs(.L533)
+ 3305 02c6 0000      		.word gs(.L534)
+ 3306 02c8 0000      		.word gs(.L547)
+GAS LISTING /tmp/ccY7DmUh.s 			page 59
+
+
+ 3307 02ca 0000      		.word gs(.L536)
+ 3308 02cc 0000      		.word gs(.L537)
+ 3309 02ce 0000      		.word gs(.L553)
+ 3310 02d0 0000      		.word gs(.L539)
+ 3311 02d2 0000      		.word gs(.L542)
+ 3312 02d4 0000      		.word gs(.L543)
+ 3313 02d6 0000      		.word gs(.L542)
+ 3314 02d8 0000      		.word gs(.L543)
+ 3315 02da 0000      		.word gs(.L544)
+ 3316 02dc 0000      		.word gs(.L545)
+ 3317 02de 0000      		.word gs(.L546)
+ 3318 02e0 0000      		.word gs(.L547)
+ 3319 02e2 0000      		.word gs(.L548)
+ 3320 02e4 0000      		.word gs(.L549)
+ 3321 02e6 0000      		.word gs(.L550)
+ 3322 02e8 0000      		.word gs(.L551)
+ 3323 02ea 0000      		.word gs(.L552)
+ 3324 02ec 0000      		.word gs(.L553)
+ 3325 02ee 0000      		.word gs(.L554)
+ 3326 02f0 0000      		.word gs(.L555)
+ 3327               		.text
+ 3328               	.L543:
+ 3329 16d4 81E4      		ldi r24,lo8(65)
+ 3330 16d6 60E0      		ldi r22,lo8(0)
+ 3331 16d8 44E0      		ldi r20,lo8(4)
+ 3332 16da 22E0      		ldi r18,lo8(2)
+ 3333 16dc 0E94 0000 		call play_note
+ 3334 16e0 0895      		ret
+ 3335               	.L533:
+ 3336 16e2 81E4      		ldi r24,lo8(65)
+ 3337 16e4 60E0      		ldi r22,lo8(0)
+ 3338 16e6 44E0      		ldi r20,lo8(4)
+ 3339 16e8 26E0      		ldi r18,lo8(6)
+ 3340 16ea 0E94 0000 		call play_note
+ 3341 16ee 0895      		ret
+ 3342               	.L534:
+ 3343 16f0 81E4      		ldi r24,lo8(65)
+ 3344 16f2 61E0      		ldi r22,lo8(1)
+ 3345 16f4 44E0      		ldi r20,lo8(4)
+ 3346 16f6 22E0      		ldi r18,lo8(2)
+ 3347 16f8 0E94 0000 		call play_note
+ 3348 16fc 0895      		ret
+ 3349               	.L539:
+ 3350 16fe 84E4      		ldi r24,lo8(68)
+ 3351 1700 60E0      		ldi r22,lo8(0)
+ 3352 1702 44E0      		ldi r20,lo8(4)
+ 3353 1704 28E0      		ldi r18,lo8(8)
+ 3354 1706 0E94 0000 		call play_note
+ 3355 170a 0895      		ret
+ 3356               	.L536:
+ 3357 170c 86E4      		ldi r24,lo8(70)
+ 3358 170e 60E0      		ldi r22,lo8(0)
+ 3359 1710 44E0      		ldi r20,lo8(4)
+ 3360 1712 28E0      		ldi r18,lo8(8)
+ 3361 1714 0E94 0000 		call play_note
+ 3362 1718 0895      		ret
+ 3363               	.L542:
+GAS LISTING /tmp/ccY7DmUh.s 			page 60
+
+
+ 3364 171a 82E4      		ldi r24,lo8(66)
+ 3365 171c 61E0      		ldi r22,lo8(1)
+ 3366 171e 44E0      		ldi r20,lo8(4)
+ 3367 1720 26E0      		ldi r18,lo8(6)
+ 3368 1722 0E94 0000 		call play_note
+ 3369 1726 0895      		ret
+ 3370               	.L528:
+ 3371 1728 85E4      		ldi r24,lo8(69)
+ 3372 172a 60E0      		ldi r22,lo8(0)
+ 3373 172c 44E0      		ldi r20,lo8(4)
+ 3374 172e 28E0      		ldi r18,lo8(8)
+ 3375 1730 0E94 0000 		call play_note
+ 3376 1734 0895      		ret
+ 3377               	.L552:
+ 3378 1736 81E4      		ldi r24,lo8(65)
+ 3379 1738 60E0      		ldi r22,lo8(0)
+ 3380 173a 44E0      		ldi r20,lo8(4)
+ 3381 173c 28E0      		ldi r18,lo8(8)
+ 3382 173e 0E94 0000 		call play_note
+ 3383 1742 0895      		ret
+ 3384               	.L553:
+ 3385 1744 87E4      		ldi r24,lo8(71)
+ 3386 1746 60E0      		ldi r22,lo8(0)
+ 3387 1748 44E0      		ldi r20,lo8(4)
+ 3388 174a 28E0      		ldi r18,lo8(8)
+ 3389 174c 0E94 0000 		call play_note
+ 3390 1750 0895      		ret
+ 3391               	.L530:
+ 3392 1752 83E4      		ldi r24,lo8(67)
+ 3393 1754 60E0      		ldi r22,lo8(0)
+ 3394 1756 44E0      		ldi r20,lo8(4)
+ 3395 1758 28E0      		ldi r18,lo8(8)
+ 3396 175a 0E94 0000 		call play_note
+ 3397 175e 0895      		ret
+ 3398               	.L547:
+ 3399 1760 81E4      		ldi r24,lo8(65)
+ 3400 1762 60E0      		ldi r22,lo8(0)
+ 3401 1764 44E0      		ldi r20,lo8(4)
+ 3402 1766 20E1      		ldi r18,lo8(16)
+ 3403 1768 0E94 0000 		call play_note
+ 3404 176c 0895      		ret
+ 3405               	.L550:
+ 3406 176e 83E4      		ldi r24,lo8(67)
+ 3407 1770 60E0      		ldi r22,lo8(0)
+ 3408 1772 45E0      		ldi r20,lo8(5)
+ 3409 1774 24E0      		ldi r18,lo8(4)
+ 3410 1776 0E94 0000 		call play_note
+ 3411 177a 0895      		ret
+ 3412               	.L551:
+ 3413 177c 84E4      		ldi r24,lo8(68)
+ 3414 177e 60E0      		ldi r22,lo8(0)
+ 3415 1780 45E0      		ldi r20,lo8(5)
+ 3416 1782 24E0      		ldi r18,lo8(4)
+ 3417 1784 0E94 0000 		call play_note
+ 3418 1788 0895      		ret
+ 3419               	.L555:
+ 3420 178a 929A      		sbi 50-32,2
+GAS LISTING /tmp/ccY7DmUh.s 			page 61
+
+
+ 3421 178c 1092 0000 		sts (beat)+1,__zero_reg__
+ 3422 1790 1092 0000 		sts beat,__zero_reg__
+ 3423 1794 88E0      		ldi r24,lo8(8)
+ 3424 1796 90E0      		ldi r25,hi8(8)
+ 3425 1798 9093 0000 		sts (max_beat)+1,r25
+ 3426 179c 8093 0000 		sts max_beat,r24
+ 3427 17a0 0895      		ret
+ 3428               	.L507:
+ 3429 17a2 929A      		sbi 50-32,2
+ 3430 17a4 1092 0000 		sts (beat)+1,__zero_reg__
+ 3431 17a8 1092 0000 		sts beat,__zero_reg__
+ 3432 17ac 81E0      		ldi r24,lo8(1)
+ 3433 17ae 90E0      		ldi r25,hi8(1)
+ 3434 17b0 9093 0000 		sts (max_beat)+1,r25
+ 3435 17b4 8093 0000 		sts max_beat,r24
+ 3436 17b8 0895      		ret
+ 3437               	.L544:
+ 3438 17ba 82E4      		ldi r24,lo8(66)
+ 3439 17bc 61E0      		ldi r22,lo8(1)
+ 3440 17be 44E0      		ldi r20,lo8(4)
+ 3441 17c0 20E1      		ldi r18,lo8(16)
+ 3442 17c2 0E94 0000 		call play_note
+ 3443 17c6 0895      		ret
+ 3444               	.L549:
+ 3445 17c8 82E4      		ldi r24,lo8(66)
+ 3446 17ca 61E0      		ldi r22,lo8(1)
+ 3447 17cc 44E0      		ldi r20,lo8(4)
+ 3448 17ce 28E0      		ldi r18,lo8(8)
+ 3449 17d0 0E94 0000 		call play_note
+ 3450 17d4 0895      		ret
+ 3451               	.L509:
+ 3452 17d6 87E4      		ldi r24,lo8(71)
+ 3453 17d8 60E0      		ldi r22,lo8(0)
+ 3454 17da 44E0      		ldi r20,lo8(4)
+ 3455 17dc 26E0      		ldi r18,lo8(6)
+ 3456 17de 0E94 0000 		call play_note
+ 3457 17e2 0895      		ret
+ 3458               	.L546:
+ 3459 17e4 84E4      		ldi r24,lo8(68)
+ 3460 17e6 60E0      		ldi r22,lo8(0)
+ 3461 17e8 45E0      		ldi r20,lo8(5)
+ 3462 17ea 20E1      		ldi r18,lo8(16)
+ 3463 17ec 0E94 0000 		call play_note
+ 3464 17f0 0895      		ret
+ 3465               	.L522:
+ 3466 17f2 81E4      		ldi r24,lo8(65)
+ 3467 17f4 60E0      		ldi r22,lo8(0)
+ 3468 17f6 44E0      		ldi r20,lo8(4)
+ 3469 17f8 24E0      		ldi r18,lo8(4)
+ 3470 17fa 0E94 0000 		call play_note
+ 3471 17fe 0895      		ret
+ 3472               	.L513:
+ 3473 1800 929A      		sbi 50-32,2
+ 3474 1802 1092 0000 		sts (beat)+1,__zero_reg__
+ 3475 1806 1092 0000 		sts beat,__zero_reg__
+ 3476 180a 82E0      		ldi r24,lo8(2)
+ 3477 180c 90E0      		ldi r25,hi8(2)
+GAS LISTING /tmp/ccY7DmUh.s 			page 62
+
+
+ 3478 180e 9093 0000 		sts (max_beat)+1,r25
+ 3479 1812 8093 0000 		sts max_beat,r24
+ 3480 1816 0895      		ret
+ 3481               	.L506:
+ 3482 1818 87E4      		ldi r24,lo8(71)
+ 3483 181a 60E0      		ldi r22,lo8(0)
+ 3484 181c 44E0      		ldi r20,lo8(4)
+ 3485 181e 27E0      		ldi r18,lo8(7)
+ 3486 1820 0E94 0000 		call play_note
+ 3487 1824 0895      		ret
+ 3488               	.L504:
+ 3489 1826 87E4      		ldi r24,lo8(71)
+ 3490 1828 60E0      		ldi r22,lo8(0)
+ 3491 182a 44E0      		ldi r20,lo8(4)
+ 3492 182c 23E0      		ldi r18,lo8(3)
+ 3493 182e 0E94 0000 		call play_note
+ 3494 1832 0895      		ret
+ 3495               	.L537:
+ 3496 1834 87E4      		ldi r24,lo8(71)
+ 3497 1836 61E0      		ldi r22,lo8(1)
+ 3498 1838 44E0      		ldi r20,lo8(4)
+ 3499 183a 28E0      		ldi r18,lo8(8)
+ 3500 183c 0E94 0000 		call play_note
+ 3501 1840 0895      		ret
+ 3502               	.L525:
+ 3503 1842 87E4      		ldi r24,lo8(71)
+ 3504 1844 60E0      		ldi r22,lo8(0)
+ 3505 1846 44E0      		ldi r20,lo8(4)
+ 3506 1848 28E1      		ldi r18,lo8(24)
+ 3507 184a 0E94 0000 		call play_note
+ 3508 184e 0895      		ret
+ 3509               	.L545:
+ 3510 1850 84E4      		ldi r24,lo8(68)
+ 3511 1852 60E0      		ldi r22,lo8(0)
+ 3512 1854 44E0      		ldi r20,lo8(4)
+ 3513 1856 20E1      		ldi r18,lo8(16)
+ 3514 1858 0E94 0000 		call play_note
+ 3515 185c 0895      		ret
+ 3516               	.L548:
+ 3517 185e 83E4      		ldi r24,lo8(67)
+ 3518 1860 60E0      		ldi r22,lo8(0)
+ 3519 1862 45E0      		ldi r20,lo8(5)
+ 3520 1864 20E1      		ldi r18,lo8(16)
+ 3521 1866 0E94 0000 		call play_note
+ 3522 186a 0895      		ret
+ 3523               	.L519:
+ 3524 186c 84E4      		ldi r24,lo8(68)
+ 3525 186e 61E0      		ldi r22,lo8(1)
+ 3526 1870 45E0      		ldi r20,lo8(5)
+ 3527 1872 24E0      		ldi r18,lo8(4)
+ 3528 1874 0E94 0000 		call play_note
+ 3529 1878 0895      		ret
+ 3530               	.L517:
+ 3531 187a 82E4      		ldi r24,lo8(66)
+ 3532 187c 61E0      		ldi r22,lo8(1)
+ 3533 187e 44E0      		ldi r20,lo8(4)
+ 3534 1880 22E0      		ldi r18,lo8(2)
+GAS LISTING /tmp/ccY7DmUh.s 			page 63
+
+
+ 3535 1882 0E94 0000 		call play_note
+ 3536 1886 0895      		ret
+ 3537               	.L521:
+ 3538 1888 82E4      		ldi r24,lo8(66)
+ 3539 188a 60E0      		ldi r22,lo8(0)
+ 3540 188c 44E0      		ldi r20,lo8(4)
+ 3541 188e 28E0      		ldi r18,lo8(8)
+ 3542 1890 0E94 0000 		call play_note
+ 3543 1894 0895      		ret
+ 3544               	.L515:
+ 3545 1896 81E4      		ldi r24,lo8(65)
+ 3546 1898 61E0      		ldi r22,lo8(1)
+ 3547 189a 44E0      		ldi r20,lo8(4)
+ 3548 189c 24E0      		ldi r18,lo8(4)
+ 3549 189e 0E94 0000 		call play_note
+ 3550 18a2 0895      		ret
+ 3551               	.L554:
+ 3552 18a4 86E4      		ldi r24,lo8(70)
+ 3553 18a6 60E0      		ldi r22,lo8(0)
+ 3554 18a8 44E0      		ldi r20,lo8(4)
+ 3555 18aa 28E1      		ldi r18,lo8(24)
+ 3556 18ac 0E94 0000 		call play_note
+ 3557 18b0 0895      		ret
+ 3558               	.L508:
+ 3559 18b2 87E4      		ldi r24,lo8(71)
+ 3560 18b4 61E0      		ldi r22,lo8(1)
+ 3561 18b6 44E0      		ldi r20,lo8(4)
+ 3562 18b8 24E0      		ldi r18,lo8(4)
+ 3563 18ba 0E94 0000 		call play_note
+ 3564 18be 0895      		ret
+ 3565               		.size	song0, .-song0
+ 3566               	.global	play_song
+ 3567               		.type	play_song, @function
+ 3568               	play_song:
+ 3569               	/* prologue: function */
+ 3570               	/* frame size = 0 */
+ 3571 18c0 8230      		cpi r24,lo8(2)
+ 3572 18c2 01F0      		breq .L564
+ 3573 18c4 8330      		cpi r24,lo8(3)
+ 3574 18c6 00F0      		brlo .L571
+ 3575 18c8 8430      		cpi r24,lo8(4)
+ 3576 18ca 01F0      		breq .L566
+ 3577 18cc 8430      		cpi r24,lo8(4)
+ 3578 18ce 00F4      		brsh .L572
+ 3579 18d0 862F      		mov r24,r22
+ 3580 18d2 90E0      		ldi r25,lo8(0)
+ 3581 18d4 0E94 0000 		call song3
+ 3582 18d8 0895      		ret
+ 3583               	.L571:
+ 3584 18da 8823      		tst r24
+ 3585 18dc 01F0      		breq .L561
+ 3586 18de 8130      		cpi r24,lo8(1)
+ 3587 18e0 01F4      		brne .L561
+ 3588 18e2 862F      		mov r24,r22
+ 3589 18e4 90E0      		ldi r25,lo8(0)
+ 3590 18e6 0E94 0000 		call song1
+ 3591 18ea 0895      		ret
+GAS LISTING /tmp/ccY7DmUh.s 			page 64
+
+
+ 3592               	.L572:
+ 3593 18ec 8530      		cpi r24,lo8(5)
+ 3594 18ee 01F0      		breq .L573
+ 3595               	.L561:
+ 3596 18f0 862F      		mov r24,r22
+ 3597 18f2 90E0      		ldi r25,lo8(0)
+ 3598 18f4 0E94 0000 		call song0
+ 3599 18f8 0895      		ret
+ 3600               	.L573:
+ 3601 18fa 862F      		mov r24,r22
+ 3602 18fc 90E0      		ldi r25,lo8(0)
+ 3603 18fe 0E94 0000 		call song5
+ 3604 1902 0895      		ret
+ 3605               	.L566:
+ 3606 1904 862F      		mov r24,r22
+ 3607 1906 90E0      		ldi r25,lo8(0)
+ 3608 1908 0E94 0000 		call song4
+ 3609 190c 0895      		ret
+ 3610               	.L564:
+ 3611 190e 862F      		mov r24,r22
+ 3612 1910 90E0      		ldi r25,lo8(0)
+ 3613 1912 0E94 0000 		call song2
+ 3614 1916 0895      		ret
+ 3615               		.size	play_song, .-play_song
+ 3616               	.global	music_off
+ 3617               		.type	music_off, @function
+ 3618               	music_off:
+ 3619               	/* prologue: function */
+ 3620               	/* frame size = 0 */
+ 3621 1918 1092 0000 		sts notes,__zero_reg__
+ 3622 191c 8EB5      		in r24,78-32
+ 3623 191e 8C7F      		andi r24,lo8(-4)
+ 3624 1920 8EBD      		out 78-32,r24
+ 3625 1922 929A      		sbi 50-32,2
+ 3626               	/* epilogue start */
+ 3627 1924 0895      		ret
+ 3628               		.size	music_off, .-music_off
+ 3629               	.global	music_on
+ 3630               		.type	music_on, @function
+ 3631               	music_on:
+ 3632               	/* prologue: function */
+ 3633               	/* frame size = 0 */
+ 3634 1926 1092 0000 		sts notes,__zero_reg__
+ 3635 192a 8EB5      		in r24,78-32
+ 3636 192c 8360      		ori r24,lo8(3)
+ 3637 192e 8EBD      		out 78-32,r24
+ 3638 1930 9298      		cbi 50-32,2
+ 3639 1932 8091 0000 		lds r24,song
+ 3640 1936 6091 0000 		lds r22,notes
+ 3641 193a 0E94 0000 		call play_song
+ 3642               	/* epilogue start */
+ 3643 193e 0895      		ret
+ 3644               		.size	music_on, .-music_on
+ 3645               	.global	music_init
+ 3646               		.type	music_init, @function
+ 3647               	music_init:
+ 3648               	/* prologue: function */
+GAS LISTING /tmp/ccY7DmUh.s 			page 65
+
+
+ 3649               	/* frame size = 0 */
+ 3650 1940 87B7      		in r24,87-32
+ 3651 1942 8061      		ori r24,lo8(16)
+ 3652 1944 87BF      		out 87-32,r24
+ 3653 1946 1FBC      		out 79-32,__zero_reg__
+ 3654 1948 8EB5      		in r24,78-32
+ 3655 194a 8860      		ori r24,lo8(8)
+ 3656 194c 8EBD      		out 78-32,r24
+ 3657 194e 1092 7A00 		sts 122,__zero_reg__
+ 3658 1952 81E3      		ldi r24,lo8(49)
+ 3659 1954 90E0      		ldi r25,hi8(49)
+ 3660 1956 9BBD      		out (74)+1-32,r25
+ 3661 1958 8ABD      		out 74-32,r24
+ 3662 195a 1092 0000 		sts notes,__zero_reg__
+ 3663 195e 8EB5      		in r24,78-32
+ 3664 1960 8C7F      		andi r24,lo8(-4)
+ 3665 1962 8EBD      		out 78-32,r24
+ 3666 1964 929A      		sbi 50-32,2
+ 3667 1966 1092 0000 		sts (beat)+1,__zero_reg__
+ 3668 196a 1092 0000 		sts beat,__zero_reg__
+ 3669 196e 1092 0000 		sts (max_beat)+1,__zero_reg__
+ 3670 1972 1092 0000 		sts max_beat,__zero_reg__
+ 3671 1976 1092 0000 		sts notes,__zero_reg__
+ 3672 197a 85E0      		ldi r24,lo8(5)
+ 3673 197c 8093 0000 		sts song,r24
+ 3674               	/* epilogue start */
+ 3675 1980 0895      		ret
+ 3676               		.size	music_init, .-music_init
+ 3677               	.global	__vector_12
+ 3678               		.type	__vector_12, @function
+ 3679               	__vector_12:
+ 3680 1982 1F92      		push __zero_reg__
+ 3681 1984 0F92      		push r0
+ 3682 1986 0FB6      		in r0,__SREG__
+ 3683 1988 0F92      		push r0
+ 3684 198a 0BB6      		in r0,91-32
+ 3685 198c 0F92      		push r0
+ 3686 198e 1124      		clr __zero_reg__
+ 3687 1990 2F93      		push r18
+ 3688 1992 3F93      		push r19
+ 3689 1994 4F93      		push r20
+ 3690 1996 5F93      		push r21
+ 3691 1998 6F93      		push r22
+ 3692 199a 7F93      		push r23
+ 3693 199c 8F93      		push r24
+ 3694 199e 9F93      		push r25
+ 3695 19a0 AF93      		push r26
+ 3696 19a2 BF93      		push r27
+ 3697 19a4 EF93      		push r30
+ 3698 19a6 FF93      		push r31
+ 3699               	/* prologue: Signal */
+ 3700               	/* frame size = 0 */
+ 3701 19a8 82B3      		in r24,50-32
+ 3702 19aa 8058      		subi r24,lo8(-(-128))
+ 3703 19ac 82BB      		out 50-32,r24
+ 3704 19ae 2091 0000 		lds r18,beat
+ 3705 19b2 3091 0000 		lds r19,(beat)+1
+GAS LISTING /tmp/ccY7DmUh.s 			page 66
+
+
+ 3706 19b6 8091 0000 		lds r24,max_beat
+ 3707 19ba 9091 0000 		lds r25,(max_beat)+1
+ 3708 19be 2817      		cp r18,r24
+ 3709 19c0 3907      		cpc r19,r25
+ 3710 19c2 00F0      		brlo .L582
+ 3711 19c4 8091 0000 		lds r24,notes
+ 3712 19c8 8F5F      		subi r24,lo8(-(1))
+ 3713 19ca 8093 0000 		sts notes,r24
+ 3714 19ce 8091 0000 		lds r24,song
+ 3715 19d2 6091 0000 		lds r22,notes
+ 3716 19d6 0E94 0000 		call play_song
+ 3717               	.L582:
+ 3718               	/* epilogue start */
+ 3719 19da FF91      		pop r31
+ 3720 19dc EF91      		pop r30
+ 3721 19de BF91      		pop r27
+ 3722 19e0 AF91      		pop r26
+ 3723 19e2 9F91      		pop r25
+ 3724 19e4 8F91      		pop r24
+ 3725 19e6 7F91      		pop r23
+ 3726 19e8 6F91      		pop r22
+ 3727 19ea 5F91      		pop r21
+ 3728 19ec 4F91      		pop r20
+ 3729 19ee 3F91      		pop r19
+ 3730 19f0 2F91      		pop r18
+ 3731 19f2 0F90      		pop r0
+ 3732 19f4 0BBE      		out 91-32,r0
+ 3733 19f6 0F90      		pop r0
+ 3734 19f8 0FBE      		out __SREG__,r0
+ 3735 19fa 0F90      		pop r0
+ 3736 19fc 1F90      		pop __zero_reg__
+ 3737 19fe 1895      		reti
+ 3738               		.size	__vector_12, .-__vector_12
+ 3739               		.comm beat,2,1
+ 3740               		.comm max_beat,2,1
+ 3741               		.comm notes,1,1
+ 3742               		.comm song,1,1
+GAS LISTING /tmp/ccY7DmUh.s 			page 67
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 kellen_music.c
+     /tmp/ccY7DmUh.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccY7DmUh.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccY7DmUh.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccY7DmUh.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccY7DmUh.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccY7DmUh.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccY7DmUh.s:13     .text:00000000 play_rest
+                            *COM*:00000002 beat
+                            *COM*:00000002 max_beat
+     /tmp/ccY7DmUh.s:27     .text:00000016 play_note
+     /tmp/ccY7DmUh.s:1065   .text:00000752 song5
+                            *COM*:00000001 notes
+     /tmp/ccY7DmUh.s:1272   .text:00000882 song4
+     /tmp/ccY7DmUh.s:1426   .text:0000097e song3
+     /tmp/ccY7DmUh.s:1582   .text:00000a68 song2
+     /tmp/ccY7DmUh.s:2906   .text:000014ac song1
+     /tmp/ccY7DmUh.s:3231   .text:000016b4 song0
+     /tmp/ccY7DmUh.s:3568   .text:000018c0 play_song
+     /tmp/ccY7DmUh.s:3618   .text:00001918 music_off
+     /tmp/ccY7DmUh.s:3631   .text:00001926 music_on
+                            *COM*:00000001 song
+     /tmp/ccY7DmUh.s:3647   .text:00001940 music_init
+     /tmp/ccY7DmUh.s:3679   .text:00001982 __vector_12
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

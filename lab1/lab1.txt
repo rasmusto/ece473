@@ -1,0 +1,41 @@
+ECE473 Lab1:
+
+Purpose: 
+  *Set up OS specific development environment. 
+  *See if your AVR tools install was successful.
+  *Make sure your AVR board is still working.
+  *Get the 473 Lab parts kit. 
+  *Get acquainted with AVR-GCC tools.
+  *Review C programming/compiling.
+  *Get acquainted with downloading code to the uC board.
+
+Task:
+  *Set up your laptop with the necessary OS and/or AVR tools as required 
+   BEFORE LAB if possible.
+  *Attach the programmer to your AVR board and USB port.
+  *Download lab1_code.c code and the Makefile into a working directory. 
+   Compile with gcc by typing "make all" and see that the compiler is working.
+   You should see no errors and a number of files will be produced.
+  *Program your mega128 board. Make sure that avrdude and Makefile are 
+   properly setup.  This is done with the command "make program".  The
+   file "Makefile" contains the instructions to properly compile, link and
+   program your board.
+  *See that the original code works.  This piece of code counts the number of 
+   "S0" button pushes by using the on-board LEDS as a binary display.  Get 
+   familiar with the code and understand what is going on there.
+  *Now...modify the code so that the S0 pushbutton increments the count 
+   as before but the count is displayed as two BCD coded numbers on the 8 
+   LEDS. The four lower and upper LEDs will form each digit.  i.e., the LSB
+   digit is displayed on LEDS L1-L4, MSB digit on LEDS L5-L8. (mega128.2
+   refdes) The count will "roll over" to 0 after 99.
+
+What to show for your work:
+  *At the beginning of the next lab period show that you have correctly
+   modified the code by demonstration.  You will hand in your code too.
+   Print your code out using the utility "a2ps".  i.e.:
+   a2ps -P [printer_name] [filename.c]
+
+Grading
+  -code functioning correctly 75%
+  -code well commented        25%
+  -lab weighting = 0.05

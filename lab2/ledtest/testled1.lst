@@ -1,0 +1,95 @@
+GAS LISTING /tmp/cckZsnHg.s 			page 1
+
+
+   1               		.file	"testled1.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	main
+  12               		.type	main, @function
+  13               	main:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 9FEF      		ldi r25,lo8(-1)
+  17 0002 9ABB      		out 58-32,r25
+  18 0004 80EF      		ldi r24,lo8(-16)
+  19 0006 87BB      		out 55-32,r24
+  20 0008 11BA      		out 49-32,__zero_reg__
+  21 000a 92BB      		out 50-32,r25
+  22 000c 9BBB      		out 59-32,r25
+  23 000e 24EC      		ldi r18,lo8(2500)
+  24 0010 39E0      		ldi r19,hi8(2500)
+  25 0012 70E1      		ldi r23,lo8(16)
+  26 0014 60E2      		ldi r22,lo8(32)
+  27 0016 50E3      		ldi r21,lo8(48)
+  28 0018 40E4      		ldi r20,lo8(64)
+  29               	.L2:
+  30 001a 18BA      		out 56-32,__zero_reg__
+  31 001c C901      		movw r24,r18
+  32               	/* #APP */
+  33               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+  34 001e 0197      		1: sbiw r24,1
+  35 0020 01F4      		brne 1b
+  36               	 ;  0 "" 2
+  37               	/* #NOAPP */
+  38 0022 78BB      		out 56-32,r23
+  39 0024 C901      		movw r24,r18
+  40               	/* #APP */
+  41               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+  42 0026 0197      		1: sbiw r24,1
+  43 0028 01F4      		brne 1b
+  44               	 ;  0 "" 2
+  45               	/* #NOAPP */
+  46 002a 68BB      		out 56-32,r22
+  47 002c C901      		movw r24,r18
+  48               	/* #APP */
+  49               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+  50 002e 0197      		1: sbiw r24,1
+  51 0030 01F4      		brne 1b
+  52               	 ;  0 "" 2
+  53               	/* #NOAPP */
+  54 0032 58BB      		out 56-32,r21
+  55 0034 C901      		movw r24,r18
+  56               	/* #APP */
+  57               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+GAS LISTING /tmp/cckZsnHg.s 			page 2
+
+
+  58 0036 0197      		1: sbiw r24,1
+  59 0038 01F4      		brne 1b
+  60               	 ;  0 "" 2
+  61               	/* #NOAPP */
+  62 003a 48BB      		out 56-32,r20
+  63 003c C901      		movw r24,r18
+  64               	/* #APP */
+  65               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+  66 003e 0197      		1: sbiw r24,1
+  67 0040 01F4      		brne 1b
+  68               	 ;  0 "" 2
+  69               	/* #NOAPP */
+  70 0042 80B3      		in r24,48-32
+  71 0044 8BBB      		out 59-32,r24
+  72 0046 00C0      		rjmp .L2
+  73               		.size	main, .-main
+GAS LISTING /tmp/cckZsnHg.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 testled1.c
+     /tmp/cckZsnHg.s:2      *ABS*:0000003f __SREG__
+     /tmp/cckZsnHg.s:3      *ABS*:0000003e __SP_H__
+     /tmp/cckZsnHg.s:4      *ABS*:0000003d __SP_L__
+     /tmp/cckZsnHg.s:5      *ABS*:00000034 __CCP__
+     /tmp/cckZsnHg.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/cckZsnHg.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/cckZsnHg.s:13     .text:00000000 main
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,90 @@
+GAS LISTING /tmp/ccJn7sVW.s 			page 1
+
+
+   1               		.file	"led_driver.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	LED_convert
+  12               		.type	LED_convert, @function
+  13               	LED_convert:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 8823      		tst r24
+  17 0002 01F0      		breq .L15
+  18 0004 8130      		cpi r24,lo8(1)
+  19 0006 01F0      		breq .L16
+  20 0008 8230      		cpi r24,lo8(2)
+  21 000a 01F0      		breq .L17
+  22 000c 8330      		cpi r24,lo8(3)
+  23 000e 01F0      		breq .L18
+  24 0010 8430      		cpi r24,lo8(4)
+  25 0012 01F0      		breq .L19
+  26 0014 8530      		cpi r24,lo8(5)
+  27 0016 01F0      		breq .L20
+  28 0018 8630      		cpi r24,lo8(6)
+  29 001a 01F0      		breq .L21
+  30 001c 8730      		cpi r24,lo8(7)
+  31 001e 01F0      		breq .L22
+  32 0020 8830      		cpi r24,lo8(8)
+  33 0022 01F0      		breq .L23
+  34 0024 8930      		cpi r24,lo8(9)
+  35 0026 01F0      		breq .L12
+  36 0028 8FEF      		ldi r24,lo8(-1)
+  37 002a 0895      		ret
+  38               	.L15:
+  39 002c 80EC      		ldi r24,lo8(-64)
+  40 002e 0895      		ret
+  41               	.L16:
+  42 0030 89EF      		ldi r24,lo8(-7)
+  43 0032 0895      		ret
+  44               	.L19:
+  45 0034 89E9      		ldi r24,lo8(-103)
+  46 0036 0895      		ret
+  47               	.L17:
+  48 0038 84EA      		ldi r24,lo8(-92)
+  49 003a 0895      		ret
+  50               	.L18:
+  51 003c 80EB      		ldi r24,lo8(-80)
+  52 003e 0895      		ret
+  53               	.L23:
+  54 0040 80E8      		ldi r24,lo8(-128)
+  55 0042 0895      		ret
+  56               	.L20:
+  57 0044 82E9      		ldi r24,lo8(-110)
+GAS LISTING /tmp/ccJn7sVW.s 			page 2
+
+
+  58 0046 0895      		ret
+  59               	.L21:
+  60 0048 82E8      		ldi r24,lo8(-126)
+  61 004a 0895      		ret
+  62               	.L22:
+  63 004c 88EF      		ldi r24,lo8(-8)
+  64 004e 0895      		ret
+  65               	.L12:
+  66 0050 80E9      		ldi r24,lo8(-112)
+  67 0052 0895      		ret
+  68               		.size	LED_convert, .-LED_convert
+GAS LISTING /tmp/ccJn7sVW.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 led_driver.c
+     /tmp/ccJn7sVW.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccJn7sVW.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccJn7sVW.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccJn7sVW.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccJn7sVW.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccJn7sVW.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccJn7sVW.s:13     .text:00000000 LED_convert
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

@@ -1,0 +1,336 @@
+
+lab5_m48.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000002  00800100  000001a4  00000238  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         000001a4  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000002  00800102  00800102  0000023a  2**0
+                  ALLOC
+  3 .stab         00000e40  00000000  00000000  0000023c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000874  00000000  00000000  0000107c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	19 c0       	rjmp	.+50     	; 0x34 <__ctors_end>
+   2:	33 c0       	rjmp	.+102    	; 0x6a <__bad_interrupt>
+   4:	32 c0       	rjmp	.+100    	; 0x6a <__bad_interrupt>
+   6:	31 c0       	rjmp	.+98     	; 0x6a <__bad_interrupt>
+   8:	30 c0       	rjmp	.+96     	; 0x6a <__bad_interrupt>
+   a:	2f c0       	rjmp	.+94     	; 0x6a <__bad_interrupt>
+   c:	2e c0       	rjmp	.+92     	; 0x6a <__bad_interrupt>
+   e:	2d c0       	rjmp	.+90     	; 0x6a <__bad_interrupt>
+  10:	2c c0       	rjmp	.+88     	; 0x6a <__bad_interrupt>
+  12:	2b c0       	rjmp	.+86     	; 0x6a <__bad_interrupt>
+  14:	2a c0       	rjmp	.+84     	; 0x6a <__bad_interrupt>
+  16:	29 c0       	rjmp	.+82     	; 0x6a <__bad_interrupt>
+  18:	28 c0       	rjmp	.+80     	; 0x6a <__bad_interrupt>
+  1a:	27 c0       	rjmp	.+78     	; 0x6a <__bad_interrupt>
+  1c:	26 c0       	rjmp	.+76     	; 0x6a <__bad_interrupt>
+  1e:	25 c0       	rjmp	.+74     	; 0x6a <__bad_interrupt>
+  20:	24 c0       	rjmp	.+72     	; 0x6a <__bad_interrupt>
+  22:	23 c0       	rjmp	.+70     	; 0x6a <__bad_interrupt>
+  24:	22 c0       	rjmp	.+68     	; 0x6a <__bad_interrupt>
+  26:	21 c0       	rjmp	.+66     	; 0x6a <__bad_interrupt>
+  28:	21 c0       	rjmp	.+66     	; 0x6c <__vector_20>
+  2a:	1f c0       	rjmp	.+62     	; 0x6a <__bad_interrupt>
+  2c:	1e c0       	rjmp	.+60     	; 0x6a <__bad_interrupt>
+  2e:	1d c0       	rjmp	.+58     	; 0x6a <__bad_interrupt>
+  30:	1c c0       	rjmp	.+56     	; 0x6a <__bad_interrupt>
+  32:	1b c0       	rjmp	.+54     	; 0x6a <__bad_interrupt>
+
+00000034 <__ctors_end>:
+  34:	11 24       	eor	r1, r1
+  36:	1f be       	out	0x3f, r1	; 63
+  38:	cf ef       	ldi	r28, 0xFF	; 255
+  3a:	d2 e0       	ldi	r29, 0x02	; 2
+  3c:	de bf       	out	0x3e, r29	; 62
+  3e:	cd bf       	out	0x3d, r28	; 61
+
+00000040 <__do_copy_data>:
+  40:	11 e0       	ldi	r17, 0x01	; 1
+  42:	a0 e0       	ldi	r26, 0x00	; 0
+  44:	b1 e0       	ldi	r27, 0x01	; 1
+  46:	e4 ea       	ldi	r30, 0xA4	; 164
+  48:	f1 e0       	ldi	r31, 0x01	; 1
+  4a:	02 c0       	rjmp	.+4      	; 0x50 <.do_copy_data_start>
+
+0000004c <.do_copy_data_loop>:
+  4c:	05 90       	lpm	r0, Z+
+  4e:	0d 92       	st	X+, r0
+
+00000050 <.do_copy_data_start>:
+  50:	a2 30       	cpi	r26, 0x02	; 2
+  52:	b1 07       	cpc	r27, r17
+  54:	d9 f7       	brne	.-10     	; 0x4c <.do_copy_data_loop>
+
+00000056 <__do_clear_bss>:
+  56:	11 e0       	ldi	r17, 0x01	; 1
+  58:	a2 e0       	ldi	r26, 0x02	; 2
+  5a:	b1 e0       	ldi	r27, 0x01	; 1
+  5c:	01 c0       	rjmp	.+2      	; 0x60 <.do_clear_bss_start>
+
+0000005e <.do_clear_bss_loop>:
+  5e:	1d 92       	st	X+, r1
+
+00000060 <.do_clear_bss_start>:
+  60:	a4 30       	cpi	r26, 0x04	; 4
+  62:	b1 07       	cpc	r27, r17
+  64:	e1 f7       	brne	.-8      	; 0x5e <.do_clear_bss_loop>
+  66:	41 d0       	rcall	.+130    	; 0xea <main>
+  68:	9b c0       	rjmp	.+310    	; 0x1a0 <_exit>
+
+0000006a <__bad_interrupt>:
+  6a:	ca cf       	rjmp	.-108    	; 0x0 <__vectors>
+
+0000006c <__vector_20>:
+    } //while 
+} //main
+
+//USART0 tx complete
+ISR(USART_TX_vect)
+{
+  6c:	1f 92       	push	r1
+  6e:	0f 92       	push	r0
+  70:	0f b6       	in	r0, 0x3f	; 63
+  72:	0f 92       	push	r0
+  74:	11 24       	eor	r1, r1
+  76:	8f 93       	push	r24
+  78:	9f 93       	push	r25
+    if(PINC == 0x00)
+  7a:	86 b1       	in	r24, 0x06	; 6
+  7c:	88 23       	and	r24, r24
+  7e:	a9 f4       	brne	.+42     	; 0xaa <__vector_20+0x3e>
+        PORTC |= 0x02;
+  80:	41 9a       	sbi	0x08, 1	; 8
+    else
+        PORTC &= 0x00;
+    if(high_byte_flag)
+  82:	80 91 00 01 	lds	r24, 0x0100
+  86:	88 23       	and	r24, r24
+  88:	b1 f4       	brne	.+44     	; 0xb6 <__vector_20+0x4a>
+        UDR0 = temperature>>8;
+        high_byte_flag = 0;
+    }
+    else
+    {
+        UDR0 = temperature;
+  8a:	80 91 02 01 	lds	r24, 0x0102
+  8e:	90 91 03 01 	lds	r25, 0x0103
+  92:	80 93 c6 00 	sts	0x00C6, r24
+        high_byte_flag = 1;
+  96:	81 e0       	ldi	r24, 0x01	; 1
+  98:	80 93 00 01 	sts	0x0100, r24
+    }
+}
+  9c:	9f 91       	pop	r25
+  9e:	8f 91       	pop	r24
+  a0:	0f 90       	pop	r0
+  a2:	0f be       	out	0x3f, r0	; 63
+  a4:	0f 90       	pop	r0
+  a6:	1f 90       	pop	r1
+  a8:	18 95       	reti
+ISR(USART_TX_vect)
+{
+    if(PINC == 0x00)
+        PORTC |= 0x02;
+    else
+        PORTC &= 0x00;
+  aa:	88 b1       	in	r24, 0x08	; 8
+  ac:	18 b8       	out	0x08, r1	; 8
+    if(high_byte_flag)
+  ae:	80 91 00 01 	lds	r24, 0x0100
+  b2:	88 23       	and	r24, r24
+  b4:	51 f3       	breq	.-44     	; 0x8a <__vector_20+0x1e>
+    {
+        UDR0 = temperature>>8;
+  b6:	80 91 02 01 	lds	r24, 0x0102
+  ba:	90 91 03 01 	lds	r25, 0x0103
+  be:	90 93 c6 00 	sts	0x00C6, r25
+        high_byte_flag = 0;
+  c2:	10 92 00 01 	sts	0x0100, r1
+    else
+    {
+        UDR0 = temperature;
+        high_byte_flag = 1;
+    }
+}
+  c6:	9f 91       	pop	r25
+  c8:	8f 91       	pop	r24
+  ca:	0f 90       	pop	r0
+  cc:	0f be       	out	0x3f, r0	; 63
+  ce:	0f 90       	pop	r0
+  d0:	1f 90       	pop	r1
+  d2:	18 95       	reti
+
+000000d4 <USART_init>:
+
+void USART_init(unsigned int ubrr)
+{
+    UBRR0H = (unsigned char)(ubrr>>8);
+  d4:	90 93 c5 00 	sts	0x00C5, r25
+    UBRR0L = (unsigned char)ubrr;
+  d8:	80 93 c4 00 	sts	0x00C4, r24
+    //enable tx and rx, enable tx complete interrupt
+    UCSR0B = (1<<RXEN0) | (1<<TXEN0) | (1<<TXCIE0);
+  dc:	88 e5       	ldi	r24, 0x58	; 88
+  de:	80 93 c1 00 	sts	0x00C1, r24
+    //8 bits per character
+    UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
+  e2:	86 e0       	ldi	r24, 0x06	; 6
+  e4:	80 93 c2 00 	sts	0x00C2, r24
+}
+  e8:	08 95       	ret
+
+000000ea <main>:
+
+void USART_init(unsigned int ubrr);
+volatile uint8_t high_byte_flag = 1;
+
+int main(void)
+{
+  ea:	cf 93       	push	r28
+  ec:	df 93       	push	r29
+    }
+}
+
+void USART_init(unsigned int ubrr)
+{
+    UBRR0H = (unsigned char)(ubrr>>8);
+  ee:	10 92 c5 00 	sts	0x00C5, r1
+    UBRR0L = (unsigned char)ubrr;
+  f2:	83 e3       	ldi	r24, 0x33	; 51
+  f4:	80 93 c4 00 	sts	0x00C4, r24
+    //enable tx and rx, enable tx complete interrupt
+    UCSR0B = (1<<RXEN0) | (1<<TXEN0) | (1<<TXCIE0);
+  f8:	88 e5       	ldi	r24, 0x58	; 88
+  fa:	80 93 c1 00 	sts	0x00C1, r24
+    //8 bits per character
+    UCSR0C = (1<<UCSZ01) | (1<<UCSZ00);
+  fe:	86 e0       	ldi	r24, 0x06	; 6
+ 100:	80 93 c2 00 	sts	0x00C2, r24
+volatile uint8_t high_byte_flag = 1;
+
+int main(void)
+{
+    USART_init(MYUBRR);
+    DDRB = 0b00000010;
+ 104:	82 e0       	ldi	r24, 0x02	; 2
+ 106:	84 b9       	out	0x04, r24	; 4
+    DDRC = 0b00000010;
+ 108:	87 b9       	out	0x07, r24	; 7
+    sei();
+ 10a:	78 94       	sei
+    UDR0 = 0x00;
+ 10c:	10 92 c6 00 	sts	0x00C6, r1
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+ 110:	c0 e1       	ldi	r28, 0x10	; 16
+ 112:	d7 e2       	ldi	r29, 0x27	; 39
+ 114:	09 c0       	rjmp	.+18     	; 0x128 <main+0x3e>
+    while(1){     //do forever
+        if(PINB == 0x00)
+            PORTB |= 0x02;
+ 116:	29 9a       	sbi	0x05, 1	; 5
+ 118:	ce 01       	movw	r24, r28
+ 11a:	01 97       	sbiw	r24, 0x01	; 1
+ 11c:	f1 f7       	brne	.-4      	; 0x11a <main+0x30>
+        else
+            PORTB &= 0x00;
+        _delay_ms(5);
+        temperature = rd_temp();
+ 11e:	0a d0       	rcall	.+20     	; 0x134 <rd_temp>
+ 120:	90 93 03 01 	sts	0x0103, r25
+ 124:	80 93 02 01 	sts	0x0102, r24
+    DDRB = 0b00000010;
+    DDRC = 0b00000010;
+    sei();
+    UDR0 = 0x00;
+    while(1){     //do forever
+        if(PINB == 0x00)
+ 128:	83 b1       	in	r24, 0x03	; 3
+ 12a:	88 23       	and	r24, r24
+ 12c:	a1 f3       	breq	.-24     	; 0x116 <main+0x2c>
+            PORTB |= 0x02;
+        else
+            PORTB &= 0x00;
+ 12e:	85 b1       	in	r24, 0x05	; 5
+ 130:	15 b8       	out	0x05, r1	; 5
+ 132:	f2 cf       	rjmp	.-28     	; 0x118 <main+0x2e>
+
+00000134 <rd_temp>:
+#include "twi.h"
+
+uint16_t rd_temp()
+{
+    TWCR = TWCR_START; //send start condition
+ 134:	84 ea       	ldi	r24, 0xA4	; 164
+ 136:	80 93 bc 00 	sts	0x00BC, r24
+	while (!(TWCR & (1<<TWINT))); //wait for start condition to transmit
+ 13a:	80 91 bc 00 	lds	r24, 0x00BC
+ 13e:	87 ff       	sbrs	r24, 7
+ 140:	fc cf       	rjmp	.-8      	; 0x13a <rd_temp+0x6>
+	TWDR = LM73_READ; //send device addr, read bit set
+ 142:	81 e9       	ldi	r24, 0x91	; 145
+ 144:	80 93 bb 00 	sts	0x00BB, r24
+	TWCR = (1<<TWINT)|(1<<TWEN);
+ 148:	84 e8       	ldi	r24, 0x84	; 132
+ 14a:	80 93 bc 00 	sts	0x00BC, r24
+	while (!(TWCR & (1<<TWINT)));
+ 14e:	80 91 bc 00 	lds	r24, 0x00BC
+ 152:	87 ff       	sbrs	r24, 7
+ 154:	fc cf       	rjmp	.-8      	; 0x14e <rd_temp+0x1a>
+	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);//enable TWI and ACK
+ 156:	84 ec       	ldi	r24, 0xC4	; 196
+ 158:	80 93 bc 00 	sts	0x00BC, r24
+	while(!(TWCR & (1<<TWINT)));
+ 15c:	80 91 bc 00 	lds	r24, 0x00BC
+ 160:	87 ff       	sbrs	r24, 7
+ 162:	fc cf       	rjmp	.-8      	; 0x15c <rd_temp+0x28>
+	uint8_t outdoor1= TWDR;//assign byte read to variable
+ 164:	40 91 bb 00 	lds	r20, 0x00BB
+	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWEA);//enable TWI and ACK
+ 168:	84 ec       	ldi	r24, 0xC4	; 196
+ 16a:	80 93 bc 00 	sts	0x00BC, r24
+	while(!(TWCR & (1<<TWINT)));
+ 16e:	80 91 bc 00 	lds	r24, 0x00BC
+ 172:	87 ff       	sbrs	r24, 7
+ 174:	fc cf       	rjmp	.-8      	; 0x16e <rd_temp+0x3a>
+	uint8_t outdoor2 = TWDR;//assign second byte read to variable
+ 176:	90 91 bb 00 	lds	r25, 0x00BB
+	TWCR = (1<<TWINT)|(1<<TWEN)|(1<<TWSTO);//stop transmission
+ 17a:	84 e9       	ldi	r24, 0x94	; 148
+ 17c:	80 93 bc 00 	sts	0x00BC, r24
+ 180:	34 2f       	mov	r19, r20
+ 182:	20 e0       	ldi	r18, 0x00	; 0
+ 184:	29 0f       	add	r18, r25
+ 186:	31 1d       	adc	r19, r1
+ 188:	35 95       	asr	r19
+ 18a:	27 95       	ror	r18
+ 18c:	35 95       	asr	r19
+ 18e:	27 95       	ror	r18
+ 190:	35 95       	asr	r19
+ 192:	27 95       	ror	r18
+ 194:	35 95       	asr	r19
+ 196:	27 95       	ror	r18
+ 198:	35 95       	asr	r19
+ 19a:	27 95       	ror	r18
+    return ((((outdoor1<< 8) + outdoor2) >> 5));
+}
+ 19c:	c9 01       	movw	r24, r18
+ 19e:	08 95       	ret
+
+000001a0 <_exit>:
+ 1a0:	f8 94       	cli
+
+000001a2 <__stop_program>:
+ 1a2:	ff cf       	rjmp	.-2      	; 0x1a2 <__stop_program>

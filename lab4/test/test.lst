@@ -1,0 +1,40 @@
+GAS LISTING /tmp/ccDbi9M9.s 			page 1
+
+
+   1               		.file	"test.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	main
+  12               		.type	main, @function
+  13               	main:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 81E0      		ldi r24,lo8(1)
+  17 0002 8093 6100 		sts 97,r24
+  18 0006 8093 6200 		sts 98,r24
+  19               	.L2:
+  20 000a 00C0      		rjmp .L2
+  21               		.size	main, .-main
+GAS LISTING /tmp/ccDbi9M9.s 			page 2
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 test.c
+     /tmp/ccDbi9M9.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccDbi9M9.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccDbi9M9.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccDbi9M9.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccDbi9M9.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccDbi9M9.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccDbi9M9.s:13     .text:00000000 main
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss

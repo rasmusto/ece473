@@ -1,0 +1,131 @@
+GAS LISTING /tmp/ccAuaejm.s 			page 1
+
+
+   1               		.file	"lab1_code.c"
+   2               	__SREG__ = 0x3f
+   3               	__SP_H__ = 0x3e
+   4               	__SP_L__ = 0x3d
+   5               	__CCP__  = 0x34
+   6               	__tmp_reg__ = 0
+   7               	__zero_reg__ = 1
+   8               		.global __do_copy_data
+   9               		.global __do_clear_bss
+  10               		.text
+  11               	.global	debounce_switch
+  12               		.type	debounce_switch, @function
+  13               	debounce_switch:
+  14               	/* prologue: function */
+  15               	/* frame size = 0 */
+  16 0000 20B3      		in r18,48-32
+  17 0002 8091 0000 		lds r24,state.1235
+  18 0006 9091 0000 		lds r25,(state.1235)+1
+  19 000a 880F      		lsl r24
+  20 000c 991F      		rol r25
+  21 000e 906E      		ori r25,hi8(-8192)
+  22 0010 30E0      		ldi r19,lo8(0)
+  23 0012 2170      		andi r18,lo8(1)
+  24 0014 3070      		andi r19,hi8(1)
+  25 0016 822B      		or r24,r18
+  26 0018 932B      		or r25,r19
+  27 001a 9093 0000 		sts (state.1235)+1,r25
+  28 001e 8093 0000 		sts state.1235,r24
+  29 0022 20E0      		ldi r18,lo8(0)
+  30 0024 8050      		subi r24,lo8(-4096)
+  31 0026 904F      		sbci r25,hi8(-4096)
+  32 0028 01F4      		brne .L2
+  33 002a 21E0      		ldi r18,lo8(1)
+  34               	.L2:
+  35 002c 822F      		mov r24,r18
+  36               	/* epilogue start */
+  37 002e 0895      		ret
+  38               		.size	debounce_switch, .-debounce_switch
+  39               	.global	main
+  40               		.type	main, @function
+  41               	main:
+  42               	/* prologue: function */
+  43               	/* frame size = 0 */
+  44 0030 8FEF      		ldi r24,lo8(-1)
+  45 0032 87BB      		out 55-32,r24
+  46 0034 4091 0000 		lds r20,state.1235
+  47 0038 5091 0000 		lds r21,(state.1235)+1
+  48 003c 60E0      		ldi r22,lo8(0)
+  49 003e 70E0      		ldi r23,lo8(0)
+  50 0040 E0E4      		ldi r30,lo8(8000)
+  51 0042 FFE1      		ldi r31,hi8(8000)
+  52               	.L9:
+  53 0044 9A01      		movw r18,r20
+  54 0046 220F      		lsl r18
+  55 0048 331F      		rol r19
+  56 004a 80B3      		in r24,48-32
+  57 004c 482F      		mov r20,r24
+GAS LISTING /tmp/ccAuaejm.s 			page 2
+
+
+  58 004e 50E0      		ldi r21,lo8(0)
+  59 0050 4170      		andi r20,lo8(1)
+  60 0052 5070      		andi r21,hi8(1)
+  61 0054 506E      		ori r21,hi8(-8192)
+  62 0056 422B      		or r20,r18
+  63 0058 532B      		or r21,r19
+  64 005a 80EF      		ldi r24,hi8(-4096)
+  65 005c 4030      		cpi r20,lo8(-4096)
+  66 005e 5807      		cpc r21,r24
+  67 0060 01F4      		brne .L5
+  68 0062 7930      		cpi r23,lo8(9)
+  69 0064 00F4      		brsh .L6
+  70 0066 7F5F      		subi r23,lo8(-(1))
+  71 0068 862F      		mov r24,r22
+  72 006a 8295      		swap r24
+  73 006c 807F      		andi r24,0xf0
+  74 006e 872B      		or r24,r23
+  75 0070 88BB      		out 56-32,r24
+  76 0072 00C0      		rjmp .L5
+  77               	.L6:
+  78 0074 6A30      		cpi r22,lo8(10)
+  79 0076 00F4      		brsh .L7
+  80 0078 6F5F      		subi r22,lo8(-(1))
+  81               	.L7:
+  82 007a 7930      		cpi r23,lo8(9)
+  83 007c 01F4      		brne .L8
+  84 007e 6A30      		cpi r22,lo8(10)
+  85 0080 01F4      		brne .L8
+  86 0082 60E0      		ldi r22,lo8(0)
+  87               	.L8:
+  88 0084 862F      		mov r24,r22
+  89 0086 90E0      		ldi r25,lo8(0)
+  90 0088 74E0      		ldi r23,4
+  91 008a 880F      	1:	lsl r24
+  92 008c 991F      		rol r25
+  93 008e 7A95      		dec r23
+  94 0090 01F4      		brne 1b
+  95 0092 88BB      		out 56-32,r24
+  96 0094 70E0      		ldi r23,lo8(0)
+  97               	.L5:
+  98 0096 CF01      		movw r24,r30
+  99               	/* #APP */
+ 100               	 ;  105 "/usr/lib/gcc/avr/4.3.4/../../../avr/include/util/delay_basic.h" 1
+ 101 0098 0197      		1: sbiw r24,1
+ 102 009a 01F4      		brne 1b
+ 103               	 ;  0 "" 2
+ 104               	/* #NOAPP */
+ 105 009c 00C0      		rjmp .L9
+ 106               		.size	main, .-main
+ 107               		.lcomm state.1235,2
+GAS LISTING /tmp/ccAuaejm.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:00000000 lab1_code.c
+     /tmp/ccAuaejm.s:2      *ABS*:0000003f __SREG__
+     /tmp/ccAuaejm.s:3      *ABS*:0000003e __SP_H__
+     /tmp/ccAuaejm.s:4      *ABS*:0000003d __SP_L__
+     /tmp/ccAuaejm.s:5      *ABS*:00000034 __CCP__
+     /tmp/ccAuaejm.s:6      *ABS*:00000000 __tmp_reg__
+     /tmp/ccAuaejm.s:7      *ABS*:00000001 __zero_reg__
+     /tmp/ccAuaejm.s:13     .text:00000000 debounce_switch
+                             .bss:00000000 state.1235
+     /tmp/ccAuaejm.s:41     .text:00000030 main
+
+UNDEFINED SYMBOLS
+__do_copy_data
+__do_clear_bss
