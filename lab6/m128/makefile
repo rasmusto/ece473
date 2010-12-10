@@ -85,7 +85,7 @@ PROJECTNAME=lab6_m128
 # (list all files to compile, e.g. 'a.c b.cpp as.S'):
 # Use .cc, .cpp or .C suffix for C++ files, use .S 
 # (NOT .s !!!) for assembly source code files.
-PRJSRC= lab6_m128.c led_driver.c lcd.c kellen_music.c twi.c
+PRJSRC= lab6_m128.c led_driver.c lcd.c music.c twi.c
 
 # additional includes (e.g. -I/path/to/mydir)
 INC=-I/path/to/include

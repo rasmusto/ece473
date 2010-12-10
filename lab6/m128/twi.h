@@ -34,7 +34,6 @@
 #define LM73_PTR_CONFIG       0x01  //LM73 configuration address
 #define LM73_PTR_CTRL_STATUS  0x04  //LM73 ctrl and stat register
 
-int doTWIStuff(void);
 uint16_t rd_temp(void);
 uint16_t send_radio(uint16_t station, uint8_t mute);
 uint8_t read_radio(void);

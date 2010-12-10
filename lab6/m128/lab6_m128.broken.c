@@ -9,73 +9,66 @@
 #include "/usr/lib/avr/include/avr/iom128.h" //for tons of tab completion
 
 void segsum(uint16_t sum);
-void setBar(uint8_t value);
 uint8_t chk_buttons(uint8_t button);
+void setBar(uint8_t value);
 uint16_t sec2mil(int32_t seconds);
-uint16_t sec2hr(int32_t seconds);
-
-void USART_init(unsigned int ubrr);
 
 //holds data to be sent to the segments. logic zero turns segment on
-volatile uint8_t segment_data[5];
-char lcd_line1[16];
-char lcd_line2[16];
-volatile uint16_t sum;
-volatile uint16_t count = 0;  //loop counter for updating each individual 7-seg
-volatile uint8_t mode = 1; //24-hr clock
-volatile uint16_t isr_count = 0;
+static uint8_t segment_data[5];
+static char lcd_line1[16];
+static char lcd_line2[16] = "Normal Mode"; 
+uint16_t sum;
+uint16_t count = 0;  //loop counter for updating each individual 7-seg
+uint8_t mode = 1; //24-hr clock
+uint16_t isr_count = 0;
+static int32_t time = 3590; //seconds
+static int32_t alarm = 3600; //seconds
 
-//time variables
-volatile int32_t time = 3590; //seconds
-volatile int32_t alarm = 3600; //seconds
+static uint8_t signal_strength;
+
+static uint8_t set_time_flag = 0;
+static uint8_t set_alarm_flag = 0;
+static uint8_t set_volume_flag = 1;
+static uint8_t set_radio_flag = 1;
+static uint8_t radio_on_flag = 0;
+static uint16_t radio_freq = 887;
+
+static uint8_t alarm_mode = 1;
+
+static uint8_t display_radio_count = 0;
+
+static uint8_t time_mode = 0;
+static uint8_t volume = 2;
+static uint8_t colon_blink_flag = 1;
+static uint8_t lcd_line1_write_flag = 0;
+static uint8_t lcd_line2_write_flag = 0;
 volatile int ms = 0;
-
-//user interface flags
-volatile uint8_t set_time_flag = 0;
-volatile uint8_t set_alarm_flag = 0;
-volatile uint8_t set_volume_flag = 1;
-volatile uint8_t set_radio_flag = 1;
-volatile uint8_t radio_on_flag = 0;
-volatile uint8_t alarm_mode = 0;
-volatile uint8_t time_mode = 0;
-volatile uint8_t display_adc_flag = 0;
-volatile uint8_t display_radio_flag = 0;
-volatile uint8_t display_bars_flag = 0;
-volatile uint8_t alarm_armed_flag = 1;
-volatile uint8_t alarm_playing_flag = 0;
-volatile uint8_t snooze_timer = 0;
-
-//radio variables
-volatile uint8_t volume = 3;
-volatile uint16_t radio_freq = 887;
-volatile uint8_t signal_strength;
-volatile uint8_t display_radio_count = 0;
-
-//led variables
-volatile uint8_t colon_blink_flag = 1;
-
-//lcd variables
-volatile uint8_t lcd_line1_write_flag = 0;
-volatile uint8_t lcd_line2_write_flag = 0;
-volatile uint8_t lcd_count = 0;
-
-//temperature variables
 volatile uint16_t temperature;
 volatile uint16_t temperature_old;
 volatile uint16_t r_temperature;
 volatile uint16_t r_temperature_temp;
 volatile uint16_t r_temperature_old;
 
-//light sensor variables
-volatile uint32_t adc_temp;
-volatile uint32_t adc_output;
-
-//uart variables
 volatile uint8_t uart_data = 0;
+
+static uint8_t display_adc_flag = 0;
+static uint8_t display_radio_flag = 0;
+static uint8_t display_bars_flag = 0;
+
+static uint8_t alarm_armed_flag = 0;
+
+static uint8_t alarm_playing_flag = 0;
+static uint8_t snooze_timer = 0;
+
 volatile uint8_t high_byte_flag = 1;
 
-//spi variables
-volatile uint8_t spi_open = 1;
+void USART_init(unsigned int ubrr);
+
+static uint32_t adc_output;
+
+static uint8_t spi_open = 1;
+
+static uint32_t temp;
 
 void tcnt0_init(void)
 {
@@ -94,6 +87,7 @@ void tcnt3_init(void)
 {
     TCCR3A |= (1<<WGM30) | (1<<COM3A1);
     TCCR3B |= (1<WGM32) | (1<<CS30);
+    OCR3A = 0x3A;
 }
 
 void spi_init(void)
@@ -126,12 +120,15 @@ void segsum(uint16_t sum)
     uint8_t tens;
     uint8_t hundreds;
     uint8_t thousands;
-
+    //break up decimal sum into 4 digit-segments
+    //these variables hold the decimal representation of each digit
     thousands = (sum / 1000) % 10;
     hundreds = (sum / 100) % 10;
     tens = (sum / 10) % 10;
     ones = (sum / 1) % 10;
-
+    //blank out leading zero digits 
+    //now move data to right place for misplaced colon position
+    //this code also blanks out any leading zeros
     if(time_mode == 1 && thousands == 0 && hundreds == 0)
     {
         thousands = 1;
@@ -154,9 +151,19 @@ void segsum(uint16_t sum)
         segment_data[1] = tens;
         segment_data[0] = ones;
     }
+
 }//segment_sum
 
-//check the status of a button
+//******************************************************************************
+//                            chk_buttons                                      
+//Checks the state of the button number passed to it. It shifts in ones till   
+//the button is pushed. Function returns a 1 only once per debounced button    
+//push so a debounce and toggle function can be implemented at the same time.  
+//Adapted to check all buttons from Ganssel's "Guide to Debouncing"            
+//Expects active low pushbuttons on PINA port.  Debounce time is determined by 
+//external loop delay times 12. 
+//
+//This code has been modified to work with a button passed in as a parameter (0-7)
 uint8_t chk_buttons(uint8_t button) 
 {
     static uint16_t state[8] = {0,0,0,0,0,0,0,0};
@@ -223,14 +230,20 @@ ISR(TIMER0_OVF_vect)
     static uint8_t knob2_old;
     static uint8_t data;
 
-    adc_temp = ADCW;
+    uint8_t left_turn[4] = {3, 1, 0, 2};
+    uint8_t right_turn[4] = {3, 2, 0, 1};
 
-    if(adc_temp < 40)
-        adc_temp = 40;
-    if(adc_temp > 850)
-        adc_temp = 850;
+    static uint8_t knob1_hit_count = 4;
+    static uint8_t knob2_hit_count = 4;
 
-    adc_output = adc_temp - 275;
+    temp = ADCW;
+
+    if(temp < 40)
+        temp = 40;
+    if(temp > 850)
+        temp = 850;
+
+    adc_output = temp - 275;
     adc_output = 80 + (adc_output) / 3;
     adc_output -= 50;
     if (adc_output > 225)
@@ -270,8 +283,14 @@ ISR(TIMER0_OVF_vect)
         if (snooze_timer > 0)
         {
             music_off();
-            if(!radio_on_flag)
-            { send_radio(radio_freq, 1); }
+            if(radio_on_flag)
+            {
+                //do nothing
+            }
+            else
+            {
+                send_radio(radio_freq, 1);
+            }
             snooze_timer--;
             if(snooze_timer == 0 && alarm_armed_flag)
             {
@@ -296,21 +315,6 @@ ISR(TIMER0_OVF_vect)
     if(set_alarm_flag || set_time_flag){
         colon_blink_flag = 1;
     }
-    // ********************************************* ADDED THIS CODE ***********************************************************************
-    /*
-    uint8_t digit = LED_convert(segment_data[count]);
-    //make PORTA an output
-    DDRA = 0xFF;
-    //turn off leds
-    PORTA = 0xFF;
-    //send PORTB the digit to display
-    uint8_t led_sel = count << 4;
-    PORTB |= led_sel;  //set PORTB4-6 to select digit
-    PORTB &= led_sel & 0b01110000;
-    //send 7 segment code to LED segments
-    PORTA = digit; 
-    */
-    // ******************************************** ADDED THIS CODE ***********************************************************************
 
     //make PORTA an input port with pullups 
     DDRA = 0x00; //PORTA is an input
@@ -424,36 +428,18 @@ ISR(TIMER0_OVF_vect)
         if(display_bars_flag == 0)
         {
             display_bars_flag = 1;
-            memcpy(lcd_line2, "Showing signal strength", 16);
+            memcpy(lcd_line2, "Showing Signal Strength", 16);
             lcd_line2_write_flag = 1;
         }
         else
         {
             display_bars_flag = 0;
-            memcpy(lcd_line2, "Normal mode.", 16);
+            memcpy(lcd_line2, "Normal Mode", 16);
             lcd_line2_write_flag = 1;
         }
     }
     */
 
-    /*
-    //output adc to leds
-    if (chk_buttons(6) && !set_time_flag && !set_alarm_flag && !display_radio_flag)
-    {
-        if(display_adc_flag == 0){
-            display_adc_flag = 1;
-            memcpy(lcd_line2, "Showing adc output", 16);
-            lcd_line2_write_flag = 1;
-        }
-        else
-        {
-            display_adc_flag = 0;
-            memcpy(lcd_line2, "Normal mode.", 16);
-            lcd_line2_write_flag = 1;
-        }
-    }
-    */
-    
     //enable radio
     if (chk_buttons(6) && !alarm_playing_flag)
     {
@@ -500,19 +486,27 @@ ISR(TIMER0_OVF_vect)
     PORTB &= 0b11111110;
     PORTB |= 0b00000001;
 
-    SPDR = data;
+    SPDR = 0xFF;
     data = SPDR;
-    setBar(data);
-    //SPDR = 0xFF;
+    SPDR = 0xFF;
 
+    /*
+    //Wiggle PB0
+    PORTB |= 0b00000001;
+    PORTB &= 0b11111110;
+    */
+
+    //setBar(data);
+
+    //parse individual knob states
     knob1_state = data & 0b00000011;
     knob2_state = data & 0b00001100;
     knob2_state = knob2_state >> 2;
 
     //If either knob has changed state, check which direction
     //it went
+    uint8_t i = 0;
     
-    /*
     if (knob1_state != knob1_old){
         while (left_turn[i%4] != knob1_state){ i++; }
         if (knob1_old == left_turn[(i-1)%4]){
@@ -535,74 +529,8 @@ ISR(TIMER0_OVF_vect)
         if (knob2_old == right_turn[(i-1)%4]){
             knob2_hit_count++;
         }
-        }
-        */
-
-    if (knob1_state == 0b01 && knob1_old == 0b00)
-    {
-        if(set_time_flag)
-            time += 60;
-        if(set_alarm_flag)
-            alarm += 60;
-        if(set_volume_flag)
-        {
-            volume++;
-            if(volume == 9)
-                volume = 8;
-        }
-    }
-
-    if (knob1_state == 0b11 && knob1_old == 0b10)
-    {
-        if(set_time_flag)
-            time -= 60;
-        if(set_alarm_flag)
-            alarm -= 60;
-        if(set_volume_flag)
-        {
-            volume--;
-            if(volume == 0)
-                volume = 1;
-        }
-    }
-
-    if (knob2_state == 0b01 && knob2_old == 0b00)
-    {
-        if(set_time_flag)
-            time += 60;
-        if(set_alarm_flag)
-            alarm += 60;
-        if(set_radio_flag)
-        {
-            radio_freq += 2;
-            if (radio_freq == 1081)
-                radio_freq = 871;
-            display_radio_count = 0;
-            display_radio_flag = 1;
-            send_radio(radio_freq, !radio_on_flag);
-            signal_strength = read_radio();
-        }
-    }
-
-    if (knob2_state == 0b11 && knob2_old == 0b10)
-    {
-        if(set_time_flag)
-            time -= 60;
-        if(set_alarm_flag)
-            alarm -= 60;
-        if(set_radio_flag)
-        {
-            radio_freq -= 2;
-            if (radio_freq == 869)
-                radio_freq = 1079;
-            display_radio_count = 0;
-            display_radio_flag = 1;
-            send_radio(radio_freq, !radio_on_flag);
-            signal_strength = read_radio();
-        }
     }
  
-    /*
     if(knob1_hit_count == 7){
         knob1_hit_count = 4;
         if(set_time_flag)
@@ -643,11 +571,14 @@ ISR(TIMER0_OVF_vect)
             radio_freq += 2;
             if (radio_freq == 1081)
                 radio_freq = 871;
-            display_radio_count = 0;
-            display_radio_flag = 1;
+            //display radio frequency unless setting alarm/time
+            if(!set_alarm_flag && !set_time_flag)
+            {
+                display_radio_flag = 1;
+                display_radio_count = 0;
+            }
             send_radio(radio_freq, !radio_on_flag);
             signal_strength = read_radio();
-
         }
     }
 
@@ -663,13 +594,18 @@ ISR(TIMER0_OVF_vect)
             radio_freq -= 2;
             if (radio_freq == 869)
                 radio_freq = 1079;
-            display_radio_count = 0;
-            display_radio_flag = 1;
+
+            //display radio frequency unless setting alarm/time
+            if(!set_alarm_flag && !set_time_flag)
+            {
+                display_radio_flag = 1;
+                display_radio_count = 0;
+            }
+
             send_radio(radio_freq, !radio_on_flag);
             signal_strength = read_radio();
         }
     }
-    */
 
     knob1_old = knob1_state;
     knob2_old = knob2_state;
@@ -678,11 +614,7 @@ ISR(TIMER0_OVF_vect)
 
 int main(void)
 {
-    char zeros[8];
-    int i;
-    for(i = 0; i < 8; i++)
-        zeros[i] = 0x20;
-
+    
     music_init();
 
     //port initialization
@@ -711,20 +643,7 @@ int main(void)
 
     while(1)
     {
-        /*
-        if(lcd_count == 0)
-            cursor_home();
-        if(lcd_count == 16)
-            home_line2();
-        if(lcd_count < 16)
-            char2lcd(lcd_line1[lcd_count]);
-        if(lcd_count < 32)
-            char2lcd(lcd_line2[lcd_count - 16]);
-        if(lcd_count == 32)
-            lcd_count = 0;
-
-        lcd_count++;
-        */
+        //uint16_t temperature = rd_temp();
 
         if (count > 4) { count = 0; }
 
@@ -754,17 +673,23 @@ int main(void)
             else
                 segsum(sec2mil(alarm));
         }
-
+        
         //adc display mode
-        if(display_adc_flag) { segsum(adc_output); }
+        if(display_adc_flag)
+        {
+            segsum(adc_output);
+        }
 
-        //display radio station
-        if(display_radio_flag) { segsum(radio_freq); }
+        if(display_radio_flag)
+        {
+            segsum(radio_freq);
+        }
 
-        //display signal strength
-        if(display_bars_flag) { segsum(signal_strength); }
+        if(display_bars_flag)
+        {
+            segsum(signal_strength);
+        }
 
-        //sound alarm
         if (alarm_armed_flag && time == alarm){
             if(alarm_mode == 0)
             {
@@ -779,14 +704,24 @@ int main(void)
             }
         }
 
-        //bound time and alarm
-        if (time >= 86400){ time -= 86400; }
-        if (time < 0){ time += 86400; }
+        if (time >= 86400){
+            time = time - 86400;
+        }
 
-        if (alarm >= 86400){ alarm -= 86400; } 
-        if (alarm < 0){ alarm += 86400; }
+        if (time < 0){
+            time = 86400 + time;
+        }
+
+        if (alarm >= 86400){
+            alarm = alarm - 86400;
+        }
+
+        if (alarm < 0){
+            alarm = 86400 + alarm;
+        }
 
         uint8_t digit = LED_convert(segment_data[count]);
+
         //make PORTA an output
         DDRA = 0xFF;
         //turn off leds
@@ -799,8 +734,8 @@ int main(void)
         PORTA = digit; 
 
         //update lcd line one
-        //if(lcd_line1_write_flag){/* | lcd_line2_write_flag){*/
-        /*
+        if(lcd_line1_write_flag | lcd_line2_write_flag){
+
             char lcd_str_h[16];
             char lcd_str_l[16];
             div_t fp_adc_result = div(temperature, 4); //do division by 205 (204.8 to be exact)
@@ -822,46 +757,41 @@ int main(void)
                 itoa(fp_low_result2.quot, lcd_str2_l, 10); //convert fractional part to ascii string
 
             //clear_display();
-            //cursor_home();
-            char space[1] = " ";
+            cursor_home();
 
-            //string2lcd(lcd_str_h); //write upper half
-            memcpy(lcd_line1, lcd_str_h, strlen(lcd_str_h) + 1);
-            //char2lcd('.'); //write decimal point
-            strcat(lcd_line1, ".");
-            //string2lcd(lcd_str_l); //write lower half
-            strcat(lcd_line1, lcd_str_l);
+            string2lcd(lcd_str_h); //write upper half
+            char2lcd('.'); //write decimal point
+            string2lcd(lcd_str_l); //write lower half
 
-            //char2lcd(0x20); //write space
-            strcat(lcd_line1, space);
+            char2lcd(0x20); //write space
 
-            //string2lcd(lcd_str2_h); //write upper half
-            strcat(lcd_line1, lcd_str2_h);
-            //char2lcd('.'); //write decimal point
-            strcat(lcd_line1, ".");
-            //string2lcd(lcd_str2_l); //write lower half
-            strcat(lcd_line1, lcd_str2_l);
+            string2lcd(lcd_str2_h); //write upper half
+            char2lcd('.'); //write decimal point
+            string2lcd(lcd_str2_l); //write lower half
 
-            //char2lcd(0x20); //write space
-            strcat(lcd_line1, space);
-            //char2lcd(0x20); //write space
-            //char2lcd(0x20); //write space
-            //char2lcd(0x20); //write space
+            char2lcd(0x20); //write space
+            /*
+            char2lcd(0x20); //write space
+            char2lcd(0x20); //write space
+            char2lcd(0x20); //write space
+            */
 
             char num_bars[5];
             itoa(signal_strength, num_bars, 10);
-            //string2lcd(num_bars);
-            strcat(lcd_line1, num_bars);
- 
+            string2lcd(num_bars);
+
             lcd_line1_write_flag = 0;
 
-            //home_line2();
+            home_line2();
+            char zeros[16];
+            int i;
+            for(i = 0; i < 16; i++)
+                zeros[i] = 0x20;
             strcat(lcd_line2, zeros);
             lcd_line2[15] = '\0';
-            //string2lcd(lcd_line2);
+            string2lcd(lcd_line2);
             lcd_line2_write_flag = 0;
-        //}
-        */
+        }
 
         //set pwm duty cycle for volume
         OCR3A = volume * 32 - 1;
