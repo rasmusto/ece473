@@ -28,21 +28,29 @@ void clear_display(void){
 
 void cursor_home(void){
     while (!(SPSR & 0x80)) {}	// Wait for any pending SPI transfers to complete
+    cli();
     SPDR = 0x00;    //command, not data
     while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
+    sei();
+    cli();
     SPDR = 0x02;   // cursor go home position
     while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
     strobe_lcd();
+    sei();
     _delay_ms(2);   //obligatory waiting for slow LCD (1.64mS)
 }         
 
 void home_line2(void){
     while (!(SPSR & 0x80)) {}	// Wait for any pending SPI transfers to complete
+    cli();
     SPDR = 0x00;    //command, not data
     while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
+    sei();
+    cli();
     SPDR = 0xC0;   // cursor go home on line 2
     while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
     strobe_lcd(); 
+    sei();
     _delay_ms(2);   //obligatory waiting for slow LCD (1.64mS)
 }                           
 
@@ -63,12 +71,16 @@ void char2lcd(char a_char){
     //sends a char to the LCD
     //usage: char2lcd('H');  // send an H to the LCD
     while (!(SPSR & 0x80)) {}	// Wait for any pending SPI transfers to complete
+    cli();
     SPDR = 0x01;   //set SR for data xfer with LSB=1
     while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
+    sei();
+    cli();
     SPDR = a_char; //send the char to the SPI port
     while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
     strobe_lcd();  //toggle the enable bit
-    //_delay_us(100);   //obligatory waiting for slow LCD (40uS)
+    sei();
+    _delay_us(100);   //obligatory waiting for slow LCD (40uS)
 }
 
 
@@ -77,12 +89,16 @@ void string2lcd(char *lcd_str){
     uint8_t count;
     while (!(SPSR & 0x80)) {}	// Wait for any pending SPI transfers to complete
     for (count=0; count<=(strlen(lcd_str)-1); count++){
+        cli();
         SPDR = 0x01; //set SR for data
         while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
+        sei();
+        cli();
         SPDR = lcd_str[count]; 
         while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
         strobe_lcd();
-        _delay_us(40);   //obligatory waiting for slow LCD (40uS)
+        sei();
+        _delay_us(100);   //obligatory waiting for slow LCD (40uS)
     }                  
 } 
 

@@ -2,6 +2,7 @@
 //Roger Traylor 4.26.07
 
 //#define F_CPU 16000000UL //16Mhz clock
+#include <avr/interrupt.h>
 
 void strobe_lcd(void);
 void clear_display(void);
