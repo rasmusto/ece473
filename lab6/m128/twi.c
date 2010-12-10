@@ -97,6 +97,11 @@ uint16_t send_radio(uint16_t station, uint8_t mute)
 
     TWCR = TWCR_STOP;
     //finish transaction
+    //
+    if(mute)
+        PORTD |= 0x04;
+    else
+        PORTD &= 0xFB;
     return(0);
     //return success value
 }

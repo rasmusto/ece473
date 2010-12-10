@@ -16,7 +16,7 @@ uint16_t sec2mil(int32_t seconds);
 //holds data to be sent to the segments. logic zero turns segment on
 static uint8_t segment_data[5];
 static char lcd_line1[16];
-static char lcd_line2[16] = "Normal Mode."; 
+static char lcd_line2[16] = "Normal Mode"; 
 uint16_t sum;
 uint16_t count = 0;  //loop counter for updating each individual 7-seg
 uint8_t mode = 1; //24-hr clock
@@ -33,16 +33,15 @@ static uint8_t set_radio_flag = 1;
 static uint8_t radio_on_flag = 0;
 static uint16_t radio_freq = 887;
 
-static uint8_t alarm_mode = 0;
+static uint8_t alarm_mode = 1;
 
 static uint8_t display_radio_count = 0;
 
 static uint8_t time_mode = 0;
-static uint8_t volume = 1;
+static uint8_t volume = 2;
 static uint8_t colon_blink_flag = 1;
 static uint8_t lcd_line1_write_flag = 0;
 static uint8_t lcd_line2_write_flag = 0;
-static uint8_t music_playing_flag = 0;
 volatile int ms = 0;
 volatile uint16_t temperature;
 volatile uint16_t temperature_old;
@@ -334,7 +333,7 @@ ISR(TIMER0_OVF_vect)
             set_alarm_flag = 1;
             set_volume_flag = 0;
             set_radio_flag = 0;
-            memcpy(lcd_line2, "Set alarm time...", 16);
+            memcpy(lcd_line2, "Set Alarm Time", 16);
             lcd_line2_write_flag = 1;
         }
         else
@@ -342,7 +341,7 @@ ISR(TIMER0_OVF_vect)
             set_alarm_flag = 0;
             set_volume_flag = 1;
             set_radio_flag = 1;
-            memcpy(lcd_line2, "Normal mode.", 16);
+            memcpy(lcd_line2, "Normal Mode", 16);
             lcd_line2_write_flag = 1;
         }
     }
@@ -354,7 +353,7 @@ ISR(TIMER0_OVF_vect)
             set_time_flag = 1;
             set_volume_flag = 0;
             set_radio_flag = 0;
-            memcpy(lcd_line2, "Set clock time...", 16);
+            memcpy(lcd_line2, "Set Clock Time", 16);
             lcd_line2_write_flag = 1;
         }
         else
@@ -362,31 +361,10 @@ ISR(TIMER0_OVF_vect)
             set_time_flag = 0;
             set_volume_flag = 1;
             set_radio_flag = 1;
-            memcpy(lcd_line2, "Normal mode.", 16);
+            memcpy(lcd_line2, "Normal mode", 16);
             lcd_line2_write_flag = 1;
         }
     }
-
-    /*
-    //play or stop music
-    if (chk_buttons(2))
-    {
-        if(music_playing_flag)
-        {
-            send_radio(radio_freq, 0);
-            music_off();
-            memcpy(lcd_line2, "Stopping Music.", 16);
-            music_playing_flag = 0;
-        }
-        else
-        {
-            send_radio(radio_freq, 1);
-            music_on();
-            memcpy(lcd_line2, "Playing Music.", 16);
-            music_playing_flag = 1;
-        }
-    }
-    */
 
     //change alarm mode
     if (chk_buttons(2))
@@ -395,11 +373,13 @@ ISR(TIMER0_OVF_vect)
         {
             alarm_mode = 1;
             memcpy(lcd_line2, "Alarm - Radio", 16);
+            lcd_line2_write_flag = 1;
         }
         else
         {
             alarm_mode = 0;
             memcpy(lcd_line2, "Alarm - Tone", 16);
+            lcd_line2_write_flag = 1;
         }
     }
 
@@ -408,14 +388,16 @@ ISR(TIMER0_OVF_vect)
     {
         if(alarm_armed_flag == 0)
         {
+            alarm_playing_flag = 0;
             alarm_armed_flag = 1;
-            memcpy(lcd_line2, "Alarm is ON.", 16);
+            memcpy(lcd_line2, "Alarm - ON", 16);
             lcd_line2_write_flag = 1;
         }
         else
         {
+            alarm_playing_flag = 0;
             alarm_armed_flag = 0;
-            memcpy(lcd_line2, "Alarm is OFF.", 16);
+            memcpy(lcd_line2, "Alarm - OFF", 16);
             lcd_line2_write_flag = 1;
             music_off();
         }
@@ -427,63 +409,55 @@ ISR(TIMER0_OVF_vect)
     {
         if(alarm_playing_flag && alarm_armed_flag)
         {
+            alarm_playing_flag = 0;
             snooze_timer = 10;
-            memcpy(lcd_line2, "Snooze is on.", 16);
+            memcpy(lcd_line2, "Snooze - On", 16);
+            lcd_line2_write_flag = 1;
+        }
+        else
+        {
+            memcpy(lcd_line2, "Snooze - N/A", 16);
             lcd_line2_write_flag = 1;
         }
     }
     
+    /*
     //show signal strength
     if (chk_buttons(5) && !set_time_flag && !set_alarm_flag && !display_adc_flag)
     {
         if(display_bars_flag == 0)
         {
             display_bars_flag = 1;
-            memcpy(lcd_line2, "Showing signal strength", 16);
+            memcpy(lcd_line2, "Showing Signal Strength", 16);
             lcd_line2_write_flag = 1;
         }
         else
         {
             display_bars_flag = 0;
-            memcpy(lcd_line2, "Normal mode.", 16);
-            lcd_line2_write_flag = 1;
-        }
-    }
-
-    /*
-    //output adc to leds
-    if (chk_buttons(6) && !set_time_flag && !set_alarm_flag && !display_radio_flag)
-    {
-        if(display_adc_flag == 0){
-            display_adc_flag = 1;
-            memcpy(lcd_line2, "Showing adc output", 16);
-            lcd_line2_write_flag = 1;
-        }
-        else
-        {
-            display_adc_flag = 0;
-            memcpy(lcd_line2, "Normal mode.", 16);
+            memcpy(lcd_line2, "Normal Mode", 16);
             lcd_line2_write_flag = 1;
         }
     }
     */
-    
+
     //enable radio
-    if (chk_buttons(6))
+    if (chk_buttons(6) && !alarm_playing_flag)
     {
         if(radio_on_flag == 0)
         {
             radio_on_flag = 1;
-            memcpy(lcd_line2, "Radio ON", 16);
-            PORTD &= unmute;
+            memcpy(lcd_line2, "Radio - ON", 16);
+            lcd_line2_write_flag = 1;
             send_radio(radio_freq, 0);
+            signal_strength = read_radio();
         }
         else
         {
             radio_on_flag = 0;
-            memcpy(lcd_line2, "Radio OFF", 16);
-            PORTD |= mute;
+            memcpy(lcd_line2, "Radio - OFF", 16);
+            lcd_line2_write_flag = 1;
             send_radio(radio_freq, 1);
+            signal_strength = read_radio();
         }
     }
 
@@ -493,12 +467,17 @@ ISR(TIMER0_OVF_vect)
         if(time_mode == 0)
         {
             time_mode = 1;
+            memcpy(lcd_line2, "12 Hour Mode", 16);
+            lcd_line2_write_flag = 1;
         }
         else
         {
             time_mode = 0;
+            memcpy(lcd_line2, "24 Hour Mode", 16);
+            lcd_line2_write_flag = 1;
         }
     }
+
 
     //disable tristate buffer
     PORTB &= 0b10001111;
@@ -511,6 +490,15 @@ ISR(TIMER0_OVF_vect)
     data = SPDR;
     SPDR = 0xFF;
 
+    /*
+    //Wiggle PB0
+    PORTB |= 0b00000001;
+    PORTB &= 0b11111110;
+    */
+
+    //setBar(data);
+
+    //parse individual knob states
     knob1_state = data & 0b00000011;
     knob2_state = data & 0b00001100;
     knob2_state = knob2_state >> 2;
@@ -583,11 +571,14 @@ ISR(TIMER0_OVF_vect)
             radio_freq += 2;
             if (radio_freq == 1081)
                 radio_freq = 871;
-            display_radio_count = 0;
-            display_radio_flag = 1;
+            //display radio frequency unless setting alarm/time
+            if(!set_alarm_flag && !set_time_flag)
+            {
+                display_radio_flag = 1;
+                display_radio_count = 0;
+            }
             send_radio(radio_freq, !radio_on_flag);
             signal_strength = read_radio();
-
         }
     }
 
@@ -603,8 +594,14 @@ ISR(TIMER0_OVF_vect)
             radio_freq -= 2;
             if (radio_freq == 869)
                 radio_freq = 1079;
-            display_radio_count = 0;
-            display_radio_flag = 1;
+
+            //display radio frequency unless setting alarm/time
+            if(!set_alarm_flag && !set_time_flag)
+            {
+                display_radio_flag = 1;
+                display_radio_count = 0;
+            }
+
             send_radio(radio_freq, !radio_on_flag);
             signal_strength = read_radio();
         }
@@ -643,8 +640,6 @@ int main(void)
     sum = 0;
     ms = 0;
     beat = 0;
-
-    PORTD &= unmute;
 
     while(1)
     {
@@ -725,9 +720,6 @@ int main(void)
             alarm = 86400 + alarm;
         }
 
-        if(ms % 100 == 0)
-            setBar(1 << (volume - 1));
-
         uint8_t digit = LED_convert(segment_data[count]);
 
         //make PORTA an output
@@ -742,43 +734,69 @@ int main(void)
         PORTA = digit; 
 
         //update lcd line one
-        if(lcd_line1_write_flag){
+        if(lcd_line1_write_flag | lcd_line2_write_flag){
 
             char lcd_str_h[16];
             char lcd_str_l[16];
             div_t fp_adc_result = div(temperature, 4); //do division by 205 (204.8 to be exact)
             itoa(fp_adc_result.quot, lcd_str_h, 10); //convert non-fractional part to ascii string
             div_t fp_low_result = div((fp_adc_result.rem*100), 4); //get fraction into non-fractional form
-            itoa(fp_low_result.quot, lcd_str_l, 10); //convert fractional part to ascii string
+            if(fp_low_result.quot == 0)
+                memcpy(lcd_str_l,  "00", 3);
+            else
+                itoa(fp_low_result.quot, lcd_str_l, 10); //convert fractional part to ascii string
 
             char lcd_str2_h[16];
             char lcd_str2_l[16];
             div_t fp_adc_result2 = div(r_temperature, 4); //do division by 205 (204.8 to be exact)
             itoa(fp_adc_result2.quot, lcd_str2_h, 10); //convert non-fractional part to ascii string
             div_t fp_low_result2 = div((fp_adc_result2.rem*100), 4); //get fraction into non-fractional form
-            itoa(fp_low_result2.quot, lcd_str2_l, 10); //convert fractional part to ascii string
+            if(fp_low_result2.quot == 0)
+                memcpy(lcd_str2_l, "00", 3);
+            else
+                itoa(fp_low_result2.quot, lcd_str2_l, 10); //convert fractional part to ascii string
 
-            clear_display();
+            //clear_display();
             cursor_home();
 
             string2lcd(lcd_str_h); //write upper half
             char2lcd('.'); //write decimal point
             string2lcd(lcd_str_l); //write lower half
 
-            char2lcd(0x20);
+            char2lcd(0x20); //write space
 
             string2lcd(lcd_str2_h); //write upper half
             char2lcd('.'); //write decimal point
             string2lcd(lcd_str2_l); //write lower half
 
+            char2lcd(0x20); //write space
+            /*
+            char2lcd(0x20); //write space
+            char2lcd(0x20); //write space
+            char2lcd(0x20); //write space
+            */
+
+            char num_bars[5];
+            itoa(signal_strength, num_bars, 10);
+            string2lcd(num_bars);
+
             lcd_line1_write_flag = 0;
 
             home_line2();
+            char zeros[16];
+            int i;
+            for(i = 0; i < 16; i++)
+                zeros[i] = 0x20;
+            strcat(lcd_line2, zeros);
+            lcd_line2[15] = '\0';
             string2lcd(lcd_line2);
+            lcd_line2_write_flag = 0;
         }
 
-        //update digit to display
+        //set pwm duty cycle for volume
         OCR3A = volume * 32 - 1;
+
+        //update digit to display
         count++;
     }
 }//main

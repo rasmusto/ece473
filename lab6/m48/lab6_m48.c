@@ -1,4 +1,4 @@
-// lab5_m48.c
+// lab6_m48.c
 // Torben Rasmussen
 // 11.16.2010
 

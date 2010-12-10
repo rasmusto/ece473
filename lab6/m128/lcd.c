@@ -82,7 +82,7 @@ void string2lcd(char *lcd_str){
         SPDR = lcd_str[count]; 
         while (!(SPSR & 0x80)) {}	// Wait for SPI transfer to complete
         strobe_lcd();
-        _delay_us(100);   //obligatory waiting for slow LCD (40uS)
+        _delay_us(40);   //obligatory waiting for slow LCD (40uS)
     }                  
 } 
 
