@@ -36,5 +36,5 @@
 
 int doTWIStuff(void);
 uint16_t rd_temp(void);
-uint16_t send_radio(uint16_t station);
+uint16_t send_radio(uint16_t station, uint8_t mute);
 uint8_t read_radio(void);

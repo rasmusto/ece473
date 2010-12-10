@@ -30,12 +30,14 @@ static uint8_t set_time_flag = 0;
 static uint8_t set_alarm_flag = 0;
 static uint8_t set_volume_flag = 1;
 static uint8_t set_radio_flag = 1;
+static uint8_t radio_on_flag = 0;
 static uint16_t radio_freq = 887;
+
+static uint8_t alarm_mode = 0;
 
 static uint8_t display_radio_count = 0;
 
 static uint8_t time_mode = 0;
-static uint8_t bar = 0;
 static uint8_t volume = 1;
 static uint8_t colon_blink_flag = 1;
 static uint8_t lcd_line1_write_flag = 0;
@@ -79,8 +81,6 @@ void tcnt0_init(void)
 void tcnt2_init(void)
 {
     TCCR2 |= (1 << WGM21) | (1 << WGM20) | (1 << COM21) | (1 << CS20);
-    //TIMSK |= (1 << OCIE2);
-    //OCR2 = 0xFF;
     OCR2 = 0x00;
 }
 
@@ -99,13 +99,6 @@ void spi_init(void)
 
 void adc_init(void)
 {
-    /*
-    //single shot mode
-    ADCSRA |= (1<<ADEN) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
-    //left adjust, use AVCC as reference
-    ADMUX |= (1<<ADLAR) | (1<<REFS0);
-    */
-
     //free running mode
     ADMUX |= (1<<REFS0);
     ADCSRA |= (1<<ADEN) | (1<<ADFR) | (1<<ADPS2) | (1<<ADPS1) | (1<<ADPS0);
@@ -244,12 +237,6 @@ ISR(TIMER0_OVF_vect)
     static uint8_t knob1_hit_count = 4;
     static uint8_t knob2_hit_count = 4;
 
-    /*
-    adc_output = ADCW;
-    OCR2 = 0xEF + adc_output;
-    */
-
-
     temp = ADCW;
 
     if(temp < 40)
@@ -257,7 +244,6 @@ ISR(TIMER0_OVF_vect)
     if(temp > 850)
         temp = 850;
 
-    //adc_output = temp - 275;
     adc_output = temp - 275;
     adc_output = 80 + (adc_output) / 3;
     adc_output -= 50;
@@ -266,7 +252,7 @@ ISR(TIMER0_OVF_vect)
     OCR2 = adc_output;
 
     ms++;
-    if(ms % 4 == 0) { //used to be 8
+    if(ms % 4 == 0) {
         //for note duration (64th notes) 
         beat++;
     } 
@@ -277,7 +263,6 @@ ISR(TIMER0_OVF_vect)
             display_radio_count += 1;
         if (display_radio_count == 2)
             display_radio_flag = 0;
-        //PORTF = 0x00;
     }
 
     if (isr_count == 128){
@@ -294,17 +279,33 @@ ISR(TIMER0_OVF_vect)
         }
         colon_blink_flag = 1;
         isr_count = 0;
-        //PORTF = 0x01;
         time += 1;
 
         if (snooze_timer > 0)
         {
             music_off();
+            if(radio_on_flag)
+            {
+                //do nothing
+            }
+            else
+            {
+                send_radio(radio_freq, 1);
+            }
             snooze_timer--;
             if(snooze_timer == 0 && alarm_armed_flag)
             {
-                music_on();
-                alarm_playing_flag = 1;
+                if(alarm_mode == 0)
+                {
+                    send_radio(radio_freq, 1);
+                    music_on();
+                    alarm_playing_flag = 1;
+                }
+                else
+                {
+                    send_radio(radio_freq, 0);
+                    alarm_playing_flag = 1;
+                }
             }
         }
 
@@ -332,7 +333,7 @@ ISR(TIMER0_OVF_vect)
         if(set_alarm_flag == 0){
             set_alarm_flag = 1;
             set_volume_flag = 0;
-            bar |= 0b10000000;
+            set_radio_flag = 0;
             memcpy(lcd_line2, "Set alarm time...", 16);
             lcd_line2_write_flag = 1;
         }
@@ -340,7 +341,7 @@ ISR(TIMER0_OVF_vect)
         {
             set_alarm_flag = 0;
             set_volume_flag = 1;
-            bar &= 0b01111111;
+            set_radio_flag = 1;
             memcpy(lcd_line2, "Normal mode.", 16);
             lcd_line2_write_flag = 1;
         }
@@ -352,7 +353,7 @@ ISR(TIMER0_OVF_vect)
         if(set_time_flag == 0){
             set_time_flag = 1;
             set_volume_flag = 0;
-            bar |= 0b01000000;
+            set_radio_flag = 0;
             memcpy(lcd_line2, "Set clock time...", 16);
             lcd_line2_write_flag = 1;
         }
@@ -360,26 +361,45 @@ ISR(TIMER0_OVF_vect)
         {
             set_time_flag = 0;
             set_volume_flag = 1;
-            bar &= 0b10111111;
+            set_radio_flag = 1;
             memcpy(lcd_line2, "Normal mode.", 16);
             lcd_line2_write_flag = 1;
         }
     }
 
+    /*
     //play or stop music
     if (chk_buttons(2))
     {
         if(music_playing_flag)
         {
+            send_radio(radio_freq, 0);
             music_off();
             memcpy(lcd_line2, "Stopping Music.", 16);
             music_playing_flag = 0;
         }
         else
         {
+            send_radio(radio_freq, 1);
             music_on();
             memcpy(lcd_line2, "Playing Music.", 16);
             music_playing_flag = 1;
+        }
+    }
+    */
+
+    //change alarm mode
+    if (chk_buttons(2))
+    {
+        if(alarm_mode == 0)
+        {
+            alarm_mode = 1;
+            memcpy(lcd_line2, "Alarm - Radio", 16);
+        }
+        else
+        {
+            alarm_mode = 0;
+            memcpy(lcd_line2, "Alarm - Tone", 16);
         }
     }
 
@@ -413,12 +433,13 @@ ISR(TIMER0_OVF_vect)
         }
     }
     
+    //show signal strength
     if (chk_buttons(5) && !set_time_flag && !set_alarm_flag && !display_adc_flag)
     {
         if(display_bars_flag == 0)
         {
             display_bars_flag = 1;
-            memcpy(lcd_line2, "Showing radio station", 16);
+            memcpy(lcd_line2, "Showing signal strength", 16);
             lcd_line2_write_flag = 1;
         }
         else
@@ -429,6 +450,7 @@ ISR(TIMER0_OVF_vect)
         }
     }
 
+    /*
     //output adc to leds
     if (chk_buttons(6) && !set_time_flag && !set_alarm_flag && !display_radio_flag)
     {
@@ -444,6 +466,26 @@ ISR(TIMER0_OVF_vect)
             lcd_line2_write_flag = 1;
         }
     }
+    */
+    
+    //enable radio
+    if (chk_buttons(6))
+    {
+        if(radio_on_flag == 0)
+        {
+            radio_on_flag = 1;
+            memcpy(lcd_line2, "Radio ON", 16);
+            PORTD &= unmute;
+            send_radio(radio_freq, 0);
+        }
+        else
+        {
+            radio_on_flag = 0;
+            memcpy(lcd_line2, "Radio OFF", 16);
+            PORTD |= mute;
+            send_radio(radio_freq, 1);
+        }
+    }
 
     //toggle 24/12 hour modes
     if (chk_buttons(7))
@@ -451,12 +493,10 @@ ISR(TIMER0_OVF_vect)
         if(time_mode == 0)
         {
             time_mode = 1;
-            bar |= 0b00000001;
         }
         else
         {
             time_mode = 0;
-            bar &= 0b11111110;
         }
     }
 
@@ -543,10 +583,11 @@ ISR(TIMER0_OVF_vect)
             radio_freq += 2;
             if (radio_freq == 1081)
                 radio_freq = 871;
-            send_radio(radio_freq);
             display_radio_count = 0;
             display_radio_flag = 1;
+            send_radio(radio_freq, !radio_on_flag);
             signal_strength = read_radio();
+
         }
     }
 
@@ -562,9 +603,9 @@ ISR(TIMER0_OVF_vect)
             radio_freq -= 2;
             if (radio_freq == 869)
                 radio_freq = 1079;
-            send_radio(radio_freq);
             display_radio_count = 0;
             display_radio_flag = 1;
+            send_radio(radio_freq, !radio_on_flag);
             signal_strength = read_radio();
         }
     }
@@ -572,16 +613,6 @@ ISR(TIMER0_OVF_vect)
     knob1_old = knob1_state;
     knob2_old = knob2_state;
 
-}
-
-ISR(TIMER2_COMP_vect)
-{
-    /*
-    if(temp > 60){
-        adc_output = temp;
-        OCR2 = 80 + adc_output;
-    }
-    */
 }
 
 int main(void)
@@ -606,7 +637,6 @@ int main(void)
     adc_init();
     lcd_init();
     USART_init(MYUBRR);
-    setBar(0b10101010);
 
     sei();         //enable interrupts before entering loop
 
@@ -614,7 +644,6 @@ int main(void)
     ms = 0;
     beat = 0;
 
-    send_radio(887);
     PORTD &= unmute;
 
     while(1)
@@ -654,7 +683,6 @@ int main(void)
         if(display_adc_flag)
         {
             segsum(adc_output);
-            //segsum(temp);
         }
 
         if(display_radio_flag)
@@ -668,8 +696,17 @@ int main(void)
         }
 
         if (alarm_armed_flag && time == alarm){
-            music_on();
-            alarm_playing_flag = 1;
+            if(alarm_mode == 0)
+            {
+                send_radio(radio_freq, 1);
+                music_on();
+                alarm_playing_flag = 1;
+            }
+            else
+            {
+                send_radio(radio_freq, 0);
+                alarm_playing_flag = 1;
+            }
         }
 
         if (time >= 86400){
@@ -734,24 +771,11 @@ int main(void)
             char2lcd('.'); //write decimal point
             string2lcd(lcd_str2_l); //write lower half
 
-            //char buffer[16];
-            //itoa(uart_data, buffer, 10);
-            //itoa(temperature, buffer, 10);
-            //string2lcd(buffer);
             lcd_line1_write_flag = 0;
 
             home_line2();
             string2lcd(lcd_line2);
         }
-
-        //update lcd line two
-        /*
-        if(lcd_line2_write_flag){
-            home_line2();
-            string2lcd(lcd_line2);
-            lcd_line2_write_flag = 0;
-        }
-        */
 
         //update digit to display
         OCR3A = volume * 32 - 1;
