@@ -18,7 +18,7 @@ void USART_init(unsigned int ubrr);
 
 //holds data to be sent to the segments. logic zero turns segment on
 volatile uint8_t segment_data[5];
-char lcd_line1[16];
+char lcd_line1[32];
 char lcd_line2[32] = "Normal Mode";
 volatile uint16_t sum;
 volatile uint16_t count = 0;  //loop counter for updating each individual 7-seg
@@ -250,6 +250,7 @@ ISR(TIMER0_OVF_vect)
             display_radio_count += 1;
         if (display_radio_count == 2)
             display_radio_flag = 0;
+        signal_strength = read_radio();
     }
 
     if (isr_count == 128){
@@ -399,20 +400,29 @@ ISR(TIMER0_OVF_vect)
     //arm alarm
     if (button3_state)
     {
-        if(alarm_armed_flag == 0)
-        {
-            alarm_playing_flag = 0;
-            alarm_armed_flag = 1;
-            memcpy(lcd_line2, "Alarm - ON", 16);
-            lcd_line2_write_flag = 1;
-        }
-        else
+        if(alarm_armed_flag)
         {
             alarm_playing_flag = 0;
             alarm_armed_flag = 0;
             memcpy(lcd_line2, "Alarm - OFF", 16);
             lcd_line2_write_flag = 1;
-            music_off();
+            if(alarm_mode == 0)
+            {
+                music_off();
+                alarm_playing_flag = 0;
+            }
+            else
+            {
+                send_radio(radio_freq, 1);
+                alarm_playing_flag = 0;
+            }
+        }
+        else
+        {
+            alarm_playing_flag = 0;
+            alarm_armed_flag = 1;
+            memcpy(lcd_line2, "Alarm - ON", 16);
+            lcd_line2_write_flag = 1;
         }
 
     }
@@ -441,11 +451,13 @@ ISR(TIMER0_OVF_vect)
         {
             snooze_duration = 600;
             memcpy(lcd_line2, "Snooze - 10m", 16);
+            lcd_line2_write_flag = 1;
         }
         else
         {
             snooze_duration = 60;
             memcpy(lcd_line2, "Snooze - 1m", 16);
+            lcd_line2_write_flag = 1;
         }
     }
     
@@ -458,7 +470,7 @@ ISR(TIMER0_OVF_vect)
             memcpy(lcd_line2, "Radio - ON", 16);
             lcd_line2_write_flag = 1;
             send_radio(radio_freq, 0);
-            signal_strength = read_radio();
+            //signal_strength = read_radio();
         }
         else
         {
@@ -466,7 +478,7 @@ ISR(TIMER0_OVF_vect)
             memcpy(lcd_line2, "Radio - OFF", 16);
             lcd_line2_write_flag = 1;
             send_radio(radio_freq, 1);
-            signal_strength = read_radio();
+            //signal_strength = read_radio();
         }
     }
 
@@ -535,7 +547,7 @@ ISR(TIMER0_OVF_vect)
             display_radio_count = 0;
             display_radio_flag = 1;
             send_radio(radio_freq, !radio_on_flag);
-            signal_strength = read_radio();
+            //signal_strength = read_radio();
         }
     }
 
@@ -551,7 +563,7 @@ ISR(TIMER0_OVF_vect)
             display_radio_count = 0;
             display_radio_flag = 1;
             send_radio(radio_freq, !radio_on_flag);
-            signal_strength = read_radio();
+            //signal_strength = read_radio();
         }
     }
     knob1_old = knob1_state;
@@ -683,35 +695,33 @@ int main(void)
                 itoa(fp_low_result2.quot, lcd_str2_l, 10); //convert fractional part to ascii string
 
             cursor_home();
-            
-            memcpy(lcd_line1, lcd_str_h, strlen(lcd_str_h));
-            //string2lcd(lcd_str_h); //write upper half
-            strcat(lcd_line1, ".");
-            //char2lcd('.'); //write decimal point
-            strcat(lcd_line1, lcd_str_l);
-            //string2lcd(lcd_str_l); //write lower half
 
-            strcat(lcd_line1, " ");
-            //char2lcd(0x20); //write space
+            sprintf(lcd_line1, "%s.%s %s.%s", lcd_str_h, lcd_str_l, lcd_str2_h, lcd_str2_l);
+            uint8_t num_bars;
+            num_bars = signal_strength / 3;
+            switch(num_bars)
+            {
+                case 5:
+                    sprintf(lcd_line1, "%s*****", lcd_line1);
+                    break;
+                case 4:
+                    sprintf(lcd_line1, "%s ****", lcd_line1);
+                    break;
+                case 3:
+                    sprintf(lcd_line1, "%s  ***", lcd_line1);
+                    break;
+                case 2:
+                    sprintf(lcd_line1, "%s   **", lcd_line1);
+                    break;
+                case 1:
+                    sprintf(lcd_line1, "%s    *", lcd_line1);
+                    break;
+                default:
+                    break;
+            }
 
-            strcat(lcd_line1, lcd_str2_h);
-            //string2lcd(lcd_str2_h); //write upper half
-            strcat(lcd_line1, ".");
-            //char2lcd('.'); //write decimal point
-            strcat(lcd_line1, lcd_str2_l);
-            //string2lcd(lcd_str2_l); //write lower half
-
-            strcat(lcd_line1, " ");
-            //char2lcd(0x20); //write space
-            //char2lcd(0x20); //write space
-
-            char num_bars[5];
-            //itoa(signal_strength, num_bars, 10);
-
-            sprintf(lcd_line1, "%s %d", lcd_line1, signal_strength);
-
-            //strcat(lcd_line1, num_bars);
-            //string2lcd(num_bars);
+            strcat(lcd_line1, zeros);
+            lcd_line1[16] = '\0';
 
             string2lcd(lcd_line1);
             lcd_line1_write_flag = 0;
