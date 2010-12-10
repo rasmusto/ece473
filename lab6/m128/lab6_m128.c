@@ -44,10 +44,10 @@ volatile uint8_t display_bars_flag = 0;
 volatile uint8_t alarm_armed_flag = 0;
 volatile uint8_t alarm_playing_flag = 0;
 volatile uint8_t snooze_timer = 0;
-volatile uint16_t snooze_duration = 60;
+volatile uint16_t snooze_duration = 10;
 
 //radio variables
-volatile int8_t volume = 3;
+volatile int8_t volume = 5;
 volatile uint16_t radio_freq = 887;
 volatile uint8_t signal_strength;
 volatile uint8_t display_radio_count = 0;
@@ -398,7 +398,7 @@ ISR(TIMER0_OVF_vect)
     }
 
     //arm alarm
-    if (button3_state)
+    if (button3_state && !alarm_playing_flag)
     {
         if(alarm_armed_flag)
         {
@@ -409,17 +409,16 @@ ISR(TIMER0_OVF_vect)
             if(alarm_mode == 0)
             {
                 music_off();
-                alarm_playing_flag = 0;
             }
             else
             {
                 send_radio(radio_freq, 1);
-                alarm_playing_flag = 0;
+                radio_on_flag = 0;
             }
         }
         else
         {
-            alarm_playing_flag = 0;
+            //alarm_playing_flag = 0;
             alarm_armed_flag = 1;
             memcpy(lcd_line2, "Alarm - ON", 16);
             lcd_line2_write_flag = 1;
@@ -449,14 +448,14 @@ ISR(TIMER0_OVF_vect)
     {
         if(snooze_duration == 60)
         {
-            snooze_duration = 600;
-            memcpy(lcd_line2, "Snooze - 10m", 16);
+            snooze_duration = 60;
+            memcpy(lcd_line2, "Snooze - 1m", 16);
             lcd_line2_write_flag = 1;
         }
         else
         {
-            snooze_duration = 60;
-            memcpy(lcd_line2, "Snooze - 1m", 16);
+            snooze_duration = 10;
+            memcpy(lcd_line2, "Snooze - 10s", 16);
             lcd_line2_write_flag = 1;
         }
     }
@@ -513,8 +512,8 @@ ISR(TIMER0_OVF_vect)
 
     if (knob1_state == 0b01 && knob1_old == 0b00)
     {
-        if(set_time_flag) time += 60;
-        if(set_alarm_flag) alarm += 60;
+        if(set_time_flag) time += 3600;
+        if(set_alarm_flag) alarm += 3600;
         if(set_volume_flag)
         {
             volume++;
@@ -525,8 +524,8 @@ ISR(TIMER0_OVF_vect)
 
     if (knob1_state == 0b11 && knob1_old == 0b10)
     {
-        if(set_time_flag) time -= 60;
-        if(set_alarm_flag) alarm -= 60;
+        if(set_time_flag) time -= 3600;
+        if(set_alarm_flag) alarm -= 3600;
         if(set_volume_flag)
         {
             volume--;
@@ -649,6 +648,7 @@ int main(void)
             {
                 send_radio(radio_freq, 0);
                 alarm_playing_flag = 1;
+                radio_on_flag = 1;
             }
         }
 
