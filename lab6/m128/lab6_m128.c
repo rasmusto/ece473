@@ -272,8 +272,10 @@ ISR(TIMER0_OVF_vect)
         if (snooze_timer > 0)
         {
             music_off();
+            /*
             if(!radio_on_flag)
             { send_radio(radio_freq, 1); }
+            */
             snooze_timer--;
             if(snooze_timer == 0 && alarm_armed_flag)
             {
@@ -446,7 +448,7 @@ ISR(TIMER0_OVF_vect)
     //toggle snooze duration
     if (button5_state)
     {
-        if(snooze_duration == 60)
+        if(snooze_duration == 10)
         {
             snooze_duration = 60;
             memcpy(lcd_line2, "Snooze - 1m", 16);
